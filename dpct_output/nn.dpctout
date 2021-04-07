@@ -1,0 +1,41 @@
+u66156@s001-n049:~/TFG/cuda$ dpct --cuda-include-path=/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/ --in-root=. nn/nn_cuda.cu 
+NOTE: Could not auto-detect compilation database for file 'nn_cuda.cu' in '/home/u66156/TFG/cuda/nn' or any parent directory.
+The directory "dpct_output" is used as "out-root"
+Processing: /home/u66156/TFG/cuda/nn/nn_cuda.cu
+/home/u66156/TFG/cuda/nn/nn_cuda.cu:99:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/u66156/TFG/cuda/nn/nn_cuda.cu:105:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/u66156/TFG/cuda/nn/nn_cuda.cu:149:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaThreadSynchronize();
+    ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/u66156/TFG/cuda/nn/nn_cuda.cu:100:27: warning: DPCT1022:0: There is no exact match between the maxGridSize and the max_nd_range size. Verify the correctness of the code.
+        unsigned long maxGridX = deviceProp.maxGridSize[0];
+                                 ^
+/home/u66156/TFG/cuda/nn/nn_cuda.cu:148:5: warning: DPCT1049:1: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    euclid<<< gridDim, threadsPerBlock >>>(d_locations,d_distances,numRecords,lat,lng);
+    ^
+Processed 1 file(s) in -in-root folder "/home/u66156/TFG/cuda"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
