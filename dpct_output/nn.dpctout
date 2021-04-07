@@ -1,6 +1,3 @@
-u66156@s001-n049:~/TFG/cuda$ dpct --cuda-include-path=/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/ --in-root=. nn/nn_cuda.cu 
-NOTE: Could not auto-detect compilation database for file 'nn_cuda.cu' in '/home/u66156/TFG/cuda/nn' or any parent directory.
-The directory "dpct_output" is used as "out-root"
 Processing: /home/u66156/TFG/cuda/nn/nn_cuda.cu
 /home/u66156/TFG/cuda/nn/nn_cuda.cu:99:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
         cudaThreadSynchronize();
