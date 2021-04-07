@@ -1,0 +1,60 @@
+u66156@s001-n007:~/TFG/cuda$ dpct --cuda-include-path=/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/ --in-root=. gaussian/gaussian.cu 
+NOTE: Could not auto-detect compilation database for file 'gaussian.cu' in '/home/u66156/TFG/cuda/gaussian' or any parent directory.
+The directory "dpct_output" is used as "out-root"
+Processing: /home/u66156/TFG/cuda/gaussian/gaussian.cu
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:366:3: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+                cudaThreadSynchronize();
+                ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:368:3: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+                cudaThreadSynchronize();
+                ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/u66156/cuda/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:210:25: warning: DPCT1003:0: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+            if( cudaSuccess == cudaGetDeviceProperties(&deviceProp, nDeviceIdx))  
+                               ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:215:67: warning: DPCT1019:1: local_mem_size in SYCL is not a complete equivalent of sharedMemPerBlock in CUDA. You may need to adjust the code.
+                            printf( "\nShared memory available per block \t - %lu KB", deviceProp.sharedMemPerBlock/1024 );  
+                                                                                       ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:221:67: warning: DPCT1022:2: There is no exact match between the maxGridSize and the max_nd_range size. Verify the correctness of the code.
+                            printf( "\nMaximum Thread Dimension (grid) \t - %d %d %d", deviceProp.maxGridSize[0], deviceProp.maxGridSize[1], deviceProp.maxGridSize[2] );  
+                                                                                       ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:223:47: warning: DPCT1005:3: The device version is different. You need to rewrite this code.
+                            printf( "\nCUDA ver \t\t\t\t - %d.%d", deviceProp.major, deviceProp.minor );  
+                                                                   ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:226:50: warning: DPCT1051:4: DPC++ does not support the device property that would be functionally compatible with deviceOverlap. It was migrated to true. You may need to rewrite the code.
+                            printf( "\nDevice Overlap \t\t\t\t - %s", deviceProp. deviceOverlap?"Allowed":"Not Allowed" );  
+                                                                      ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:230:26: warning: DPCT1009:5: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf( "\n%s", cudaGetErrorString(cudaGetLastError()));  
+                                ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:230:45: warning: DPCT1010:6: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                printf( "\n%s", cudaGetErrorString(cudaGetLastError()));  
+                                                   ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:365:3: warning: DPCT1049:7: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                Fan1<<<dimGrid,dimBlock>>>(m_cuda,a_cuda,Size,t);
+                ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:367:3: warning: DPCT1049:8: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                Fan2<<<dimGridXY,dimBlockXY>>>(m_cuda,a_cuda,b_cuda,Size,Size-t,t);
+                ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:462:23: warning: DPCT1010:9: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+    cudaError_t err = cudaGetLastError();
+                      ^
+/home/u66156/TFG/cuda/gaussian/gaussian.cu:466:35: warning: DPCT1009:10: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                                  cudaGetErrorString( err) );
+                                  ^
+Processed 1 file(s) in -in-root folder "/home/u66156/TFG/cuda"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
+
