@@ -1,0 +1,18 @@
+NOTE: Could not auto-detect compilation database for file 'hotspot.cu' in '/home/german/Documentos/TFG/dockerTFG/cuda/hotspot' or any parent directory.
+Processing: /home/german/Documentos/TFG/dockerTFG/cuda/hotspot/hotspot.cu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/hotspot/hotspot.cu:89:10: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                        fatal("not enough lines in file");
+                              ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/hotspot/hotspot.cu:92:10: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                        fatal("invalid file format");
+                              ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/hotspot/hotspot.cu:312:15: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+        fatal("unable to allocate memory");
+              ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/hotspot/hotspot.cu:247:13: warning: DPCT1049:0: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+            calculate_temp<<<dimGrid, dimBlock>>>(MIN(num_iterations, total_iterations-t), MatrixPower,MatrixTemp[src],MatrixTemp[dst],\
+            ^
+Processed 1 file(s) in -in-root folder "/var/lib/docker/volumes/dockerTFG/_data/cuda/hotspot"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
