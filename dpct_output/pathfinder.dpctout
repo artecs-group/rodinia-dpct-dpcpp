@@ -1,0 +1,5 @@
+Processing: /home/german/Documentos/TFG/dockerTFG/cuda/pathfinder/pathfinder.cu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/pathfinder/pathfinder.cu:199:13: warning: DPCT1049:0: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+            dynproc_kernel<<<dimGrid, dimBlock>>>(
+            ^
+Processed 1 file(s) in -in-root folder "/var/lib/docker/volumes/dockerTFG/_data/cuda/pathfinder"
