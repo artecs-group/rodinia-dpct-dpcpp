@@ -1,12 +1,11 @@
 /*
- * nn_dpcpp.cpp
+ * nn.cu
  * Nearest Neighbor
  *
  */
 
 #include <CL/sycl.hpp>
-#include "dpc_common.hpp"
-
+#include <dpct/dpct.hpp>
 #include <stdio.h>
 #include <sys/time.h>
 #include <float.h>
@@ -43,9 +42,38 @@ void printUsage();
 int parseCommandline(int argc, char *argv[], char* filename,int *r,float *lat,float *lng,
                      int *q, int *t, int *p, int *d);
 
+/**
+* Kernel
+* Executed on GPU
+* Calculates the Euclidean distance from each record in the database to the target position
+*/
+void euclid(LatLong *d_locations, float *d_distances, int numRecords,float lat, float lng,
+            sycl::nd_item<3> item_ct1)
+{
+	//int globalId = gridDim.x * blockDim.x * blockIdx.y + blockDim.x * blockIdx.x + threadIdx.x;
+        int globalId =
+            item_ct1.get_local_range().get(2) *
+                (item_ct1.get_group_range(2) * item_ct1.get_group(1) +
+                 item_ct1.get_group(2)) +
+            item_ct1.get_local_id(2); // more efficient
+    LatLong *latLong = d_locations+globalId;
+    if (globalId < numRecords) {
+        float *dist=d_distances+globalId;
+        *dist = (float)sycl::sqrt((lat - latLong->lat) * (lat - latLong->lat) +
+                                  (lng - latLong->lng) * (lng - latLong->lng));
+        }
+}
 
-int main(int argc, char* argv[]){
-	int i=0;
+/**
+* This program finds the k-nearest neighbors
+**/
+
+int main(int argc, char* argv[])
+{
+  
+  dpct::device_ext &dev_ct1 = dpct::get_current_device();
+  sycl::queue &q_ct1 = dev_ct1.default_queue();
+        int    i=0;
 	float lat, lng;
 	int quiet=0,timing=0,platform=0,device=0;
 
@@ -63,71 +91,125 @@ int main(int argc, char* argv[]){
 
     int numRecords = loadData(filename,records,locations);
     if (resultsCount > numRecords) resultsCount = numRecords;
-    //std::vector<float> distances(-1, numRecords); //will contain the result
+
+    //for(i=0;i<numRecords;i++)
+    //  printf("%s, %f, %f\n",(records[i].recString),locations[i].lat,locations[i].lng);
+
+
     //Pointers to host memory
-	  float *distances = new float[numRecords];
-	  //Pointers to device memory
-	  //LatLong *d_locations;
-	  //float *d_distances;
+	float *distances;
+	//Pointers to device memory
+	LatLong *d_locations;
+	float *d_distances;
 
 
-    // Initialize the device queue with the default selector. The device queue is
-    // used to enqueue kernels. It encapsulates all states needed for execution.
-    try {
-        sycl::queue q(sycl::default_selector{}, dpc_common::exception_handler);
+	// Scaling calculations - added by Sam Kauffman
+        dpct::device_info deviceProp;
+        dpct::dev_mgr::instance().get_device(0).get_device_info(deviceProp);
+        dev_ct1.queues_wait_and_throw();
+        /*
+        DPCT1022:0: There is no exact match between the maxGridSize and the
+        max_nd_range size. Verify the correctness of the code.
+        */
+        unsigned long maxGridX = deviceProp.get_max_nd_range_size()[0];
+        unsigned long threadsPerBlock = min(
+            deviceProp.get_max_work_group_size(), DEFAULT_THREADS_PER_BLOCK);
+        size_t totalDeviceMemory;
+	/*
+  size_t freeDeviceMemory;
+	cudaMemGetInfo(  &freeDeviceMemory, &totalDeviceMemory );
+        dev_ct1.queues_wait_and_throw();
+        unsigned long usableDeviceMemory = freeDeviceMemory * 85 / 100; // 85% arbitrary throttle to compensate for known CUDA bug
+	unsigned long maxThreads = usableDeviceMemory / 12; // 4 bytes in 3 vectors per thread
+	if ( numRecords > maxThreads )
+	{
+		fprintf( stderr, "Error: Input too large.\n" );
+		exit( 1 );
+	}
+  */
+	unsigned long blocks = ceilDiv( numRecords, threadsPerBlock ); // extra threads will do nothing
+	unsigned long gridY = ceilDiv( blocks, maxGridX );
+	unsigned long gridX = ceilDiv( blocks, gridY );
+	// There will be no more than (gridY - 1) extra blocks
+        sycl::range<3> gridDim(1, gridY, gridX);
 
-        std::cout << "Device: " << q.get_device().get_info<sycl::info::device::name>() << "\n";
+        if ( DEBUG )
+	{
+		print( totalDeviceMemory ); // 804454400
+		//print( freeDeviceMemory );
+		//print( usableDeviceMemory );
+		print( maxGridX ); // 65535
+                print(deviceProp.get_max_work_group_size()); // 1024
+                print( threadsPerBlock );
+		//print( maxThreads );
+		print( blocks ); // 130933
+		print( gridY );
+		print( gridX );
+	}
 
-        //distances = (float *)malloc(sizeof(float) * numRecords);
-        //distances = new float[numRecords];
-        // Create 1D buffers for locations and distances
-        //sycl::buffer<LatLong, 1> d_locations(range(numRecords));
-        //sycl::buffer d_distances(reinterpret_cast<float *>(distances_back), range(numRecords));
-        sycl::buffer d_locations(locations);
-        sycl::buffer<float> d_distances(distances, numRecords);
+	/**
+	* Allocate memory on host and device
+	*/
+	distances = (float *)malloc(sizeof(float) * numRecords);
+        d_locations = sycl::malloc_device<LatLong>(numRecords, q_ct1);
+        d_distances = sycl::malloc_device<float>(numRecords, q_ct1);
 
-        q.submit([&](auto &h){
-            sycl::accessor loc(d_locations, h, sycl::read_only);
-            sycl::accessor dist(d_distances, h, sycl::write_only, sycl::noinit);
+   /**
+    * Transfer data from host to device
+    */
+    q_ct1.memcpy(d_locations, &locations[0], sizeof(LatLong) * numRecords).wait();
 
-            /**
-            * Kernel
-            * Executed on device
-            * Calculates the Euclidean distance from each record in the database to the target position
-            */
-            h.parallel_for(numRecords, [=](auto idx){
-                dist[idx] = sqrt((lat - loc[idx].lat)*(lat - loc[idx].lat) + 
-                                 (lng - loc[idx].lng)*(lng - loc[idx].lng));
+    /**
+    * Execute kernel
+    */
+    /*
+    DPCT1049:1: The workgroup size passed to the SYCL kernel may exceed the
+    limit. To get the device limit, query info::device::max_work_group_size.
+    Adjust the workgroup size if needed.
+    */
+    q_ct1.submit([&](sycl::handler &cgh) {
+        cgh.parallel_for(
+            sycl::nd_range<3>(gridDim * sycl::range<3>(1, 1, threadsPerBlock),
+                              sycl::range<3>(1, 1, threadsPerBlock)),
+            [=](sycl::nd_item<3> item_ct1) {
+                euclid(d_locations, d_distances, numRecords, lat, lng,
+                       item_ct1);
             });
-        });
+    });
+    dev_ct1.queues_wait_and_throw();
 
-    } catch (sycl::exception const &e) {
-        std::cout << "An exception is caught while calculating the euclidean distances.\n";
-        std::terminate();
-    }
+    //Copy data from device memory to host memory
+    q_ct1.memcpy(distances, d_distances, sizeof(float) * numRecords).wait();
 
+        // find the resultsCount least distances
     findLowest(records,distances,numRecords,resultsCount);
 
     // print out results
     if (!quiet)
-        for(i=0;i<resultsCount;i++) {
-            printf("%s --> Distance=%f\n",records[i].recString,records[i].distance);
-        }
-
-    delete[] distances;
-
-    return 0;
+    for(i=0;i<resultsCount;i++) {
+      printf("%s --> Distance=%f\n",records[i].recString,records[i].distance);
+    }
+    free(distances);
+    //Free memory
+        sycl::free(d_locations, q_ct1);
+        sycl::free(d_distances, q_ct1);
 }
 
 int loadData(char *filename,std::vector<Record> &records,std::vector<LatLong> &locations){
-    FILE   *flist,*fp;
+  FILE   *flist,*fp;
 	int    i=0;
 	char dbname[64];
 	int recNum=0;
 
-    /**Main processing **/
+  /**Main processing **/
 
     flist = fopen(filename, "r");
+    /*
+    if(flist == NULL){
+      std::cout << "error opening the file\n";
+      exit(0);
+    }
+    */
 	while(!feof(flist)) {
 		/**
 		* Read in all records of length REC_LENGTH
