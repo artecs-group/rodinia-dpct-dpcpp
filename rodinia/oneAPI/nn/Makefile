@@ -1,8 +1,8 @@
 DPCPP_CXX = dpcpp
 DPCPP_CXXFLAGS = -std=c++17 -g -o
 DPCPP_LDFLAGS = 
-DPCPP_EXE_NAME = nn_dpcpp
-DPCPP_SOURCES = nn_dpcpp.cpp
+DPCPP_EXE_NAME = nn
+DPCPP_SOURCES = nn.dp.cpp
 
 RUN_OPTS = filelist.txt -r 5 -lat 30 -lng 90
 
