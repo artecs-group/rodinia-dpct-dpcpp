@@ -1,0 +1,449 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:533:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:580:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:5:
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:54:10: warning: DPCT1009:0: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+  return cudaGetErrorName(error);
+         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:602:21: warning: DPCT1010:1: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+  cudaError_t err = cudaGetLastError();
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:609:13: warning: DPCT1009:2: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+            cudaGetErrorString(err));
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:620:21: warning: DPCT1010:3: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+  cudaError_t err = cudaGetLastError();
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:627:13: warning: DPCT1009:4: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+            cudaGetErrorString(err));
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:740:19: warning: DPCT1003:5: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+  checkCudaErrors(cudaGetDeviceCount(&device_count));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:766:19: warning: DPCT1035:6: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+  checkCudaErrors(cudaDeviceGetAttribute(&computeMode, cudaDevAttrComputeMode, devID));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:769:22: warning: DPCT1035:7: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+  if (computeMode == cudaComputeModeProhibited) {
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:781:19: warning: DPCT1003:8: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+  checkCudaErrors(cudaSetDevice(devID));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:795:19: warning: DPCT1003:9: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+  checkCudaErrors(cudaGetDeviceCount(&device_count));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:809:21: warning: DPCT1035:10: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+    checkCudaErrors(cudaDeviceGetAttribute(&computeMode, cudaDevAttrComputeMode, current_device));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:815:24: warning: DPCT1035:11: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+    if (computeMode != cudaComputeModeProhibited) {
+                       ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:882:21: warning: DPCT1003:12: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaSetDevice(devID));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:899:19: warning: DPCT1003:13: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+  checkCudaErrors(cudaGetDeviceCount(&device_count));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:909:21: warning: DPCT1035:14: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+    checkCudaErrors(cudaDeviceGetAttribute(&computeMode, cudaDevAttrComputeMode, current_device));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:913:39: warning: DPCT1035:15: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+    if (integrated && (computeMode != cudaComputeModeProhibited)) {
+                                      ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/helper_cuda.h:914:23: warning: DPCT1003:16: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+      checkCudaErrors(cudaSetDevice(current_device));
+                      ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:57:18: warning: DPCT1003:17: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMalloc((void**)&t, sizeof(T)*N));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:64:18: warning: DPCT1003:18: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaFree((void*)array));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:70:18: warning: DPCT1003:19: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyDeviceToDevice));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:76:18: warning: DPCT1003:20: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyHostToDevice));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:82:18: warning: DPCT1003:21: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyDeviceToHost));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:134:2: warning: DPCT1049:22: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_initialize_variables<<<Dg, Db>>>(nelr, variables);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:135:22: warning: DPCT1010:23: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:138:63: warning: DPCT1009:24: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+            fprintf(stderr,"GPUassert: %s Initializing variables\n", cudaGetErrorString(error));
+                                                                     ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:209:2: warning: DPCT1049:25: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_step_factor<<<Dg, Db>>>(nelr, variables, areas, step_factors);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:210:22: warning: DPCT1010:26: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t error = cudaGetLastError();         
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:213:67: warning: DPCT1009:27: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+            fprintf(stderr,"GPUassert: %s compute_step_factor failed\n", cudaGetErrorString(error));
+                                                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:356:2: warning: DPCT1049:28: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_flux<<<Dg,Db>>>(nelr, elements_surrounding_elements, normals, variables, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:357:22: warning: DPCT1010:29: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:360:60: warning: DPCT1009:30: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+            fprintf(stderr,"GPUassert: %s compute_flux failed\n", cudaGetErrorString(error));
+                                                                  ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:381:2: warning: DPCT1049:31: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_time_step<<<Dg,Db>>>(j, nelr, old_variables, variables, step_factors, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:382:22: warning: DPCT1010:32: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:385:54: warning: DPCT1009:33: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+            fprintf(stderr,"GPUassert: %s update failed\n", cudaGetErrorString(error));
+                                                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:410:18: warning: DPCT1003:34: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaSetDevice(0));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:412:18: warning: DPCT1003:35: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaGetDeviceProperties(&prop, dev));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:450:20: warning: DPCT1003:36: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_variable,          h_ff_variable,          NVAR*sizeof(double)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:451:20: warning: DPCT1003:37: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_momentum_x, &h_ff_flux_contribution_momentum_x, sizeof(double3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:452:20: warning: DPCT1003:38: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_momentum_y, &h_ff_flux_contribution_momentum_y, sizeof(double3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:453:20: warning: DPCT1003:39: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_momentum_z, &h_ff_flux_contribution_momentum_z, sizeof(double3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:455:20: warning: DPCT1003:40: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_density_energy, &h_ff_flux_contribution_density_energy, sizeof(double3)) );            
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:551:11: warning: DPCT1010:41: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                error = cudaGetLastError();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:554:68: warning: DPCT1009:42: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                    fprintf(stderr,"GPUassert: %s compute_step_factor failed\n", cudaGetErrorString(error));
+                                                                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:562:15: warning: DPCT1010:43: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:565:58: warning: DPCT1009:44: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s compute_flux failed\n", cudaGetErrorString(error));
+                                                                              ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:570:15: warning: DPCT1010:45: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d_double.cu:573:55: warning: DPCT1009:46: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s time_step failed\n", cudaGetErrorString(error));
+                                                                           ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:555:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:585:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:105:18: warning: DPCT1003:47: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMalloc((void**)&t, sizeof(T)*N));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:112:18: warning: DPCT1003:48: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaFree((void*)array));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:118:18: warning: DPCT1003:49: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyDeviceToDevice));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:124:18: warning: DPCT1003:50: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyHostToDevice));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:130:18: warning: DPCT1003:51: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyDeviceToHost));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:182:2: warning: DPCT1049:52: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_initialize_variables<<<Dg, Db>>>(nelr, variables);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:252:2: warning: DPCT1049:53: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_step_factor<<<Dg, Db>>>(nelr, variables, areas, step_factors);             
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:393:2: warning: DPCT1049:54: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_flux<<<Dg,Db>>>(nelr, elements_surrounding_elements, normals, variables, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:412:2: warning: DPCT1049:55: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_time_step<<<Dg,Db>>>(j, nelr, old_variables, variables, step_factors, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:433:18: warning: DPCT1003:56: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaSetDevice(0));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:435:18: warning: DPCT1003:57: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaGetDeviceProperties(&prop, dev));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:472:20: warning: DPCT1003:58: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_variable,          h_ff_variable,          NVAR*sizeof(float)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:473:20: warning: DPCT1003:59: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_momentum_x, &h_ff_flux_contribution_momentum_x, sizeof(float3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:474:20: warning: DPCT1003:60: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_momentum_y, &h_ff_flux_contribution_momentum_y, sizeof(float3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:475:20: warning: DPCT1003:61: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_momentum_z, &h_ff_flux_contribution_momentum_z, sizeof(float3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/euler3d.cu:477:20: warning: DPCT1003:62: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_flux_contribution_density_energy, &h_ff_flux_contribution_density_energy, sizeof(float3)) );             
+                                 ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:625:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:650:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:135:2: warning: DPCT1049:63: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_initialize_variables<<<Dg, Db>>>(nelr, variables);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:136:10: warning: DPCT1010:64: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        error = cudaGetLastError();
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:139:60: warning: DPCT1009:65: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s initialize variables \n", cudaGetErrorString(error));
+                                                                                ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:212:2: warning: DPCT1049:66: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_step_factor<<<Dg, Db>>>(nelr, variables, areas, step_factors);                         error = cudaGetLastError();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:212:92: warning: DPCT1010:67: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cuda_compute_step_factor<<<Dg, Db>>>(nelr, variables, areas, step_factors);                         error = cudaGetLastError();
+                                                                                                                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:215:65: warning: DPCT1009:68: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s compute_step_factor failed\n", cudaGetErrorString(error));
+                                                                                     ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:265:2: warning: DPCT1049:69: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_flux_contributions<<<Dg,Db>>>(nelr, variables, fc_momentum_x, fc_momentum_y, fc_momentum_z, fc_density_energy);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:266:15: warning: DPCT1010:70: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:269:71: warning: DPCT1009:71: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s compute_flux_contribution failed\n", cudaGetErrorString(error));
+                                                                                           ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:445:2: warning: DPCT1049:72: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_flux<<<Dg,Db>>>(nelr, elements_surrounding_elements, normals, variables, fc_momentum_x, fc_momentum_y, fc_momentum_z, fc_density_energy, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:446:15: warning: DPCT1010:73: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:449:58: warning: DPCT1009:74: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s compute_flux failed\n", cudaGetErrorString(error));
+                                                                              ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:472:2: warning: DPCT1049:75: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_time_step<<<Dg,Db>>>(j, nelr, old_variables, variables, step_factors, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:473:15: warning: DPCT1010:76: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:476:52: warning: DPCT1009:77: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s update failed\n", cudaGetErrorString(error));
+                                                                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:499:18: warning: DPCT1003:78: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaSetDevice(0));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:501:18: warning: DPCT1003:79: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaGetDeviceProperties(&prop, dev));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:538:20: warning: DPCT1003:80: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_variable,          h_ff_variable,          NVAR*sizeof(double)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:539:20: warning: DPCT1003:81: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_momentum_x, &h_ff_fc_momentum_x, sizeof(double3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:540:20: warning: DPCT1003:82: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_momentum_y, &h_ff_fc_momentum_y, sizeof(double3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:541:20: warning: DPCT1003:83: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_momentum_z, &h_ff_fc_momentum_z, sizeof(double3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d_double.cu:543:20: warning: DPCT1003:84: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_density_energy, &h_ff_fc_density_energy, sizeof(double3)) );          
+                                 ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:36:2: warning: "the kernels may fail too launch on some systems if the block length is too large" [-W#warnings]
+#warning "the kernels may fail too launch on some systems if the block length is too large"
+ ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:613:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:667:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/home/german/Documentos/TFG/rodinia/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:53:18: warning: DPCT1003:85: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMalloc((void**)&t, sizeof(T)*N));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:60:18: warning: DPCT1003:86: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaFree((void*)array));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:66:18: warning: DPCT1003:87: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyDeviceToDevice));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:72:18: warning: DPCT1003:88: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyHostToDevice));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:78:18: warning: DPCT1003:89: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy((void*)dst, (void*)src, N*sizeof(T), cudaMemcpyDeviceToHost));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:131:2: warning: DPCT1049:90: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_initialize_variables<<<Dg, Db>>>(nelr, variables);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:132:10: warning: DPCT1010:91: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        error = cudaGetLastError();
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:135:60: warning: DPCT1009:92: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s initialize variables \n", cudaGetErrorString(error));
+                                                                                ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:208:2: warning: DPCT1049:93: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_step_factor<<<Dg, Db>>>(nelr, variables, areas, step_factors);                         error = cudaGetLastError();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:208:92: warning: DPCT1010:94: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cuda_compute_step_factor<<<Dg, Db>>>(nelr, variables, areas, step_factors);                         error = cudaGetLastError();
+                                                                                                                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:211:65: warning: DPCT1009:95: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s compute_step_factor failed\n", cudaGetErrorString(error));
+                                                                                     ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:259:2: warning: DPCT1049:96: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_flux_contributions<<<Dg,Db>>>(nelr, variables, fc_momentum_x, fc_momentum_y, fc_momentum_z, fc_density_energy);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:260:15: warning: DPCT1010:97: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:263:71: warning: DPCT1009:98: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s compute_flux_contribution failed\n", cudaGetErrorString(error));
+                                                                                           ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:435:2: warning: DPCT1049:99: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_compute_flux<<<Dg,Db>>>(nelr, elements_surrounding_elements, normals, variables, fc_momentum_x, fc_momentum_y, fc_momentum_z, fc_density_energy, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:436:15: warning: DPCT1010:100: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:439:58: warning: DPCT1009:101: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s compute_flux failed\n", cudaGetErrorString(error));
+                                                                              ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:461:2: warning: DPCT1049:102: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        cuda_time_step<<<Dg,Db>>>(j, nelr, old_variables, variables, step_factors, fluxes);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:462:15: warning: DPCT1010:103: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                    error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:465:52: warning: DPCT1009:104: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                        fprintf(stderr,"GPUassert: %s update failed\n", cudaGetErrorString(error));
+                                                                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:486:18: warning: DPCT1003:105: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaSetDevice(0));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:488:18: warning: DPCT1003:106: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaGetDeviceProperties(&prop, dev));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:525:20: warning: DPCT1003:107: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_variable,          h_ff_variable,          NVAR*sizeof(float)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:526:20: warning: DPCT1003:108: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_momentum_x, &h_ff_fc_momentum_x, sizeof(float3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:527:20: warning: DPCT1003:109: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_momentum_y, &h_ff_fc_momentum_y, sizeof(float3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:528:20: warning: DPCT1003:110: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_momentum_z, &h_ff_fc_momentum_z, sizeof(float3)) );
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:530:20: warning: DPCT1003:111: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors( cudaMemcpyToSymbol(ff_fc_density_energy, &h_ff_fc_density_energy, sizeof(float3)) );           
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:630:14: warning: DPCT1010:112: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+            error = cudaGetLastError();
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:633:64: warning: DPCT1009:113: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                fprintf(stderr,"GPUassert: %s compute_step_factor failed\n", cudaGetErrorString(error));
+                                                                             ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:641:11: warning: DPCT1010:114: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                error = cudaGetLastError();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:644:75: warning: DPCT1009:115: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                    fprintf(stderr,"GPUassert: %s compute_flux_contributions failed\n", cudaGetErrorString(error));
+                                                                                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:649:11: warning: DPCT1010:116: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                error = cudaGetLastError();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:652:61: warning: DPCT1009:117: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                    fprintf(stderr,"GPUassert: %s compute_flux failed\n", cudaGetErrorString(error));
+                                                                          ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:657:11: warning: DPCT1010:118: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+                error = cudaGetLastError();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/cfd/pre_euler3d.cu:660:51: warning: DPCT1009:119: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                    fprintf(stderr,"GPUassert: %s time_step\n", cudaGetErrorString(error));
+                                                                ^
+/home/german/Documentos/TFG/rodinia/oneAPI/cfd/helper_cuda.h.yaml exist, try to merge it.
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/cfd/helper_cuda.h.yaml file
+Processed 5 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/cfd"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
+File '/home/german/Documentos/TFG/rodinia/oneAPI/cfd/exception.h' already exists; skipping it.
+File '/home/german/Documentos/TFG/rodinia/oneAPI/cfd/helper_string.h' already exists; skipping it.
+File '/home/german/Documentos/TFG/rodinia/oneAPI/cfd/helper_timer.h' already exists; skipping it.
