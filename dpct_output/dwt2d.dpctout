@@ -1,0 +1,141 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/main.cu
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/main.cu:55:18: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+    char *path = "../../data/dwt2d/";
+                 ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/dwt2d/main.cu:38:
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:48:11: warning: DPCT1010:0: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+#  define cudaCheckError( msg ) {                                            \
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:52:42: warning: DPCT1009:1: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                __FILE__, __LINE__, msg, cudaGetErrorString( err) );         \
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/main.cu:331:9: warning: DPCT1005:2: The device version is different. You need to rewrite this code.
+    if (devProp.major < 1) {                                         
+        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:141:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaCheckAsyncError("Cuda malloc")
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:57:5: note: expanded from macro 'cudaCheckAsyncError'
+    cudaThreadSynchronize();                                                 \
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:153:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaCheckAsyncError("CopySrcToComponents kernel")
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:57:5: note: expanded from macro 'cudaCheckAsyncError'
+    cudaThreadSynchronize();                                                 \
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:157:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaCheckAsyncError("Free memory")
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:57:5: note: expanded from macro 'cudaCheckAsyncError'
+    cudaThreadSynchronize();                                                 \
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:173:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaCheckAsyncError("Cuda malloc")
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:57:5: note: expanded from macro 'cudaCheckAsyncError'
+    cudaThreadSynchronize();                                                 \
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:185:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaCheckAsyncError("CopySrcToComponent kernel")
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:57:5: note: expanded from macro 'cudaCheckAsyncError'
+    cudaThreadSynchronize();                                                 \
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:189:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaCheckAsyncError("Free memory")
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/common.h:57:5: note: expanded from macro 'cudaCheckAsyncError'
+    cudaThreadSynchronize();                                                 \
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:152:5: warning: DPCT1049:3: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    c_CopySrcToComponents<<<grid, threads>>>(d_r, d_g, d_b, d_src, pixels);
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/components.cu:184:5: warning: DPCT1049:4: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    c_CopySrcToComponent<<<grid, threads>>>(d_c, d_src, pixels);
+    ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/fdwt53.cu
+In file included from /home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/fdwt53.cu:33:
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.h:188:9: warning: DPCT1026:5: The call to cudaEventCreate was removed, because this call is redundant in DPC++.
+        cudaEventCreate(&beginEvent);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.h:189:9: warning: DPCT1026:6: The call to cudaEventCreate was removed, because this call is redundant in DPC++.
+        cudaEventCreate(&endEvent);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.h:190:9: warning: DPCT1012:7: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(beginEvent, 0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.h:200:9: warning: DPCT1012:8: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(endEvent, 0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.h:203:9: warning: DPCT1026:9: The call to cudaEventDestroy was removed, because this call is redundant in DPC++.
+        cudaEventDestroy(beginEvent);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.h:204:9: warning: DPCT1026:10: The call to cudaEventDestroy was removed, because this call is redundant in DPC++.
+        cudaEventDestroy(endEvent);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.h:242:14: warning: DPCT1003:11: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    status = cudaMemcpy(dest, src, sx*sy*sizeof(T), cudaMemcpyDeviceToDevice);
+             ^
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/fdwt53.cu:353:5: warning: DPCT1049:12: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    fdwt53Kernel<WIN_SX, WIN_SY><<<gSize, WIN_SX>>>(in, out, sx, sy, steps);
+    ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/rdwt97.cu
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/rdwt97.cu:325:5: warning: DPCT1049:13: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    rdwt97Kernel<WIN_SX, WIN_SY><<<gSize, WIN_SX>>>(in, out, sx, sy, steps);
+    ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt.cu
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/fdwt97.cu
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/fdwt97.cu:330:5: warning: DPCT1049:14: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    fdwt97Kernel<WIN_SX, WIN_SY><<<gSize, WIN_SX>>>(in, out, sx, sy, steps);
+    ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/common.cu
+Processing: /home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/rdwt53.cu
+/home/german/Documentos/TFG/rodinia/cuda/dwt2d/dwt_cuda/rdwt53.cu:323:5: warning: DPCT1049:15: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    rdwt53Kernel<WIN_SX, WIN_SY><<<gSize, WIN_SX>>>(in, out, sx, sy, steps);
+    ^
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/dwt2d/common.h.yaml file
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/dwt2d/dwt_cuda/common.h.yaml file
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/dwt2d/dwt_cuda/io.h.yaml file
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/dwt2d/dwt_cuda/transform_buffer.h.yaml file
+Processed 11 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/dwt2d"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
