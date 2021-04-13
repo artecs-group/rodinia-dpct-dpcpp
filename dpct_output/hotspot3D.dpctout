@@ -1,0 +1,13 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/hotspot3D/3D.cu
+warning: argument unused during migration: '--cuda-noopt-device-debug' [-Wunused-command-line-argument]
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hotspot3D/3D.cu:22:
+/home/german/Documentos/TFG/rodinia/cuda/hotspot3D/opt1.cu:79:5: warning: DPCT1004:0: Could not generate replacement.
+    cudaFuncSetCacheConfig(hotspotOpt1, cudaFuncCachePreferL1);
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/hotspot3D/opt1.cu:86:9: warning: DPCT1049:1: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        hotspotOpt1<<<grid_dim, block_dim>>>
+        ^
+Processed 2 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/hotspot3D"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
