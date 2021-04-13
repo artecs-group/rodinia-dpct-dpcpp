@@ -1,0 +1,17 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/heartwall/AVI/avimod.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/heartwall/AVI/avilib.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/heartwall/main.cu
+/home/german/Documentos/TFG/rodinia/cuda/heartwall/main.cu:86:34: warning: data argument not used by format string [-Wformat-extra-args]
+            fprintf(fid, "\n--endo--\n",j);
+                         ~~~~~~~~~~~~~~ ^
+/home/german/Documentos/TFG/rodinia/cuda/heartwall/main.cu:95:33: warning: data argument not used by format string [-Wformat-extra-args]
+            fprintf(fid, "\n--epi--\n",j);
+                         ~~~~~~~~~~~~~ ^
+/home/german/Documentos/TFG/rodinia/cuda/heartwall/main.cu:662:3: warning: DPCT1049:0: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                kernel<<<blocks, threads>>>();
+                ^
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/heartwall/AVI/avilib.h.yaml file
+Processed 3 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/heartwall"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
