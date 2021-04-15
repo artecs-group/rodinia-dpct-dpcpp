@@ -1,0 +1,241 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu
+/home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:91:28: warning: DPCT1003:0: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+            CUDA_SAFE_CALL(cudaMalloc((void**) &g_scanBlockSums[level++], numBlocks * sizeof(unsigned int)));
+                           ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:37:
+/home/german/Documentos/TFG/rodinia/cuda/huffman/cutil.h:785:37: warning: DPCT1009:1: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                __FILE__, __LINE__, cudaGetErrorString( err) );              \
+                                    ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/cutil.h:830:11: warning: DPCT1010:2: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+#  define CUT_CHECK_ERROR(errorMessage) {                                    \
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/cutil.h:834:51: warning: DPCT1009:3: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                errorMessage, __FILE__, __LINE__, cudaGetErrorString( err) );\
+                                                  ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:176:9: warning: DPCT1049:4: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        prescan<true, false><<< grid, threads, sharedMemSize >>>(outArray, 
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:199:9: warning: DPCT1049:5: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        uniformAdd<<< grid, threads >>>(outArray, 
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:183:13: warning: DPCT1049:6: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+            prescan<true, true><<< 1, numThreadsLastBlock, sharedMemLastBlock >>>
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:206:13: warning: DPCT1049:7: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+            uniformAdd<<< 1, numThreadsLastBlock >>>(outArray, 
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:216:9: warning: DPCT1049:8: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        prescan<false, false><<< grid, threads, sharedMemSize >>>(outArray, inArray,
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/scan.cu:222:10: warning: DPCT1049:9: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+         prescan<false, true><<< grid, threads, sharedMemSize >>>(outArray, inArray, 
+         ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/huffman/vlc_kernel_sm64huff.cu
+In file included from /home/german/Documentos/TFG/rodinia/cuda/huffman/vlc_kernel_sm64huff.cu:19:
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pabio_kernels_v2.cu:32:11: warning: DPCT1039:10: The generated code assumes that "&out[kc]" points to the global memory address space. If it points to a local memory address space, replace "dpct::atomic_fetch_or" with "dpct::atomic_fetch_or<unsigned int, sycl::access::address_space::local_space>".
+        atomicOr(&out[kc], cw32);
+                 ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pabio_kernels_v2.cu:59:12: warning: DPCT1039:11: The generated code assumes that "&out[kc]" points to the global memory address space. If it points to a local memory address space, replace "dpct::atomic_fetch_or" with "dpct::atomic_fetch_or<unsigned int, sycl::access::address_space::local_space>".
+                atomicOr(&out[kc], cw32);
+                         ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/huffman/stats_logger.cpp
+Processing: /home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu
+In file included from /home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:29:
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:35:16: warning: operator '<<' has lower precedence than '-'; '-' will be evaluated first [-Wshift-op-parentheses]
+        tmp = dw << 32-bit;                             // save the remaining bits that were cut off earlier in tmp
+                 ~~ ~~^~~~
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:35:16: note: place parentheses around the '-' expression to silence this warning
+        tmp = dw << 32-bit;                             // save the remaining bits that were cut off earlier in tmp
+                      ^
+                    (     )
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:40:17: warning: operator '<<' has lower precedence than '-'; '-' will be evaluated first [-Wshift-op-parentheses]
+                tmp = dw << 32-bit;                     // save the remaining bits in tmp (like before)
+                         ~~ ~~^~~~
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:40:17: note: place parentheses around the '-' expression to silence this warning
+                tmp = dw << 32-bit;                     // save the remaining bits in tmp (like before)
+                              ^
+                            (     )
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:50:41: warning: operator '<<' has lower precedence than '-'; '-' will be evaluated first [-Wshift-op-parentheses]
+                atomicOr(&dstData[dword+i+1], dw << 32-bit);
+                                                 ~~ ~~^~~~
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:50:41: note: place parentheses around the '-' expression to silence this warning
+                atomicOr(&dstData[dword+i+1], dw << 32-bit);
+                                                      ^
+                                                    (     )
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:48:20: warning: 'cudaThreadExit' is deprecated [-Wdeprecated-declarations]
+    CUDA_SAFE_CALL(cudaThreadExit());
+                   ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:931:8: note: 'cudaThreadExit' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadExit(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:148:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaThreadSynchronize();
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:16:
+/home/german/Documentos/TFG/rodinia/cuda/huffman/cuda_helpers.h:24:6: warning: DPCT1003:12: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                if(cudaGetDeviceProperties(&prop, i) == cudaSuccess) {
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/cuda_helpers.h:25:7: warning: DPCT1005:13: The device version is different. You need to rewrite this code.
+                        if(prop.major >= 1) {
+                           ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:20:
+In file included from /home/german/Documentos/TFG/rodinia/cuda/huffman/load_data.h:5:
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:24:48: warning: DPCT1009:14: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+        fprintf(stderr,"GPUassert: %s %s %d\n",cudaGetErrorString(code),file, line);
+                                               ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:67:7: warning: DPCT1003:15: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    ( cudaGetDeviceProperties( &prop, 0 ) );
+      ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:69:9: warning: DPCT1051:16: DPC++ does not support the device property that would be functionally compatible with deviceOverlap. It was migrated to true. You may need to rewrite the code.
+    if(!prop.deviceOverlap)
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:90:11: warning: DPCT1003:17: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CHECK(cudaStreamCreate(&stream0));
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:93:7: warning: DPCT1027:18: The call to cudaEventCreate was replaced with 0, because this call is redundant in DPC++.
+    ( cudaEventCreate( &start ) );
+      ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:94:7: warning: DPCT1027:19: The call to cudaEventCreate was replaced with 0, because this call is redundant in DPC++.
+    ( cudaEventCreate( &stop ) );
+      ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:95:7: warning: DPCT1012:20: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+    ( cudaEventRecord( start, 0 ) );
+      ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:95:7: warning: DPCT1024:21: The original code returned the error code that was further consumed by the program logic. This original code was replaced with 0. You may need to rewrite the program logic consuming the error code.
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:101:15: warning: DPCT1003:22: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CHECK(cudaMemcpyAsync(dev_buffer0, buffer+i, partSize, cudaMemcpyHostToDevice,stream0));
+              ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:102:15: warning: DPCT1003:23: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CHECK(cudaMemcpyAsync(dev_buffer1, buffer+i+partialNum, partSize, cudaMemcpyHostToDevice,stream1));
+              ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:109:11: warning: DPCT1003:24: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CHECK(cudaStreamSynchronize(stream0));
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:110:11: warning: DPCT1003:25: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CHECK(cudaStreamSynchronize(stream1));
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:112:7: warning: DPCT1012:26: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+    ( cudaEventRecord( stop, 0 ) );
+      ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:112:7: warning: DPCT1024:27: The original code returned the error code that was further consumed by the program logic. This original code was replaced with 0. You may need to rewrite the program logic consuming the error code.
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:113:7: warning: DPCT1003:28: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    ( cudaEventSynchronize( stop ) );
+      ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/hist.cu:115:7: warning: DPCT1003:29: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    ( cudaEventElapsedTime( &elapsedTime,
+      ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:29:
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:34:11: warning: DPCT1039:30: The generated code assumes that "&dstData[dword]" points to the global memory address space. If it points to a local memory address space, replace "dpct::atomic_fetch_or" with "dpct::atomic_fetch_or<unsigned int, sycl::access::address_space::local_space>".
+        atomicOr(&dstData[dword], tmp); // fill up this initial location
+                 ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:46:12: warning: DPCT1039:31: The generated code assumes that "&dstData[dword+i]" points to the global memory address space. If it points to a local memory address space, replace "dpct::atomic_fetch_or" with "dpct::atomic_fetch_or<unsigned int, sycl::access::address_space::local_space>".
+                atomicOr(&dstData[dword+i], tmp);
+                         ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:49:12: warning: DPCT1039:32: The generated code assumes that "&dstData[dword+i]" points to the global memory address space. If it points to a local memory address space, replace "dpct::atomic_fetch_or" with "dpct::atomic_fetch_or<unsigned int, sycl::access::address_space::local_space>".
+                atomicOr(&dstData[dword+i], dw >> bit);
+                         ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:50:12: warning: DPCT1039:33: The generated code assumes that "&dstData[dword+i+1]" points to the global memory address space. If it points to a local memory address space, replace "dpct::atomic_fetch_or" with "dpct::atomic_fetch_or<unsigned int, sycl::access::address_space::local_space>".
+                atomicOr(&dstData[dword+i+1], dw << 32-bit);
+                         ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:48:20: warning: DPCT1003:34: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaThreadExit());
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:137:5: warning: DPCT1026:35: The call to cudaEventCreate was removed, because this call is redundant in DPC++.
+    cudaEventCreate(&start);
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:138:5: warning: DPCT1026:36: The call to cudaEventCreate was removed, because this call is redundant in DPC++.
+    cudaEventCreate(&stop);
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:140:5: warning: DPCT1012:37: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+    cudaEventRecord( start, 0 );
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:149:5: warning: DPCT1012:38: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+    cudaEventRecord( stop, 0 ) ;
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:93:20: warning: DPCT1003:39: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**) &d_sourceData,             mem_size));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:94:20: warning: DPCT1003:40: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**) &d_destData,                       mem_size));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:95:20: warning: DPCT1003:41: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**) &d_destDataPacked,         mem_size));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:97:20: warning: DPCT1003:42: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**) &d_codewords,              NUM_SYMBOLS*symbol_type_size));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:98:20: warning: DPCT1003:43: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**) &d_codewordlens,           NUM_SYMBOLS*symbol_type_size));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:100:20: warning: DPCT1003:44: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**) &d_cw32,                           mem_size));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:104:20: warning: DPCT1003:45: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**)&d_cindex,         num_blocks*sizeof(unsigned int)));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:105:20: warning: DPCT1003:46: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMalloc((void**)&d_cindex2,        num_blocks*sizeof(unsigned int)));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:107:20: warning: DPCT1003:47: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMemcpy(d_sourceData,             sourceData,             mem_size,               cudaMemcpyHostToDevice));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:108:20: warning: DPCT1003:48: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMemcpy(d_codewords,              codewords,              NUM_SYMBOLS*symbol_type_size,   cudaMemcpyHostToDevice));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:142:13: warning: DPCT1049:49: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+            vlc_encode_kernel_sm64huff<<<grid_size, block_size, sm_size>>>(d_sourceData, d_codewords, d_codewordlens,  
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:170:20: warning: DPCT1003:50: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMemcpy(destData, d_destDataPacked, mem_size, cudaMemcpyDeviceToHost));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:175:20: warning: DPCT1003:51: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaFree(d_sourceData));     CUDA_SAFE_CALL(cudaFree(d_destData)); CUDA_SAFE_CALL(cudaFree(d_destDataPacked));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:176:20: warning: DPCT1003:52: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaFree(d_codewords));              CUDA_SAFE_CALL(cudaFree(d_codewordlens));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:177:20: warning: DPCT1003:53: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaFree(d_cw32));           CUDA_SAFE_CALL(cudaFree(d_cw32len));    CUDA_SAFE_CALL(cudaFree(d_cw32idx)); 
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/huffman/main_test_cu.cu:178:20: warning: DPCT1003:54: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaFree(d_cindex)); CUDA_SAFE_CALL(cudaFree(d_cindex2));
+                   ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/huffman/cpuencode.cpp
+Processing: /home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:35:16: warning: operator '<<' has lower precedence than '-'; '-' will be evaluated first [-Wshift-op-parentheses]
+        tmp = dw << 32-bit;                             // save the remaining bits that were cut off earlier in tmp
+                 ~~ ~~^~~~
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:35:16: note: place parentheses around the '-' expression to silence this warning
+        tmp = dw << 32-bit;                             // save the remaining bits that were cut off earlier in tmp
+                      ^
+                    (     )
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:40:17: warning: operator '<<' has lower precedence than '-'; '-' will be evaluated first [-Wshift-op-parentheses]
+                tmp = dw << 32-bit;                     // save the remaining bits in tmp (like before)
+                         ~~ ~~^~~~
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:40:17: note: place parentheses around the '-' expression to silence this warning
+                tmp = dw << 32-bit;                     // save the remaining bits in tmp (like before)
+                              ^
+                            (     )
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:50:41: warning: operator '<<' has lower precedence than '-'; '-' will be evaluated first [-Wshift-op-parentheses]
+                atomicOr(&dstData[dword+i+1], dw << 32-bit);
+                                                 ~~ ~~^~~~
+/home/german/Documentos/TFG/rodinia/cuda/huffman/pack_kernels.cu:50:41: note: place parentheses around the '-' expression to silence this warning
+                atomicOr(&dstData[dword+i+1], dw << 32-bit);
+                                                      ^
+                                                    (     )
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/huffman/cuda_helpers.h.yaml file
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/huffman/cutil.h.yaml file
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/huffman/load_data.h.yaml file
+Processed 11 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/huffman"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
