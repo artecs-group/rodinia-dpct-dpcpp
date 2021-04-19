@@ -72,7 +72,7 @@ void cuda_print_double_array(double *array_GPU, size_t size) {
     printf("FINISHED PRINTING ARRAY VALUES\n");
 
     //clean up memory
-    //free(mem);
+    free(mem);
     mem = NULL;
 }
 
@@ -480,6 +480,8 @@ void strelDisk(int * disk, int radius) {
                                    pow((double)(y - radius + 1), 2));
             if (distance < radius)
                 disk[x * diameter + y] = 1;
+            else
+                disk[x * diameter + y] = 0;
         }
     }
 }
@@ -606,7 +608,7 @@ void videoSequence(unsigned char * I, int IszX, int IszY, int Nfr, int * seed) {
             }
         }
     }
-    //free(newMatrix);
+    free(newMatrix);
 
     /*define background, add noise*/
     setIf(0, 100, I, &IszX, &IszY, &Nfr);
@@ -675,13 +677,10 @@ void particleFilter(unsigned char *I, int IszX, int IszY, int Nfr, int *seed,
     int * objxy = (int *) malloc(countOnes * 2 * sizeof (int));
     getneighbors(disk, countOnes, objxy, radius);
     //initial weights are all equal (1/Nparticles)
-std::cout << "before malloc\n"; // debug malloc
     double * weights = (double *) malloc(sizeof (double) *Nparticles);
-std::cout << "after malloc\n";
     for (x = 0; x < Nparticles; x++) {
         weights[x] = 1 / ((double) (Nparticles));
     }
-std::cout << "after for\n";
     //initial likelihood to 0.0
     double * likelihood = (double *) malloc(sizeof (double) *Nparticles);
     double * arrayX = (double *) malloc(sizeof (double) *Nparticles);
@@ -951,7 +950,7 @@ std::cout << "after for\n";
     //block till kernels are finished
     dev_ct1.queues_wait_and_throw();
     long long back_time = get_time();
-/*
+
     sycl::free(xj_GPU, q_ct1);
     sycl::free(yj_GPU, q_ct1);
     sycl::free(CDF_GPU, q_ct1);
@@ -962,7 +961,7 @@ std::cout << "after for\n";
     sycl::free(ind_GPU, q_ct1);
     sycl::free(seed_GPU, q_ct1);
     sycl::free(partial_sums, q_ct1);
-*/
+
     long long free_time = get_time();
     /*
     DPCT1003:25: Migrated API does not return error code. (*, 0) is
@@ -1009,15 +1008,11 @@ std::cout << "after for\n";
     printf("%lf\n", distance);
 
     //CUDA freeing of memory
-    //sycl::free(weights_GPU, q_ct1);
-std::cout << "sycl free array Y GPU\n";
-    //sycl::free(arrayY_GPU, q_ct1);
-std::cout << "sycl free array X GPU\n";
-    //sycl::free(arrayX_GPU, q_ct1);
+    sycl::free(weights_GPU, q_ct1);
+    sycl::free(arrayY_GPU, q_ct1);
+    sycl::free(arrayX_GPU, q_ct1);
 
-std::cout << "free regular memory\n";
     //free regular memory
-/*
     free(likelihood);
     free(arrayX);
     free(arrayY);
@@ -1026,8 +1021,6 @@ std::cout << "free regular memory\n";
     free(CDF);
     free(ind);
     free(u);
-*/
-std::cout << "free regular memory\n";
 }
 
 int main(int argc, char * argv[]) {
@@ -1106,10 +1099,7 @@ int main(int argc, char * argv[]) {
     long long endParticleFilter = get_time();
     printf("PARTICLE FILTER TOOK %f\n", elapsed_time(endVideoSequence, endParticleFilter));
     printf("ENTIRE PROGRAM TOOK %f\n", elapsed_time(start, endParticleFilter));
-std::cout << "free main 1\n";
-    //free(seed);
-std::cout << "free main 2\n";
-    //free(I);
-std::cout << "return\n";
+    free(seed);
+    free(I);
     return 0;
 }

@@ -226,11 +226,13 @@ void strelDisk(int * disk, int radius)
 	int x, y;
 	for(x = 0; x < diameter; x++){
 		for(y = 0; y < diameter; y++){
-                        double distance =
-                            sqrt(pow((double)(x - radius + 1), 2) +
-                                 pow((double)(y - radius + 1), 2));
-                        if(distance < radius)
-			disk[x*diameter + y] = 1;
+            double distance =
+            sqrt(pow((double)(x - radius + 1), 2) +
+                 pow((double)(y - radius + 1), 2));
+            if(distance < radius)
+				disk[x*diameter + y] = 1;
+			else
+				disk[x*diameter + y] = 0;
 		}
 	}
 }
