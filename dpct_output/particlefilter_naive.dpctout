@@ -1,0 +1,33 @@
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:573:17: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+                cudaThreadSynchronize();
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:618:16: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+        char* usage = "naive.out -x <dimX> -y <dimY> -z <Nfr> -np <Nparticles>";
+                      ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:55:36: warning: DPCT1009:0: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+        printf("\nCUDA error: %s\n", cudaGetErrorString(e));
+                                     ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:462:14: warning: DPCT1003:1: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        check_error(cudaMalloc((void **) &arrayX_GPU, sizeof(double)*Nparticles));
+                    ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:463:14: warning: DPCT1003:2: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        check_error(cudaMalloc((void **) &arrayY_GPU, sizeof(double)*Nparticles));
+                    ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:464:14: warning: DPCT1003:3: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        check_error(cudaMalloc((void **) &xj_GPU, sizeof(double)*Nparticles));
+                    ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:465:14: warning: DPCT1003:4: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        check_error(cudaMalloc((void **) &yj_GPU, sizeof(double)*Nparticles));
+                    ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:466:14: warning: DPCT1003:5: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        check_error(cudaMalloc((void **) &CDF_GPU, sizeof(double)*Nparticles));
+                    ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_naive_seq.cu:467:14: warning: DPCT1003:6: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        check_error(cudaMalloc((void **) &u_GPU, sizeof(double)*Nparticles));
+                    ^

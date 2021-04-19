@@ -1,0 +1,95 @@
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:745:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaThreadSynchronize();
+    ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:803:19: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+    char* usage = "double.out -x <dimX> -y <dimY> -z <Nfr> -np <Nparticles>";
+                  ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:53:38: warning: DPCT1009:0: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+        printf("\nCUDA error: %s\n", cudaGetErrorString(e));
+                                     ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:690:17: warning: DPCT1003:1: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &arrayX_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:691:17: warning: DPCT1003:2: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &arrayY_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:692:17: warning: DPCT1003:3: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &xj_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:693:17: warning: DPCT1003:4: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &yj_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:694:17: warning: DPCT1003:5: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &CDF_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:695:17: warning: DPCT1003:6: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &u_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:696:17: warning: DPCT1003:7: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &likelihood_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:698:17: warning: DPCT1003:8: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemset((void *) likelihood_GPU, 0, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:699:17: warning: DPCT1003:9: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &weights_GPU, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:700:17: warning: DPCT1003:10: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &I_GPU, sizeof (unsigned char) *IszX * IszY * Nfr));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:701:17: warning: DPCT1003:11: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &objxy_GPU, sizeof (int) *2 * countOnes));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:702:17: warning: DPCT1003:12: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &ind_GPU, sizeof (int) *countOnes * Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:703:17: warning: DPCT1003:13: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &seed_GPU, sizeof (int) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:704:17: warning: DPCT1003:14: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMalloc((void **) &partial_sums, sizeof (double) *Nparticles));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:721:17: warning: DPCT1003:15: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(I_GPU, I, sizeof (unsigned char) *IszX * IszY*Nfr, cudaMemcpyHostToDevice));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:722:17: warning: DPCT1003:16: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(objxy_GPU, objxy, sizeof (int) *2 * countOnes, cudaMemcpyHostToDevice));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:723:17: warning: DPCT1003:17: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(weights_GPU, weights, sizeof (double) *Nparticles, cudaMemcpyHostToDevice));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:724:17: warning: DPCT1003:18: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(xj_GPU, xj, sizeof (double) *Nparticles, cudaMemcpyHostToDevice));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:725:17: warning: DPCT1003:19: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(yj_GPU, yj, sizeof (double) *Nparticles, cudaMemcpyHostToDevice));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:726:17: warning: DPCT1003:20: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(seed_GPU, seed, sizeof (int) *Nparticles, cudaMemcpyHostToDevice));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:734:9: warning: DPCT1049:21: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        likelihood_kernel <<< num_blocks, threads_per_block >>> (arrayX_GPU, arrayY_GPU, xj_GPU, yj_GPU, CDF_GPU, ind_GPU, objxy_GPU, likelihood_GPU, I_GPU, u_GPU, weights_GPU, Nparticles, countOnes, max_size, k, IszY, Nfr, seed_GPU, partial_sums);
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:736:9: warning: DPCT1049:22: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        sum_kernel <<< num_blocks, threads_per_block >>> (partial_sums, Nparticles);
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:738:9: warning: DPCT1049:23: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        normalize_weights_kernel <<< num_blocks, threads_per_block >>> (weights_GPU, Nparticles, partial_sums, CDF_GPU, u_GPU, seed_GPU);
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:740:9: warning: DPCT1049:24: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        find_index_kernel <<< num_blocks, threads_per_block >>> (arrayX_GPU, arrayY_GPU, CDF_GPU, u_GPU, xj_GPU, yj_GPU, weights_GPU, Nparticles);
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:760:17: warning: DPCT1003:25: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(arrayX, arrayX_GPU, sizeof (double) *Nparticles, cudaMemcpyDeviceToHost));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:762:17: warning: DPCT1003:26: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(arrayY, arrayY_GPU, sizeof (double) *Nparticles, cudaMemcpyDeviceToHost));
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/particlefilter/ex_particle_CUDA_float_seq.cu:764:17: warning: DPCT1003:27: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    check_error(cudaMemcpy(weights, weights_GPU, sizeof (double) *Nparticles, cudaMemcpyDeviceToHost));

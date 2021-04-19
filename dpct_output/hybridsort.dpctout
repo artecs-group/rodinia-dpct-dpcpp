@@ -1,0 +1,205 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/hybridsort/main.cu
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hybridsort/main.cu:11:
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:68:13: warning: 51 enumeration values not handled in switch: 'cudaErrorLaunchMaxDepthExceeded', 'cudaErrorLaunchFileScopedTex', 'cudaErrorLaunchFileScopedSurf'... [-Wswitch]
+    switch (error)
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:271:13: warning: 29 enumeration values not handled in switch: 'CUDA_ERROR_PEER_ACCESS_UNSUPPORTED', 'CUDA_ERROR_INVALID_PTX', 'CUDA_ERROR_INVALID_GRAPHICS_CONTEXT'... [-Wswitch]
+    switch (error)
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/main.cu:97:36: warning: implicit conversion from 'int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
+                cpu_idata[i] = ((float) rand() / RAND_MAX); 
+                                               ~ ^~~~~~~~
+/usr/include/stdlib.h:86:18: note: expanded from macro 'RAND_MAX'
+#define RAND_MAX        2147483647
+                        ^~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/main.cu:215:3: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+                cudaThreadSynchronize(); 
+                ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hybridsort/main.cu:11:
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:787:23: warning: DPCT1010:0: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+    cudaError_t err = cudaGetLastError();
+                      ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:792:53: warning: DPCT1009:1: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                file, line, errorMessage, (int)err, cudaGetErrorString(err));
+                                                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:851:21: warning: DPCT1003:2: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaGetDeviceCount(&device_count));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:874:21: warning: DPCT1003:3: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaGetDeviceProperties(&deviceProp, devID));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:876:35: warning: DPCT1035:4: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+    if (deviceProp.computeMode == cudaComputeModeProhibited)
+                                  ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:882:9: warning: DPCT1005:5: The device version is different. You need to rewrite this code.
+    if (deviceProp.major < 1)
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:888:21: warning: DPCT1003:6: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaSetDevice(devID));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:905:21: warning: DPCT1003:7: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaGetDeviceCount(&device_count));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:919:39: warning: DPCT1035:8: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+        if (deviceProp.computeMode != cudaComputeModeProhibited)
+                                      ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:921:17: warning: DPCT1005:9: The device version is different. You need to rewrite this code.
+            if (deviceProp.major > 0 && deviceProp.major < 9999)
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:923:50: warning: DPCT1005:10: The device version is different. You need to rewrite this code.
+                best_SM_arch = MAX(best_SM_arch, deviceProp.major);
+                                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:938:39: warning: DPCT1035:11: All DPC++ devices can be used by host to submit tasks. You may need to adjust this code.
+        if (deviceProp.computeMode != cudaComputeModeProhibited)
+                                      ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:940:17: warning: DPCT1005:12: The device version is different. You need to rewrite this code.
+            if (deviceProp.major == 9999 && deviceProp.minor == 9999)
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:946:56: warning: DPCT1005:13: The device version is different. You need to rewrite this code.
+                sm_per_multiproc = _ConvertSMVer2Cores(deviceProp.major, deviceProp.minor);
+                                                       ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:957:25: warning: DPCT1005:14: The device version is different. You need to rewrite this code.
+                    if (deviceProp.major == best_SM_arch)
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1009:25: warning: DPCT1003:15: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaSetDevice(devID));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1010:25: warning: DPCT1003:16: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaGetDeviceProperties(&deviceProp, devID));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1011:99: warning: DPCT1005:17: The device version is different. You need to rewrite this code.
+        printf("GPU Device %d: \"%s\" with compute capability %d.%d\n\n", devID, deviceProp.name, deviceProp.major, deviceProp.minor);
+                                                                                                  ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1021:5: warning: DPCT1005:18: The device version is different. You need to rewrite this code.
+    deviceProp.major = 0;
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1022:5: warning: DPCT1005:19: The device version is different. You need to rewrite this code.
+    deviceProp.minor = 0;
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1026:21: warning: DPCT1003:20: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaGetDeviceProperties(&deviceProp, dev));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1028:10: warning: DPCT1005:21: The device version is different. You need to rewrite this code.
+    if ((deviceProp.major > major_version) ||
+         ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1029:10: warning: DPCT1005:22: The device version is different. You need to rewrite this code.
+        (deviceProp.major == major_version && deviceProp.minor >= minor_version))
+         ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:1031:95: warning: DPCT1005:23: The device version is different. You need to rewrite this code.
+        printf("  GPU Device %d: <%16s >, Compute SM %d.%d detected\n", dev, deviceProp.name, deviceProp.major, deviceProp.minor);
+                                                                                              ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/main.cu:221:20: warning: DPCT1003:24: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                checkCudaErrors(        cudaMemcpy((void *) resultList, 
+                                        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:10:
+In file included from /usr/include/GL/glew.h:225:
+In file included from /usr/include/c++/10.2.0/cstdint:35:
+/usr/include/c++/10.2.0/bits/c++0x_warning.h:32:2: error: This file requires compiler and library support for the ISO C++ 2011 standard. This support must be enabled with the -std=c++11 or -std=gnu++11 compiler options.
+#error This file requires compiler and library support \
+ ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:16:
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:68:13: warning: 51 enumeration values not handled in switch: 'cudaErrorLaunchMaxDepthExceeded', 'cudaErrorLaunchFileScopedTex', 'cudaErrorLaunchFileScopedSurf'... [-Wswitch]
+    switch (error)
+            ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/helper_cuda.h:271:13: warning: 29 enumeration values not handled in switch: 'CUDA_ERROR_PEER_ACCESS_UNSUPPORTED', 'CUDA_ERROR_INVALID_PTX', 'CUDA_ERROR_INVALID_GRAPHICS_CONTEXT'... [-Wswitch]
+    switch (error)
+            ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:20:
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort_kernel.cu:16:1: warning: DPCT1059:25: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> texPivot; 
+^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:21:
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/histogram1024_kernel.cu:64:9: warning: DPCT1064:26: Migrated __mul24 call is used in a macro definition and is not valid for all macro uses. Adjust the code.
+#define IMUL(a, b) __mul24(a, b)
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/histogram1024_kernel.cu:112:20: warning: DPCT1039:27: The generated code assumes that "d_Result + pos" points to the global memory address space. If it points to a local memory address space, replace "dpct::atomic_fetch_add" with "dpct::atomic_fetch_add<unsigned int, sycl::access::address_space::local_space>".
+         atomicAdd(d_Result + pos, sum);
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/histogram1024_kernel.cu:129:22: warning: DPCT1003:28: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors( cudaMalloc((void **)&d_Result1024, HISTOGRAM_SIZE ));
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/histogram1024_kernel.cu:134:22: warning: DPCT1003:29: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors( cudaFree(d_Result1024) );
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/histogram1024_kernel.cu:145:22: warning: DPCT1003:30: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors( cudaMemset(d_Result1024, 0, HISTOGRAM_SIZE) );
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/histogram1024_kernel.cu:153:22: warning: DPCT1003:31: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors( cudaMemcpy(h_Result, d_Result1024, HISTOGRAM_SIZE, cudaMemcpyDeviceToHost) );
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:49:21: warning: DPCT1003:32: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaMalloc((void**) &d_offsets, histosize * sizeof(unsigned int)));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:52:21: warning: DPCT1003:33: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaMalloc((void**) &d_indice, listsize * sizeof(int)));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:55:18: warning: DPCT1003:34: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMalloc((void**) &l_pivotpoints, DIVISIONS * sizeof(float))); 
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:56:18: warning: DPCT1003:35: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMalloc((void**) &l_offsets, DIVISIONS * sizeof(int))); 
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:59:18: warning: DPCT1003:36: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMalloc((void**) &d_prefixoffsets, blocks * BUCKET_BLOCK_MEMORY * sizeof(int))); 
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:69:21: warning: DPCT1003:37: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    checkCudaErrors(cudaFree(d_indice));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:70:18: warning: DPCT1003:38: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaFree(d_offsets));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:71:18: warning: DPCT1003:39: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaFree(l_pivotpoints));
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:72:18: warning: DPCT1003:40: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaFree(l_offsets)); 
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:76:18: warning: DPCT1003:41: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaFree(d_prefixoffsets)); 
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:112:2: warning: DPCT1049:42: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        bucketcount <<< grid, threads >>>(d_input, d_indice, d_prefixoffsets, listsize);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:123:2: warning: DPCT1049:43: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        bucketprefixoffset <<< grid, threads >>>(d_prefixoffsets, d_offsets, blocks);   
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:151:2: warning: DPCT1049:44: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        bucketsort <<< grid, threads >>>(d_input, d_indice, d_output, listsize, d_prefixoffsets, l_offsets);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:91:18: warning: DPCT1003:45: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemset((void *) d_offsets, 0, histosize * sizeof(int))); 
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:104:18: warning: DPCT1003:46: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemcpy(l_pivotpoints, pivotPoints, (DIVISIONS)*sizeof(int), cudaMemcpyHostToDevice)); 
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu:105:18: warning: DPCT1003:47: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        checkCudaErrors(cudaMemset((void *) d_offsets, 0, DIVISIONS * sizeof(int))); 
+                        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/hybridsort/mergesort.cu
+In file included from /home/german/Documentos/TFG/rodinia/cuda/hybridsort/mergesort.cu:9:
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/mergesort_kernel.cu:8:1: warning: DPCT1059:48: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> txt; 
+^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/mergesort.cu:54:2: warning: DPCT1049:49: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        mergeSortFirst<<< grid, threads >>>(d_resultList, listsize);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/mergesort.cu:103:2: warning: DPCT1049:50: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        mergepack <<< grid, threads >>> ((float *)d_resultList, (float *)d_origList);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/hybridsort/mergesort.cu:86:3: warning: DPCT1049:51: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                mergeSortPass <<< grid, threads >>>(d_resultList, nrElems, threadsPerDiv); 
+                ^
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/hybridsort/helper_cuda.h.yaml file
+Processed 8 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/hybridsort", 1 file(s) with error(s):
+  /home/german/Documentos/TFG/rodinia/cuda/hybridsort/bucketsort.cu: 1 parsing error(s)
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
+
