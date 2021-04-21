@@ -1,0 +1,78 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/num/num.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:66:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:196:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:228:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",        (float) (time1-time0) / 1000000, (float) (time1-time0) / (float) (time6-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:229:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: ALO\n",                                         (float) (time2-time1) / 1000000, (float) (time2-time1) / (float) (time6-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:230:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",                                     (float) (time3-time2) / 1000000, (float) (time3-time2) / (float) (time6-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:232:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU: KERNEL\n",                                          (float) (time4-time3) / 1000000, (float) (time4-time3) / (float) (time6-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:234:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",                            (float) (time5-time4) / 1000000, (float) (time5-time4) / (float) (time6-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:235:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: FRE\n",                                         (float) (time6-time5) / 1000000, (float) (time6-time5) / (float) (time6-time0) * 100);
+                                   ~~^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:28:
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda.cu:90:3: warning: DPCT1065:0: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                __syncthreads();
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda.cu:134:4: warning: DPCT1065:1: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                        __syncthreads();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda.cu:194:4: warning: DPCT1065:2: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                        __syncthreads();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/kernel/kernel_gpu_cuda_wrapper.cu:188:2: warning: DPCT1049:3: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        kernel_gpu_cuda<<<blocks, threads>>>(   par_cpu,
+        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/timer/timer.c
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/timer/timer.c:26:2: warning: implicit declaration of function 'gettimeofday' is invalid in C99 [-Wimplicit-function-declaration]
+        gettimeofday(&tv, NULL);
+        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/device/device.cu
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/device/device.cu:60:3: warning: DPCT1001:4: The statement could not be removed.
+                fflush(NULL);
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/device/device.cu:57:2: warning: DPCT1000:5: Error handling if-stmt was detected but could not be rewritten.
+        if( cudaSuccess != err) {
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/device/device.cu:56:20: warning: DPCT1010:6: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t err = cudaGetLastError();
+                          ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/util/device/device.cu:59:40: warning: DPCT1009:7: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("Cuda error: %s: %s.\n", msg, cudaGetErrorString( err) );
+                                                     ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lavaMD/main.c
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/main.c:95:6: warning: implicitly declaring library function 'strcmp' with type 'int (const char *, const char *)' [-Wimplicit-function-declaration]
+                if(strcmp(argv[dim_cpu.cur_arg], "-boxes1d")==0){
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/main.c:95:6: note: include the header <string.h> or explicitly provide a declaration for 'strcmp'
+/home/german/Documentos/TFG/rodinia/cuda/lavaMD/main.c:228:8: warning: implicit declaration of function 'time' is invalid in C99 [-Wimplicit-function-declaration]
+        srand(time(NULL));
+              ^
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/lavaMD/main.h.yaml file
+Processed 4 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/lavaMD"
