@@ -1,0 +1,38 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lud/common/common.c
+In file included from <built-in>:341:
+<command line>:6:9: warning: '__CUDACC_VER_MAJOR__' macro redefined [-Wmacro-redefined]
+#define __CUDACC_VER_MAJOR__ 11
+        ^
+<command line>:3:9: note: previous definition is here
+#define __CUDACC_VER_MAJOR__ 10
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/lud/common/common.c:187:1: warning: non-void function does not return a value [-Wreturn-type]
+}
+^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud.cu
+Processing: /home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu
+/home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu:26:3: warning: DPCT1065:0: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+  __syncthreads();
+  ^
+/home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu:35:5: warning: DPCT1065:1: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+    __syncthreads();
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu:41:5: warning: DPCT1065:2: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+    __syncthreads();
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu:98:3: warning: DPCT1065:3: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+  __syncthreads();
+  ^
+/home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu:147:3: warning: DPCT1065:4: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+  __syncthreads();
+  ^
+/home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu:182:3: warning: DPCT1065:5: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+  __syncthreads();
+  ^
+/home/german/Documentos/TFG/rodinia/cuda/lud/cuda/lud_kernel.cu:203:7: warning: DPCT1049:6: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+      lud_internal<<<dimGrid, dimBlock>>>(m, matrix_dim, i); 
+      ^
+Processed 2 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/lud"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
