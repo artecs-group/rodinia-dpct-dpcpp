@@ -1,0 +1,8 @@
+rocessing: /var/lib/docker/volumes/dockerTFG/_data/cuda/bfs/bfs.cu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/bfs/bfs.cu:190:3: warning: DPCT1049:0: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                Kernel<<< grid, threads, 0 >>>( d_graph_nodes, d_graph_edges, d_graph_mask, d_updating_graph_mask, d_graph_visited, d_cost, no_of_nodes);
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/bfs/bfs.cu:194:3: warning: DPCT1049:1: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                Kernel2<<< grid, threads, 0 >>>( d_graph_mask, d_updating_graph_mask, d_graph_visited, d_over, no_of_nodes);
+                ^
+Processed 3 file(s) in -in-root folder "/var/lib/docker/volumes/dockerTFG/_data/cuda/bfs"
