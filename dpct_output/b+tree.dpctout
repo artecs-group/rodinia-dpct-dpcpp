@@ -1,0 +1,186 @@
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/cuda/cuda.cu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/cuda/cuda.cu:64:3: warning: DPCT1001:0: The statement could not be removed.
+                fflush(NULL);
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/cuda/cuda.cu:61:2: warning: DPCT1000:1: Error handling if-stmt was detected but could not be rewritten.
+        if( cudaSuccess != err) {
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/cuda/cuda.cu:60:20: warning: DPCT1010:2: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t err = cudaGetLastError();
+                          ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/cuda/cuda.cu:63:40: warning: DPCT1009:3: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("Cuda error: %s: %s.\n", msg, cudaGetErrorString( err) );
+                                                     ^
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/num/num.c
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:78:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:226:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:268:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",        (float) (time1-time0) / 1000000, (float) (time1-time0) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:269:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: ALO\n",                                         (float) (time2-time1) / 1000000, (float) (time2-time1) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:270:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",                                     (float) (time3-time2) / 1000000, (float) (time3-time2) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:272:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU: KERNEL\n",                                          (float) (time4-time3) / 1000000, (float) (time4-time3) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:274:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",                            (float) (time5-time4) / 1000000, (float) (time5-time4) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:275:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: FRE\n",                                         (float) (time6-time5) / 1000000, (float) (time6-time5) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper.cu:215:2: warning: DPCT1049:4: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        findK<<<numBlocks, threadsPerBlock>>>(  maxheight,
+        ^
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/timer/timer.c
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/util/timer/timer.c:26:2: warning: implicit declaration of function 'gettimeofday' is invalid in C99 [-Wimplicit-function-declaration]
+        gettimeofday(&tv, NULL);
+        ^
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:80:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:275:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:327:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",        (float) (time1-time0) / 1000000, (float) (time1-time0) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:328:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: ALO\n",                                         (float) (time2-time1) / 1000000, (float) (time2-time1) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:329:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",                                     (float) (time3-time2) / 1000000, (float) (time3-time2) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:331:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU: KERNEL\n",                                          (float) (time4-time3) / 1000000, (float) (time4-time3) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:333:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",                            (float) (time5-time4) / 1000000, (float) (time5-time4) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:334:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU MEM: FRE\n",                                         (float) (time6-time5) / 1000000, (float) (time6-time5) / (float) (time6-time0) * 100);
+                                   ~~^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/kernel/kernel_gpu_cuda_wrapper_2.cu:263:2: warning: DPCT1049:5: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        findRangeK<<<numBlocks, threadsPerBlock>>>(     maxheight,
+        ^
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.o
+error: no such file or directory: '$(CUDA_LIB)'
+warning: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.o: 'linker' input unused [-Wunused-command-line-argument]
+warning: ./kernel/kernel_gpu_cuda_wrapper.o: 'linker' input unused [-Wunused-command-line-argument]
+warning: ./kernel/kernel_gpu_cuda_wrapper_2.o: 'linker' input unused [-Wunused-command-line-argument]
+warning: ./util/timer/timer.o: 'linker' input unused [-Wunused-command-line-argument]
+warning: ./util/num/num.o: 'linker' input unused [-Wunused-command-line-argument]
+warning: ./util/cuda/cuda.o: 'linker' input unused [-Wunused-command-line-argument]
+warning: -lm: 'linker' input unused [-Wunused-command-line-argument]
+error: unable to handle migration, expected exactly one migration job in ''
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:652:2: warning: implicit declaration of function 'gettimeofday' is invalid in C99 [-Wimplicit-function-declaration]
+        gettimeofday (&one, NULL);
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:737:68: warning: format specifies type 'int' but the argument has type 'long' [-Wformat]
+                printf("\nNumber of records = %d, sizeof(record)=%d, total=%d\n",size,sizeof(record),size*sizeof(record));
+                                              ~~                                 ^~~~
+                                              %ld
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:737:73: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+                printf("\nNumber of records = %d, sizeof(record)=%d, total=%d\n",size,sizeof(record),size*sizeof(record));
+                                                                 ~~                   ^~~~~~~~~~~~~~
+                                                                 %lu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:737:88: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+                printf("\nNumber of records = %d, sizeof(record)=%d, total=%d\n",size,sizeof(record),size*sizeof(record));
+                                                                           ~~                        ^~~~~~~~~~~~~~~~~~~
+                                                                           %lu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:738:64: warning: format specifies type 'int' but the argument has type 'long' [-Wformat]
+                printf("Number of knodes = %d, sizeof(knode)=%d, total=%d\n",nodeindex,sizeof(knode),(nodeindex)*sizeof(knode));
+                                           ~~                                ^~~~~~~~~
+                                           %ld
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:738:74: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+                printf("Number of knodes = %d, sizeof(knode)=%d, total=%d\n",nodeindex,sizeof(knode),(nodeindex)*sizeof(knode));
+                                                             ~~                        ^~~~~~~~~~~~~
+                                                             %lu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:738:88: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+                printf("Number of knodes = %d, sizeof(knode)=%d, total=%d\n",nodeindex,sizeof(knode),(nodeindex)*sizeof(knode));
+                                                                       ~~                            ^~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                       %lu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:739:51: warning: format specifies type 'int' but the argument has type 'long' [-Wformat]
+                printf("\nDone Transformation. Mem used: %d\n", mem_used);
+                                                         ~~     ^~~~~~~~
+                                                         %ld
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:872:3: warning: add explicit braces to avoid dangling else [-Wdangling-else]
+                else
+                ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:930:18: warning: format specifies type 'unsigned int' but the argument has type 'node *' (aka 'struct node *') [-Wformat]
+                printf("(%x)", n);
+                         ~~    ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:933:18: warning: format specifies type 'unsigned int' but the argument has type 'void *' [-Wformat]
+                        printf("%x ", n->pointers[i]);
+                                ~~    ^~~~~~~~~~~~~~
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:941:18: warning: format specifies type 'unsigned int' but the argument has type 'void *' [-Wformat]
+                        printf("%x ", n->pointers[order - 1]);
+                                ~~    ^~~~~~~~~~~~~~~~~~~~~~
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:943:18: warning: format specifies type 'unsigned int' but the argument has type 'void *' [-Wformat]
+                        printf("%x ", n->pointers[n->num_keys]);
+                                ~~    ^~~~~~~~~~~~~~~~~~~~~~~~
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:1866:2: warning: implicit declaration of function 'cudaSetDevice' is invalid in C99 [-Wimplicit-function-declaration]
+        cudaSetDevice(device);
+        ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:1958:37: warning: incompatible pointer types passing 'char *' to parameter of type 'FILE *' (aka 'struct _IO_FILE *') [-Wincompatible-pointer-types]
+       fputs ("Fail to open %s !\n",output);
+                                    ^~~~~~
+/usr/include/stdio.h:631:64: note: passing argument to parameter '__stream' here
+extern int fputs (const char *__restrict __s, FILE *__restrict __stream);
+                                                               ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:2148:48: warning: comparison between pointer and integer ('char *' and 'int') [-Wpointer-integer-compare]
+                                while(*commandPointer!=32 && commandPointer!='\n')
+                                                             ~~~~~~~~~~~~~~^ ~~~~
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:2224:38: warning: incompatible pointer types passing 'char *' to parameter of type 'FILE *' (aka 'struct _IO_FILE *') [-Wincompatible-pointer-types]
+                                    fputs ("Fail to open %s !\n",output);
+                                                                 ^~~~~~
+/usr/include/stdio.h:631:64: note: passing argument to parameter '__stream' here
+extern int fputs (const char *__restrict __s, FILE *__restrict __stream);
+                                                               ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:2278:48: warning: comparison between pointer and integer ('char *' and 'int') [-Wpointer-integer-compare]
+                                while(*commandPointer!=32 && commandPointer!='\n')
+                                                             ~~~~~~~~~~~~~~^ ~~~~
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:2283:48: warning: comparison between pointer and integer ('char *' and 'int') [-Wpointer-integer-compare]
+                                while(*commandPointer!=32 && commandPointer!='\n')
+                                                             ~~~~~~~~~~~~~~^ ~~~~
+/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree/main.c:2371:38: warning: incompatible pointer types passing 'char *' to parameter of type 'FILE *' (aka 'struct _IO_FILE *') [-Wincompatible-pointer-types]
+                                    fputs ("Fail to open %s !\n",output);
+                                                                 ^~~~~~
+/usr/include/stdio.h:631:64: note: passing argument to parameter '__stream' here
+extern int fputs (const char *__restrict __s, FILE *__restrict __stream);
+                                                               ^
+Processed 6 file(s) in -in-root folder "/var/lib/docker/volumes/dockerTFG/_data/cuda/b+tree"
