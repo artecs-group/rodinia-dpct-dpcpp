@@ -1,0 +1,50 @@
+rocessing: /var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/imagenet.c
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/imagenet.c:6:8: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+extern layer_size;
+~~~~~~ ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/imagenet.c:8:1: warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+load(net)
+^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/imagenet.c:21:30: warning: implicit conversion from 'int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
+          units[k] = (float) rand()/RAND_MAX ;
+                                   ~^~~~~~~~
+/usr/include/stdlib.h:86:18: note: expanded from macro 'RAND_MAX'
+#define RAND_MAX        2147483647
+                        ^~~~~~~~~~
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/imagenet.c:24:1: warning: non-void function does not return a value [-Wreturn-type]
+}
+^
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/facetrain.c
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/facetrain.c:7:10: fatal error: 'omp.h' file not found
+#include "omp.h"
+         ^~~~~~~
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop.c
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop.c:10:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+Processing: /var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop_cuda.cu
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop_cuda.cu:130:3: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+  cudaThreadSynchronize();
+  ^
+/opt/cuda/targets/x86_64-linux/include/cuda_runtime_api.h:1011:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda/targets/x86_64-linux/include/cuda_runtime_api.h:255:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop_cuda.cu:123:3: warning: DPCT1049:0: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+  bpnn_layerforward_CUDA<<< grid, threads >>>(input_cuda,
+  ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop_cuda.cu:172:3: warning: DPCT1049:1: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+  bpnn_adjust_weights_cuda<<< grid, threads >>>(hidden_delta_cuda,  
+  ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop_cuda.cu:132:23: warning: DPCT1010:2: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+  cudaError_t error = cudaGetLastError();
+                      ^
+/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop_cuda.cu:134:37: warning: DPCT1009:3: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("bpnn kernel error: %s\n", cudaGetErrorString(error));
+                                                  ^
+Saved new version of /home/german/Documentos/TFG/dockerTFG/oneAPI/backprop/backprop.h.yaml file
+Processed 3 file(s) in -in-root folder "/var/lib/docker/volumes/dockerTFG/_data/cuda/backprop", 2 file(s) with error(s):
+  /var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/backprop.c: 1 parsing error(s)
+  /var/lib/docker/volumes/dockerTFG/_data/cuda/backprop/facetrain.c: 1 parsing error(s)
