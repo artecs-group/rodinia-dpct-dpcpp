@@ -1,0 +1,135 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda_cpu.cpp
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda_cpu.cpp:745:27: warning: format specifies type 'unsigned int' but the argument has type 'long' [-Wformat]
+      fprintf(fp, "%u\n", centerIDs[i]);
+                   ~~     ^~~~~~~~~~~~
+                   %ld
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda_cpu.cpp:793:39: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+    fprintf(stderr,"read %d points\n",numRead);
+                         ~~           ^~~~~~~
+                         %lu
+Processing: /home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_header.cu
+Processing: /home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:257:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:96:18: warning: DPCT1003:0: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMalloc((void**) &center_table_d,      num * sizeof(int))   );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:23:36: warning: DPCT1009:1: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+               __FILE__, __LINE__, cudaGetErrorString( err) );                  \
+                                   ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:97:18: warning: DPCT1003:2: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMalloc((void**) &switch_membership_d, num * sizeof(bool))  );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:98:18: warning: DPCT1003:3: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMalloc((void**) &p,                                   num * sizeof(Point)) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:99:18: warning: DPCT1003:4: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMalloc((void**) &coord_d,           num * dim * sizeof(float)) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:115:18: warning: DPCT1003:5: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaFree(center_table_d)          );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:116:18: warning: DPCT1003:6: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaFree(switch_membership_d) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:117:18: warning: DPCT1003:7: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaFree(p)                                       );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:118:18: warning: DPCT1003:8: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaFree(coord_d)                         );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:138:2: warning: DPCT1026:9: The call to cudaEventCreate was removed, because this call is redundant in DPC++.
+        cudaEventCreate(&start);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:139:2: warning: DPCT1026:10: The call to cudaEventCreate was removed, because this call is redundant in DPC++.
+        cudaEventCreate(&stop);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:141:2: warning: DPCT1012:11: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(start, 0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:186:2: warning: DPCT1012:12: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(stop,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:191:2: warning: DPCT1012:13: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(start,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:205:2: warning: DPCT1012:14: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(stop,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:210:2: warning: DPCT1012:15: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(start,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:228:2: warning: DPCT1012:16: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(stop,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:233:2: warning: DPCT1012:17: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(start,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:268:2: warning: DPCT1012:18: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(stop,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:245:2: warning: DPCT1049:19: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        kernel_compute_cost<<<grid_size, THREADS_PER_BLOCK>>>(  
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:273:2: warning: DPCT1012:20: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(start,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:283:2: warning: DPCT1012:21: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(stop,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:288:2: warning: DPCT1012:22: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(start,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:358:2: warning: DPCT1012:23: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(stop,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:363:2: warning: DPCT1012:24: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(start,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:373:2: warning: DPCT1012:25: Detected kernel execution time measurement pattern and generated an initial code for time measurements in SYCL. You can change the way time is measured depending on your goals.
+        cudaEventRecord(stop,0);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:197:18: warning: DPCT1003:26: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMalloc((void**) &work_mem_d,  stride * (nThread + 1) * sizeof(float)) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:219:19: warning: DPCT1003:27: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                CUDA_SAFE_CALL( cudaMemcpy(coord_d,  coord_h,    num * dim * sizeof(float), cudaMemcpyHostToDevice) );
+                                ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:221:18: warning: DPCT1003:28: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpy(center_table_d,  center_table,  num * sizeof(int),   cudaMemcpyHostToDevice) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:222:18: warning: DPCT1003:29: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpy(p,  points->p,                                  num * sizeof(Point), cudaMemcpyHostToDevice) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:224:18: warning: DPCT1003:30: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemset((void*) switch_membership_d, 0,                      num * sizeof(bool))  );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:225:18: warning: DPCT1003:31: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemset((void*) work_mem_d,                  0, stride * (nThread + 1) * sizeof(float)) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:260:10: warning: DPCT1010:32: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        error = cudaGetLastError();
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:263:32: warning: DPCT1009:33: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("kernel error: %s\n", cudaGetErrorString(error));
+                                             ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:279:18: warning: DPCT1003:34: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpy(work_mem_h,            work_mem_d,   stride * (nThread + 1) * sizeof(float), cudaMemcpyDeviceToHost) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:280:18: warning: DPCT1003:35: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpy(switch_membership, switch_membership_d,       num * sizeof(bool),  cudaMemcpyDeviceToHost) );
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/streamcluster/streamcluster_cuda.cu:369:18: warning: DPCT1003:36: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaFree(work_mem_d) );
+                        ^
+Processed 3 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/streamcluster"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
