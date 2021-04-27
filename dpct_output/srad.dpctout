@@ -1,0 +1,135 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:168:17: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+        read_graphics(  "../../../data/srad/image.pgm",
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:439:18: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+        write_graphics( "image_out.pgm",
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:479:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : SETUP VARIABLES\n",                                                                                                              (float) (time1-time0) / 1000000, (float) (time1-time0) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:480:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : READ COMMAND LINE PARAMETERS\n",                                                                                 (float) (time2-time1) / 1000000, (float) (time2-time1) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:481:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : READ IMAGE FROM FILE\n",                                                                                                 (float) (time3-time2) / 1000000, (float) (time3-time2) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:482:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : RESIZE IMAGE\n",                                                                                                                 (float) (time4-time3) / 1000000, (float) (time4-time3) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:483:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : GPU DRIVER INIT, CPU/GPU SETUP, MEMORY ALLOCATION\n",                                    (float) (time5-time4) / 1000000, (float) (time5-time4) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:484:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : COPY DATA TO CPU->GPU\n",                                                                                                (float) (time6-time5) / 1000000, (float) (time6-time5) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:485:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : EXTRACT IMAGE\n",                                                                                                                (float) (time7-time6) / 1000000, (float) (time7-time6) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:486:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : COMPUTE\n",                                                                                                                              (float) (time8-time7) / 1000000, (float) (time8-time7) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:487:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : COMPRESS IMAGE\n",                                                                                                               (float) (time9-time8) / 1000000, (float) (time9-time8) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:488:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : COPY DATA TO GPU->CPU\n",                                                                                                (float) (time10-time9) / 1000000, (float) (time10-time9) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:489:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : SAVE IMAGE INTO FILE\n",                                                                                                 (float) (time11-time10) / 1000000, (float) (time11-time10) / (float) (time12-time0) * 100);
+                                   ~~^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:490:31: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%15.12f s, %15.12f % : FREE MEMORY\n",                                                                                                                  (float) (time12-time11) / 1000000, (float) (time12-time11) / (float) (time12-time0) * 100);
+                                   ~~^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:32:
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/reduce_kernel.cu:31:5: warning: DPCT1065:0: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+    __syncthreads();
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/reduce_kernel.cu:44:4: warning: DPCT1065:1: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                        __syncthreads();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/reduce_kernel.cu:64:5: warning: DPCT1065:2: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                                __syncthreads();                                                                                        //
+                                ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/reduce_kernel.cu:88:5: warning: DPCT1065:3: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                                __syncthreads();                                                                                        //
+                                ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:40:
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/device.c:50:3: warning: DPCT1001:4: The statement could not be removed.
+                fflush(NULL);
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/device.c:47:2: warning: DPCT1000:5: Error handling if-stmt was detected but could not be rewritten.
+        if( cudaSuccess != err) {
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/device.c:46:20: warning: DPCT1010:6: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t err = cudaGetLastError();
+                          ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/device.c:49:40: warning: DPCT1009:7: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("Cuda error: %s: %s.\n", msg, cudaGetErrorString( err) );
+                                                     ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:291:2: warning: DPCT1049:8: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        extract<<<blocks, threads>>>(   Ne,
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:418:2: warning: DPCT1049:9: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        compress<<<blocks, threads>>>(  Ne,
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:311:3: warning: DPCT1049:10: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                prepare<<<blocks, threads>>>(   Ne,
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:372:3: warning: DPCT1049:11: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                srad<<<blocks, threads>>>(      lambda,                                                                 // SRAD coefficient 
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:391:3: warning: DPCT1049:12: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                srad2<<<blocks, threads>>>(     lambda,                                                                 // SRAD coefficient 
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v1/main.cu:329:4: warning: DPCT1049:13: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+                        reduce<<<blocks2, threads>>>(   Ne,
+                        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad.cu
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad.cu:240:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaThreadSynchronize();
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad.cu:12:
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:53:4: warning: DPCT1065:14: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+   __syncthreads();
+   ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:65:3: warning: DPCT1065:15: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+  __syncthreads();
+  ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:71:3: warning: DPCT1065:16: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+  __syncthreads();
+  ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:149:5: warning: DPCT1065:17: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+    __syncthreads();
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:198:5: warning: DPCT1065:18: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+    __syncthreads();
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:205:2: warning: DPCT1065:19: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+        __syncthreads();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:214:5: warning: DPCT1065:20: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+    __syncthreads();
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:218:5: warning: DPCT1065:21: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+    __syncthreads();
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad_kernel.cu:253:4: warning: DPCT1065:22: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+   __syncthreads();
+   ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad.cu:231:2: warning: DPCT1049:23: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        srad_cuda_1<<<dimGrid, dimBlock>>>(E_C, W_C, N_C, S_C, J_cuda, C_cuda, cols, rows, q0sqr); 
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/srad/srad_v2/srad.cu:232:2: warning: DPCT1049:24: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        srad_cuda_2<<<dimGrid, dimBlock>>>(E_C, W_C, N_C, S_C, J_cuda, C_cuda, cols, rows, lambda, q0sqr); 
+        ^
+Processed 10 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/srad"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
