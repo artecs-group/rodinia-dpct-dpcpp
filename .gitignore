@@ -34,3 +34,14 @@
 # Extras
 *.json
 .vscode
+*.code-workspace
+Jupyter
+dockerTFG
+rodinia/cuda
+*~
+done.txt
+*.yaml
+*.trace
+TODO.txt
+rodinia/dpct1059.cpp
+dpct_notes.txt
