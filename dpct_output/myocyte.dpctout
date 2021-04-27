@@ -1,0 +1,58 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/myocyte/main.cu
+In file included from /home/german/Documentos/TFG/rodinia/cuda/myocyte/main.cu:92:
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work.cu:126:9: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                read(   "../../data/myocyte/y.txt",
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work.cu:135:8: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                read("../../data/myocyte/params.txt",
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work.cu:234:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : SETUP VARIABLES\n",                                                                                                                  (float) (time1-time0) / 1000000, (float) (time1-time0) / (float) (time5-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work.cu:235:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : ALLOCATE CPU MEMORY AND GPU MEMORY\n",                               (float) (time2-time1) / 1000000, (float) (time2-time1) / (float) (time5-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work.cu:236:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : READ DATA FROM FILES\n",                                                                                             (float) (time3-time2) / 1000000, (float) (time3-time2) / (float) (time5-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work.cu:237:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : RUN COMPUTATION\n",                                                                                                          (float) (time4-time3) / 1000000, (float) (time4-time3) / (float) (time5-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work.cu:238:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : FREE MEMORY\n",                                                                                                                              (float) (time5-time4) / 1000000, (float) (time5-time4) / (float) (time5-time0) * 100);
+                               ~~^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/myocyte/main.cu:93:
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:171:8: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                read("../../data/myocyte/y.txt",
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:185:8: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                read("../../data/myocyte/params.txt",
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:305:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : SETUP VARIABLES\n",                                                                                                                  (float) (time1-time0) / 1000000, (float) (time1-time0) / (float) (time6-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:306:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : ALLOCATE CPU MEMORY AND GPU MEMORY\n",                               (float) (time2-time1) / 1000000, (float) (time2-time1) / (float) (time6-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:307:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : READ DATA FROM FILES, COPY TO GPU MEMORY\n",                 (float) (time3-time2) / 1000000, (float) (time3-time2) / (float) (time6-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:308:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : RUN GPU KERNEL\n",                                                                                                                   (float) (time4-time3) / 1000000, (float) (time4-time3) / (float) (time6-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:309:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : COPY GPU DATA TO CPU MEMORY\n",                                                              (float) (time5-time4) / 1000000, (float) (time5-time4) / (float) (time6-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:310:27: warning: invalid conversion specifier ':' [-Wformat-invalid-specifier]
+        printf("%.12f s, %.12f % : FREE MEMORY\n",                                                                                                                              (float) (time6-time5) / 1000000, (float) (time6-time5) / (float) (time6-time0) * 100);
+                               ~~^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/master.cu:53:2: warning: DPCT1049:0: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        kernel<<<blocks, threads>>>(    timeinst,
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/myocyte/work_2.cu:216:2: warning: DPCT1049:1: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        solver_2<<<blocks, threads>>>(  workload,
+        ^
+Processed 15 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/myocyte"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
