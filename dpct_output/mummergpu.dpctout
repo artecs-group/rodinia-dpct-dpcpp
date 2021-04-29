@@ -1,0 +1,333 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:20:9: warning: DPCT1077:0: 'ulong4' redefines a standard SYCL type, which may cause conflicts.
+#define ulong4 uint32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:21:9: warning: DPCT1077:1: 'uint4' redefines a standard SYCL type, which may cause conflicts.
+#define uint4 uint32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:22:9: warning: DPCT1077:2: 'int2' redefines a standard SYCL type, which may cause conflicts.
+#define int2 int32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:186:9: warning: 'this' pointer cannot be null in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
+    if (this) { return m_nodeid; }
+    ~~  ^~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:1210:18: warning: unused variable 'newaddr' [-Wunused-variable]
+  TextureAddress newaddr = arrayToAddress(arr);
+                 ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:1716:33: warning: unused parameter 'rc' [-Wunused-parameter]
+                           bool rc)
+                                ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:2181:1: warning: non-void function does not return a value [-Wreturn-type]
+}
+^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:2492:21: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+  if (printParentId == matchNodeId)
+      ~~~~~~~~~~~~~ ^  ~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/suffix-tree.cpp:2632:21: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+            if (cid == matchNodeId)
+                ~~~ ^  ~~~~~~~~~~~
+Processing: /home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/PoolMalloc.cpp
+Processing: /home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:7:9: warning: DPCT1077:3: 'ulong4' redefines a standard SYCL type, which may cause conflicts.
+#define ulong4 uint32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:8:9: warning: DPCT1077:4: 'int2' redefines a standard SYCL type, which may cause conflicts.
+#define int2 int32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:9:9: warning: DPCT1077:5: 'uint4' redefines a standard SYCL type, which may cause conflicts.
+#define uint4 uint32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:332:29: error: invalid suffix on literal; C++11 requires a space between literal and identifier [-Wreserved-user-defined-literal]
+                XPRINTF("In node ("fNID"): starting with %c [%d] =>  \n",
+                                   ^
+                                    
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:355:35: error: invalid suffix on literal; C++11 requires a space between literal and identifier [-Wreserved-user-defined-literal]
+                    XPRINTF(" In node: ("fNID")\n", NID(cur));
+                                         ^
+                                          
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:612:21: warning: unused parameter 'results' [-Wunused-parameter]
+                           MatchResults* results,
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:613:13: warning: unused parameter 'refstr' [-Wunused-parameter]
+                           char* refstr,
+                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:614:22: warning: unused parameter 'queries' [-Wunused-parameter]
+               char* queries, 
+                     ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:615:27: warning: unused parameter 'queryAddrs' [-Wunused-parameter]
+               const int* queryAddrs,
+                          ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:616:18: warning: unused parameter 'queryLengths' [-Wunused-parameter]
+                           const int* queryLengths,
+                                      ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:617:20: warning: unused parameter 'nodeTexture' [-Wunused-parameter]
+                           PixelOfNode* nodeTexture,
+                                        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:618:22: warning: unused parameter 'childrenTexture' [-Wunused-parameter]
+                                PixelOfChildren* childrenTexture,
+                                                 ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp:620:17: warning: unused parameter 'min_match_len' [-Wunused-parameter]
+                           const int min_match_len) 
+                                     ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:390:65: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+        fprintf(stderr, "This tree will need %d bytes on the board\n", ref->bytes_on_board);
+                                             ~~                        ^~~~~~~~~~~~~~~~~~~
+                                             %lu
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:453:55: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+    fprintf(stderr, "The refstr requires %d bytes\n", ref->len);
+                                         ~~           ^~~~~~~~
+                                         %lu
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:672:25: warning: 'cudaMemcpyToArray' is deprecated [-Wdeprecated-declarations]
+        CUDA_SAFE_CALL( cudaMemcpyToArray( (cudaArray*)(ref->d_node_tex_array),
+                        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:6782:8: note: 'cudaMemcpyToArray' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaMemcpyToArray(cudaArray_t dst, size_t wOffset, size_t hOffset, const void *src, size_t count, enum cudaMemcpyKind kind);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:713:25: warning: 'cudaMemcpyToArray' is deprecated [-Wdeprecated-declarations]
+        CUDA_SAFE_CALL( cudaMemcpyToArray((cudaArray*)(ref->d_children_tex_array),
+                        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:6782:8: note: 'cudaMemcpyToArray' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaMemcpyToArray(cudaArray_t dst, size_t wOffset, size_t hOffset, const void *src, size_t count, enum cudaMemcpyKind kind);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1071:16: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+                        numQueries, numCoords*sizeof(MatchCoord) );
+                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1079:11: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+          boardFreeMemory, total_mem);
+          ^~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1079:28: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+          boardFreeMemory, total_mem);
+                           ^~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1335:75: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+        fprintf(stderr, "Allocing %d bytes of host memory for %d alignments\n",  alignmentOffset * sizeof(Alignment), numAlignments);
+                                  ~~                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                  %lu
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1362:74: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+        fprintf(stderr, "Copying %d bytes to host memory for %d alignments\n",  numAlignments * sizeof(Alignment), numAlignments);
+                                 ~~                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                 %lu
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1429:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaThreadSynchronize();
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1447:5: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+    cudaThreadSynchronize();
+    ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1518:3: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                boardFreeMemory, total_mem);
+                ^~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1518:20: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                boardFreeMemory, total_mem);
+                                 ^~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1531:48: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+    fprintf(stderr, "board free memory: %u\n", boardFreeMemory);
+                                        ~~     ^~~~~~~~~~~~~~~
+                                        %lu
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1576:10: warning: 'cudaThreadExit' is deprecated [-Wdeprecated-declarations]
+                cudaThreadExit();
+                ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:931:8: note: 'cudaThreadExit' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadExit(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1636:30: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                        addToBuffer("> ");
+                                    ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1638:30: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+                        addToBuffer("\n");
+                                    ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2011:13: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+            ctx->queries->bytes_on_board,
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2012:13: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+            ctx->ref->bytes_on_board,
+            ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2013:13: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+            ctx->results.bytes_on_board);
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2024:3: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+                cudaThreadSynchronize();
+                ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2087:3: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                free_mem, total_mem);
+                ^~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2087:13: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                free_mem, total_mem);
+                          ^~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2113:10: warning: 'cudaThreadExit' is deprecated [-Wdeprecated-declarations]
+                cudaThreadExit();
+                ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:931:8: note: 'cudaThreadExit' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadExit(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2245:62: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+    writeStatisticsFile(&(ctx->statistics), ctx->stats_file, "node_hist.out", "child_hist.out");
+                                                             ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2245:79: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+    writeStatisticsFile(&(ctx->statistics), ctx->stats_file, "node_hist.out", "child_hist.out");
+                                                                              ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:21:
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_kernel.cu:142:1: warning: DPCT1059:6: SYCL only supports 4-channel image format. Adjust the code.
+texture<char, 1, cudaReadModeElementType> reftex;
+^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_kernel.cu:145:1: warning: DPCT1059:7: SYCL only supports 4-channel image format. Adjust the code.
+texture<char, 1, cudaReadModeElementType> qrytex;
+^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:468:24: warning: DPCT1003:8: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+  CU_SAFE_CALL_NO_SYNC(cuMemGetInfo(free_mem, total_mem));
+                       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda.h:99:49: note: expanded from macro 'cuMemGetInfo'
+    #define cuMemGetInfo                        cuMemGetInfo_v2
+                                                ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:468:24: warning: DPCT1072:9: DPC++ currently does not support getting the available memory on the current device. You may need to adjust the code.
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda.h:99:49: note: expanded from macro 'cuMemGetInfo'
+    #define cuMemGetInfo                        cuMemGetInfo_v2
+                                                ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:481:9: warning: DPCT1059:10: SYCL only supports 4-channel image format. Adjust the code.
+        cudaCreateChannelDesc(8, 0, 0, 0, cudaChannelFormatKindSigned);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:35:9: warning: DPCT1001:11: The statement could not be removed.
+#define CUDA_SAFE_CALL( call) do {                                           \
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:35:9: warning: DPCT1000:12: Error handling if-stmt was detected but could not be rewritten.
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:549:19: warning: DPCT1003:13: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+                CUDA_SAFE_CALL( cudaMemcpy( (void*)(ref->d_ref_array), 
+                                ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:40:42: warning: DPCT1009:14: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                __FILE__, __LINE__, err, cudaGetErrorString( err) );              \
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:576:17: warning: DPCT1003:15: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL(cudaFree((ref->d_ref_array)));
+                       ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:590:20: warning: DPCT1003:16: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+           CUDA_SAFE_CALL(cudaFreeArray((cudaArray*)(ref->d_node_tex_array)));
+                          ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:601:20: warning: DPCT1003:17: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+           CUDA_SAFE_CALL(cudaFreeArray((cudaArray*)(ref->d_children_tex_array)));
+                          ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:672:25: warning: DPCT1003:18: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpyToArray( (cudaArray*)(ref->d_node_tex_array),
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:713:25: warning: DPCT1003:19: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpyToArray((cudaArray*)(ref->d_children_tex_array),
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:725:9: warning: DPCT1064:20: Migrated cudaBindTextureToArray call is used in a macro definition and is not valid for all macro uses. Adjust the code.
+        BIND_TEX_ARRAY(childrentex, (cudaArray*)(ref->d_children_tex_array),
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:85:17: note: expanded from macro 'BIND_TEX_ARRAY'
+        CUDA_SAFE_CALL(cudaBindTextureToArray(tex, arr, desc));                                  \
+                       ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:923:25: warning: DPCT1003:21: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpy((void*) queries->d_tex_array,
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:942:25: warning: DPCT1003:22: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpy((void*) queries->d_addrs_tex_array,
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:952:25: warning: DPCT1003:23: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemcpy((void*) queries->d_lengths_array,
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:978:19: warning: DPCT1003:24: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+   CUDA_SAFE_CALL(cudaFree(queries->d_tex_array));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:981:19: warning: DPCT1003:25: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+   CUDA_SAFE_CALL(cudaFree(queries->d_addrs_tex_array));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:984:19: warning: DPCT1003:26: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+   CUDA_SAFE_CALL(cudaFree(queries->d_lengths_array));
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1098:25: warning: DPCT1003:27: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL( cudaMemset( (void*)ctx->results.d_match_coords, 0,
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1125:20: warning: DPCT1003:28: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaFree(ctx->results.d_match_coords));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1141:19: warning: DPCT1003:29: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+          CUDA_SAFE_CALL(cudaMemcpy(ctx->results.h_match_coords, 
+                         ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1394:5: warning: DPCT1049:30: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    printKernel <<< dimGrid, dimBlock, 0 >>> (d_matches,
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1356:20: warning: DPCT1003:31: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMemset((void*)   d_alignments, 0, alignmentSize));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1382:20: warning: DPCT1003:32: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMemcpy(d_matches, h_matches, matchesSize, cudaMemcpyHostToDevice));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1433:23: warning: DPCT1010:33: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+    cudaError_t err = cudaGetLastError();
+                      ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1437:17: warning: DPCT1009:34: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                cudaGetErrorString(err));
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1443:20: warning: DPCT1003:35: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaMemcpy((void*)alignments,
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1454:20: warning: DPCT1003:36: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaFree(d_alignments));
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1455:20: warning: DPCT1003:37: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+    CUDA_SAFE_CALL(cudaFree(d_matches));                   
+                   ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1947:9: warning: DPCT1049:38: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        mummergpuRCKernel <<< dimGrid, dimBlock, 0 >>> (ctx->results.d_match_coords,
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1955:9: warning: DPCT1049:39: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        mummergpuKernel <<< dimGrid, dimBlock, 0 >>> (ctx->results.d_match_coords,
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1990:20: warning: DPCT1010:40: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t err = cudaGetLastError();
+                          ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:1993:14: warning: DPCT1009:41: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                    cudaGetErrorString(err));
+                    ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2081:17: warning: DPCT1003:42: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL(cudaMalloc((void**)&p, sizeof(int)));
+                       ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu.cu:2082:17: warning: DPCT1003:43: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.
+        CUDA_SAFE_CALL(cudaFree(p));
+                       ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_main.cpp
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_main.cpp:6:9: warning: DPCT1077:44: 'int2' redefines a standard SYCL type, which may cause conflicts.
+#define int2 int32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_main.cpp:7:9: warning: DPCT1077:45: 'ulong4' redefines a standard SYCL type, which may cause conflicts.
+#define ulong4 uint32_t
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_main.cpp:8:9: warning: DPCT1077:46: 'uint4' redefines a standard SYCL type, which may cause conflicts.
+#define uint4 uint32_t
+        ^
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/mummergpu/src/mummergpu.h.yaml file
+Processed 7 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/mummergpu", 1 file(s) with error(s):
+  /home/german/Documentos/TFG/rodinia/cuda/mummergpu/src/mummergpu_gold.cpp: 2 parsing error(s)
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
