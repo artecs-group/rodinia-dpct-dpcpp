@@ -1,0 +1,71 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:169:94: warning: comparison of different enumeration types ('cudaError_t' (aka 'cudaError') and 'cudaError_enum') [-Wenum-compare]
+        if(cudaBindTexture(NULL, &t_features, feature_d, &chDesc0, npoints*nfeatures*sizeof(float)) != CUDA_SUCCESS)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:177:110: warning: comparison of different enumeration types ('cudaError_t' (aka 'cudaError') and 'cudaError_enum') [-Wenum-compare]
+        if(cudaBindTexture(NULL, &t_features_flipped, feature_flipped_d, &chDesc1, npoints*nfeatures*sizeof(float)) != CUDA_SUCCESS)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:185:97: warning: comparison of different enumeration types ('cudaError_t' (aka 'cudaError') and 'cudaError_enum') [-Wenum-compare]
+        if(cudaBindTexture(NULL, &t_clusters, clusters_d, &chDesc2, nclusters*nfeatures*sizeof(float)) != CUDA_SUCCESS)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:207:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+In file included from /home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:15:
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda_kernel.cu:15:1: warning: DPCT1059:0: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> t_features;
+^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda_kernel.cu:17:1: warning: DPCT1059:1: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> t_features_flipped;
+^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda_kernel.cu:18:1: warning: DPCT1059:2: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> t_clusters;
+^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:74:2: warning: DPCT1049:3: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        invert_mapping<<<num_blocks,num_threads>>>(feature_flipped_d,feature_d,npoints,nfeatures);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:198:5: warning: DPCT1049:4: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+    kmeansPoint<<< grid, threads >>>( feature_d,
+    ^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:164:37: warning: DPCT1059:5: SYCL only supports 4-channel image format. Adjust the code.
+    cudaChannelFormatDesc chDesc0 = cudaCreateChannelDesc<float>();
+                                    ^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:172:34: warning: DPCT1059:6: SYCL only supports 4-channel image format. Adjust the code.
+        cudaChannelFormatDesc chDesc1 = cudaCreateChannelDesc<float>();
+                                        ^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_cuda.cu:180:34: warning: DPCT1059:7: SYCL only supports 4-channel image format. Adjust the code.
+        cudaChannelFormatDesc chDesc2 = cudaCreateChannelDesc<float>();
+                                        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/kmeans/cluster.c
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/cluster.c:111:3: warning: implicit declaration of function 'allocateMemory' is invalid in C99 [-Wimplicit-function-declaration]
+                allocateMemory(npoints, nfeatures, nclusters, features);
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/cluster.c:149:3: warning: implicit declaration of function 'deallocateMemory' is invalid in C99 [-Wimplicit-function-declaration]
+                deallocateMemory();                                                     /* free device memory (@ kmeans_cuda.cu) */
+                ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/kmeans/getopt.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/kmeans/rmse.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_clustering.c
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans_clustering.c:149:19: warning: implicit declaration of function 'kmeansCuda' is invalid in C99 [-Wimplicit-function-declaration]
+                delta = (float) kmeansCuda(feature,                     /* in: [npoints][nfeatures] */
+                                ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans.c
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans.c:131:16: warning: implicit declaration of function 'getopt' is invalid in C99 [-Wimplicit-function-declaration]
+                while ( (opt=getopt(argc,argv,"i:t:m:n:l:bro"))!= EOF) {
+                             ^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans.c:167:9: warning: implicit declaration of function 'read' is invalid in C99 [-Wimplicit-function-declaration]
+        read(infile, &npoints,   sizeof(int));
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/kmeans/kmeans.c:179:9: warning: implicit declaration of function 'close' is invalid in C99 [-Wimplicit-function-declaration]
+        close(infile);
+        ^
+Processed 2 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/kmeans"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
