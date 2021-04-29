@@ -1,0 +1,488 @@
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memstat.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memstat.c:133:12: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+            if ( !isatty(fileno(stdout)) ) {
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memstat.c:379:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,void **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memstat.c:379:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,void **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memstat.c:379:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,void **)) {   /* NULL ends the list*/
+              ^
+              ==
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/symmeig.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/vecop.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/vecop.c:315:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,VEC *)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/vecop.c:315:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,VEC *)) {   /* NULL ends the list*/
+              ^
+          (                     )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/vecop.c:315:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,VEC *)) {   /* NULL ends the list*/
+              ^
+              ==
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/spchfctr.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/misc_math.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sprow.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/update.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/iter0.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/ivecop.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/version.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparseio.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparseio.c:219:8: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+        tty = isatty(fileno(fp));
+              ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparseio.c:246:16: warning: multiple unsequenced modifications to 'scratch' [-Wunsequenced]
+                          scratch = RENEW(scratch,2*scratch_len,row_elt);
+                                  ~ ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matrix.h:142:11: note: expanded from macro 'RENEW'
+    ((var)=(type *)((var) ? \
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparseio.c:324:16: warning: multiple unsequenced modifications to 'scratch' [-Wunsequenced]
+                          scratch = RENEW(scratch,2*scratch_len,row_elt);
+                                  ~ ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matrix.h:142:11: note: expanded from macro 'RENEW'
+    ((var)=(type *)((var) ? \
+          ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/chfactor.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmatlab.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/givens.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:116:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:207:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:28:1: warning: DPCT1059:0: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> t_grad_x;
+^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:29:1: warning: DPCT1059:1: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> t_grad_y;
+^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:113:2: warning: DPCT1049:2: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        GICOV_kernel <<< num_blocks, threads_per_block >>> (grad_m, device_gicov);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:117:22: warning: DPCT1010:3: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:119:38: warning: DPCT1009:4: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("GICOV kernel error: %s\n", cudaGetErrorString(error));
+                                                   ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:141:1: warning: DPCT1059:5: SYCL only supports 4-channel image format. Adjust the code.
+texture<float, 1, cudaReadModeElementType> t_img;
+^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:204:2: warning: DPCT1049:6: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        dilate_kernel <<< num_blocks, threads_per_block >>> (max_gicov_m, max_gicov_n, strel_m, strel_n, device_img_dilated);
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:208:22: warning: DPCT1010:7: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse_kernel.cu:210:41: warning: DPCT1009:8: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("Dilation kernel error: %s\n", cudaGetErrorString(error));
+                                                      ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:995:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:995:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+              ^
+          (                        )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:995:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:1025:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:1025:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+              ^
+          (                        )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:1025:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:1054:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:1054:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+              ^
+          (                        )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/sparse.c:1054:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,SPMAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmachine.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/init.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/machine.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/znorm.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/find_ellipse.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zfunc.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/fft.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/spbkp.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zhessen.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/err.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/err.c:146:9: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+        if ( ! isatty(fileno(stdout)) )
+               ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/err.c:262:14: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+      if ( ! isatty(fileno(stdout)) ) {
+             ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/err.c:280:14: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+      if ( ! isatty(fileno(stdout)) )
+             ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/err.c:296:12: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+           if ( ! isatty(fileno(stdout)) )
+                  ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/err.c:312:12: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+           if ( ! isatty(fileno(stdout)) )
+                  ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zlufctr.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matrixio.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matrixio.c:91:11: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+     if ( isatty(fileno(fp)) )
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matrixio.c:218:11: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+     if ( isatty(fileno(fp)) )
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matrixio.c:344:11: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+     if ( isatty(fileno(fp)) )
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matrixio.c:661:9: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+   if ( isatty(fileno(fp)) )
+        ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/svd.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/splufctr.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmatio.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmatio.c:54:10: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+    if ( isatty(fileno(fp)) )
+         ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmatio.c:89:11: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+     if ( isatty(fileno(fp)) )
+          ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmatio.c:217:11: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+     if ( isatty(fileno(fp)) )
+          ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:548:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:548:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+              ^
+          (                      )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:548:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:565:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:565:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:565:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:581:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:581:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+              ^
+          (                      )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:581:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:597:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:597:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:597:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:629:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:629:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+              ^
+          (                      )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:629:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:647:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:647:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:647:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:663:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:663:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+              ^
+          (                      )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:663:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:680:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:680:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:680:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:711:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:711:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+              ^
+          (                      )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:711:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,VEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:731:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:731:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:731:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,IVEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:751:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:751:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:751:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,PERM **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:770:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:770:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+              ^
+          (                      )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/memory.c:770:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,MAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/mfunc.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/copy.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/iternsym.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmatop.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zschur.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/lufactor.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matop.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:240:2: warning: 'cudaThreadSynchronize' is deprecated [-Wdeprecated-declarations]
+        cudaThreadSynchronize();
+        ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:957:8: note: 'cudaThreadSynchronize' has been explicitly marked deprecated here
+extern __CUDA_DEPRECATED __host__ cudaError_t CUDARTAPI cudaThreadSynchronize(void);
+       ^
+/opt/cuda-10.2/targets/x86_64-linux/include/cuda_runtime_api.h:238:42: note: expanded from macro '__CUDA_DEPRECATED'
+#define __CUDA_DEPRECATED __attribute__((deprecated))
+                                         ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:78:2: warning: DPCT1065:9: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+        __syncthreads();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:83:2: warning: DPCT1065:10: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+        __syncthreads();
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:184:3: warning: DPCT1065:11: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                __syncthreads();
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:190:3: warning: DPCT1065:12: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                __syncthreads();
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:212:3: warning: DPCT1065:13: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                __syncthreads();
+                ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:178:4: warning: DPCT1065:14: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                        __syncthreads();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:198:4: warning: DPCT1065:15: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance, if there is no access to global memory.
+                        __syncthreads();
+                        ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:235:2: warning: DPCT1049:16: The workgroup size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the workgroup size if needed.
+        IMGVF_kernel <<< num_cells, threads_per_block >>>
+        ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:241:22: warning: DPCT1010:17: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.
+        cudaError_t error = cudaGetLastError();
+                            ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse_kernel.cu:243:37: warning: DPCT1009:18: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.
+                printf("MGVF kernel error: %s\n", cudaGetErrorString(error));
+                                                  ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/schur.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zgivens.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/pxop.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/bkpfacto.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/meminfo.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/meminfo.c:379:9: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+         if ( !isatty(fileno(stdout)) ) {
+               ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/meminfo.c:430:9: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+         if ( !isatty(fileno(stdout)) ) {
+               ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zqrfctr.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/track_ellipse.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/itersym.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/matlab.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/otherio.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/otherio.c:58:9: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+        if ( ! isatty(fileno(fp)) )
+               ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/otherio.c:103:9: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+        if ( ! isatty(fileno(fp)) )
+               ^
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/otherio.c:146:9: warning: implicit declaration of function 'isatty' is invalid in C99 [-Wimplicit-function-declaration]
+        if ( ! isatty(fileno(fp)) )
+               ^
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/norm.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/spswap.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/avilib.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/qrfactor.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zsolve.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/bdfactor.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/hessen.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zhsehldr.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/CUDA/detect_main.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/solve.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/hsehldr.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/submat.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:456:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:456:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:456:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:474:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:474:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:474:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:506:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:506:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:506:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:524:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:524:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:524:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:555:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:555:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:555:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,ZVEC **)) {   /* NULL ends the list*/
+              ^
+              ==
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:576:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:576:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+              ^
+          (                       )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zmemory.c:576:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,ZMAT **)) {   /* NULL ends the list*/
+              ^
+              ==
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zcopy.c
+Processing: /home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zvecop.c
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zvecop.c:280:15: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
+   while (par = va_arg(ap,ZVEC *)) {   /* NULL ends the list*/
+          ~~~~^~~~~~~~~~~~~~~~~~~
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zvecop.c:280:15: note: place parentheses around the assignment to silence this warning
+   while (par = va_arg(ap,ZVEC *)) {   /* NULL ends the list*/
+              ^
+          (                      )
+/home/german/Documentos/TFG/rodinia/cuda/leukocyte/meschach_lib/zvecop.c:280:15: note: use '==' to turn this assignment into an equality comparison
+   while (par = va_arg(ap,ZVEC *)) {   /* NULL ends the list*/
+              ^
+              ==
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/leukocyte/meschach_lib/matrix.h.yaml file
+Saved new version of /home/german/Documentos/TFG/rodinia/oneAPI/leukocyte/meschach_lib/meminfo.h.yaml file
+Processed 9 file(s) in -in-root folder "/home/german/Documentos/TFG/rodinia/cuda/leukocyte"
+
+See Diagnostics Reference to resolve warnings and complete the migration:
+https://software.intel.com/content/www/us/en/develop/documentation/intel-dpcpp-compatibility-tool-user-guide/top/diagnostics-reference.html
