@@ -196,7 +196,7 @@ void bucketSort(float *d_input, float *d_output, int listsize,
     dpct::get_default_queue().submit([&](sycl::handler &cgh) {
         sycl::accessor<volatile unsigned int, 1, sycl::access::mode::read_write,
                        sycl::access::target::local>
-            s_offset_acc_ct1(sycl::range<1>(1024 /*BUCKET_BLOCK_MEMORY*/), cgh);
+            s_offset_acc_ct1(sycl::range<1>(BUCKET_BLOCK_MEMORY), cgh);
 
         auto texPivot_acc = texPivot.get_access(cgh);
 
@@ -204,7 +204,7 @@ void bucketSort(float *d_input, float *d_output, int listsize,
 
         auto d_indice_ct1 = d_indice;
         auto d_prefixoffsets_ct2 = d_prefixoffsets;
-
+std::cout << "\nparallel_for\n";
         cgh.parallel_for(
             sycl::nd_range<3>(grid * threads, threads),
             [=](sycl::nd_item<3> item_ct1) {
@@ -221,7 +221,7 @@ void bucketSort(float *d_input, float *d_output, int listsize,
 #ifdef BUCKET_WG_SIZE_0
 threads[2] = BUCKET_WG_SIZE_0;
 #else
-	threads.x = 128;  
+	threads[2] = 128;  
 #endif
         grid[2] = DIVISIONS / threads[2];
         /*
@@ -283,7 +283,7 @@ threads[2] = BUCKET_WG_SIZE_0;
     dpct::get_default_queue().submit([&](sycl::handler &cgh) {
         sycl::accessor<volatile unsigned int, 1, sycl::access::mode::read_write,
                        sycl::access::target::local>
-            s_offset_acc_ct1(sycl::range<1>(1024 /*BUCKET_BLOCK_MEMORY*/), cgh);
+            s_offset_acc_ct1(sycl::range<1>(BUCKET_BLOCK_MEMORY), cgh);
 
         auto d_indice_ct1 = d_indice;
         auto d_prefixoffsets_ct4 = d_prefixoffsets;

@@ -202,23 +202,34 @@ void cudaSort(float *origList, float minimum, float maximum,
 	sdkStartTimer(&bucketTimer); 
 		int *sizes = (int*) malloc(DIVISIONS * sizeof(int)); 
 		int *nullElements = (int*) malloc(DIVISIONS * sizeof(int));  
-		unsigned int *origOffsets = (unsigned int *) malloc((DIVISIONS + 1) * sizeof(int)); 
+		unsigned int *origOffsets = (unsigned int *) malloc((DIVISIONS + 1) * sizeof(int));
+try{
 		bucketSort(d_input, d_output, numElements, sizes, nullElements, 
 				   minimum, maximum, origOffsets); 
 	sdkStopTimer(&bucketTimer); 
-
+}catch(sycl::exception &e){
+	std::cerr << "Bucketsort exception\n";
+	std::cerr << e.what()<< std::endl;
+}
 	// Mergesort the result
 	sdkStartTimer(&mergeTimer);
                 sycl::float4 *d_origList = (sycl::float4 *)d_output,
                              *d_resultList = (sycl::float4 *)d_input;
                 int newlistsize = 0; 
-	
+
 		for(int i = 0; i < DIVISIONS; i++)
 			newlistsize += sizes[i] * 4;
-
-                sycl::float4 *mergeresult = runMergeSort(
+		
+		sycl::float4 *mergeresult;
+try{
+                mergeresult = runMergeSort(
                     newlistsize, DIVISIONS, d_origList, d_resultList, sizes,
                     nullElements, origOffsets); // d_origList;
+}catch(sycl::exception &e){
+	std::cerr << "Mergesort exception\n";
+	std::cerr << e.what()<< std::endl;
+	std::exit(1);
+}
                 dpct::get_current_device().queues_wait_and_throw();
         sdkStopTimer(&mergeTimer); 
 	sdkStopTimer(&totalTimer); 
