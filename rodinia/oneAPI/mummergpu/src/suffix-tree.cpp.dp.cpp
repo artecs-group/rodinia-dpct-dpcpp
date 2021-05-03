@@ -17,6 +17,7 @@
 #include <assert.h>
 #include <stdint.h>
 
+#include "mummergpu.h"
 /*
 DPCT1077:0: 'ulong4' redefines a standard SYCL type, which may cause conflicts.
 */
@@ -29,7 +30,7 @@ DPCT1077:1: 'uint4' redefines a standard SYCL type, which may cause conflicts.
 DPCT1077:2: 'int2' redefines a standard SYCL type, which may cause conflicts.
 */
 #define int2 int32_t
-#include "mummergpu.h"
+//#include "mummergpu.h"
 
 #define MPOOL 0
 

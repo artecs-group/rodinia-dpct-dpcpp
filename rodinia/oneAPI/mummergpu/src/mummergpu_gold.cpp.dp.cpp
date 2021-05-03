@@ -4,6 +4,7 @@
 #include <fstream>
 #include <stdint.h>
 
+#include "mummergpu.h"
 /*
 DPCT1077:3: 'ulong4' redefines a standard SYCL type, which may cause conflicts.
 */
@@ -18,7 +19,7 @@ DPCT1077:5: 'uint4' redefines a standard SYCL type, which may cause conflicts.
 #define uint4 uint32_t
 
 #include "omp.h"
-#include "mummergpu.h"
+//#include "mummergpu.h"
 // Matches are reported as a node in the suffix tree,
 // plus a distance up the node's parent link for partial
 // matches on the patch from the root to the node
@@ -338,7 +339,7 @@ int kernel_gold(int qryid,
 
 	        char c = GETQCHAR(qrystart + qry_match_len);
 
-	        XPRINTF("In node ("fNID"): starting with %c [%d] =>  \n",
+	        XPRINTF("In node (" fNID "): starting with %c [%d] =>  \n",
 	                NID(cur), c, qry_match_len);
 
 	        unsigned int refpos = 0;
@@ -361,7 +362,7 @@ int kernel_gold(int qryid,
 
 				//arrayToAddress(next, cur);
 
-	            XPRINTF(" In node: ("fNID")\n", NID(cur));
+	            XPRINTF(" In node: (" fNID ")\n", NID(cur));
 
 	            // No edge to follow out of the node
 	            if (cur == 0) {
@@ -437,7 +438,7 @@ int kernel_gold(int qryid,
 				node = GETNODEHIST(prev, false);
 		        arrayToAddress(node.suffix, cur);
 			}
-	        //XPRINTF(" following suffix link. mustmatch:%d qry_match_len:%d sl:("fNID")\n",
+	        //XPRINTF(" following suffix link. mustmatch:%d qry_match_len:%d sl:(" fNID ")\n",
 	        //       mustmatch, qry_match_len, NID(cur));
 	        do {} while (0);
 	    }

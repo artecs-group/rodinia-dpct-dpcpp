@@ -16,7 +16,7 @@
 // includes, kernels
 #include "common.dp.cpp"
 
-#include <mummergpu.h>
+#include "mummergpu.h"
 #include "mummergpu_kernel.dp.cpp"
 
 int USE_PRINT_KERNEL = 1;

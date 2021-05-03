@@ -131,7 +131,7 @@ struct PixelOfNode
 {
   union
   {
-    sycl::uint4 data{};
+    uint32_t data;
     struct
     {
       unsigned char parent[3];
@@ -151,7 +151,7 @@ struct PixelOfChildren
 {
   union
   {
-    sycl::uint4 data{};
+    uint32_t data;
 
     union
     {

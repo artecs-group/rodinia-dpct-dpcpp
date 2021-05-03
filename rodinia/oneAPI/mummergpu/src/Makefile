@@ -114,11 +114,11 @@ $(OBJDIR)/%.cpp_o : $(SRCDIR)%.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 #.cu.cu_$(APPEND)_o:
-#$(OBJDIR)/%.dpcpp_o : $(SRCDIR)%.dp.cpp
-#	$(NVCC) -o $@ -c $< $(NVCCFLAGS)
+$(OBJDIR)/%.dpcpp_o : $(SRCDIR)%.cpp.dp.cpp
+	$(NVCC) -o $@ -c $< $(NVCCFLAGS)
 
-$(OBJDIR)/mummergpu_gold.dpcpp_o : mummergpu_gold.dp.cpp
-	$(NVCC) -o mummergpu_gold.dpcpp_o -c mummergpu_gold.dp.cpp $(NVCCFLAGS)
+$(OBJDIR)/mummergpu.dpcpp_o : mummergpu.dp.cpp
+	$(NVCC) -o mummergpu.dpcpp_o -c mummergpu.dp.cpp $(NVCCFLAGS)
 
 
 #.cu.cubin
@@ -137,7 +137,7 @@ makedirectories:
 LIBOBJS= \
     $(OBJDIR)/mummergpu_gold.dpcpp_o \
     $(OBJDIR)/suffix-tree.dpcpp_o \
-    $(OBJDIR)/PoolMalloc.dpcpp_o \
+    $(OBJDIR)/PoolMalloc.cpp_o \
     $(OBJDIR)/mummergpu.dpcpp_o \
 
 $(LIBDIR)/libmummergpu$(LIBSUFFIX).a: $(LIBOBJS)
