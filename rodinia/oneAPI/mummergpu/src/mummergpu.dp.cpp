@@ -584,7 +584,7 @@ void loadReferenceTexture(MatchContext *ctx) try {
 
         ctx->ref->bytes_on_board += numrows * ref->pitch;
 #else
-                CUDA_MALLOC(ref->len);
+                CUDA_MALLOC((void**)(&ref->d_ref_array),ref->len);
                 /*
                 DPCT1003:13: Migrated API does not return error code. (*, 0) is
                 inserted. You may need to rewrite this code.

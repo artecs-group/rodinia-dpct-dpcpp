@@ -95,8 +95,8 @@
 #define GETNODEHIST(addr, two_level)    getNode(addr, two_level, node_hist)
 #define GETNODE(addr, two_level)        getNode(addr, two_level, NULL)
 #else
-#define GETNODEHIST(addr, two_level)    getNode(addr, two_level)
-#define GETNODE(addr, two_level)        getNode(addr, two_level)
+#define GETNODEHIST(addr, two_level, imgAccessor)    getNode(addr, two_level, imgAccessor)
+#define GETNODE(addr, two_level, imgAccessor)        getNode(addr, two_level, imgAccessor)
 #endif
 #else
 #if TREE_ACCESS_HISTOGRAM
@@ -113,8 +113,8 @@
 #define GETCHILDRENHIST(addr, two_level)    getChildren(addr, two_level, child_hist)
 #define GETCHILDREN(addr, two_level)        getChildren(addr, two_level, NULL)
 #else
-#define GETCHILDRENHIST(addr, two_level)    getChildren(addr, two_level)
-#define GETCHILDREN(addr, two_level)        getChildren(addr, two_level)
+#define GETCHILDRENHIST(addr, two_level, imgAccessor)    getChildren(addr, two_level, imgAccessor)
+#define GETCHILDREN(addr, two_level, imgAccessor)        getChildren(addr, two_level, imgAccessor)
 #endif
 #else
 #if TREE_ACCESS_HISTOGRAM
@@ -364,7 +364,7 @@ char rc(char c)
 /// getNode
 //////////////////////////////////
 
-uint32_t getNode(unsigned int cur, bool use_two_level
+sycl::uint4 getNode(unsigned int cur, bool use_two_level
 #if !NODETEX
                     ,
                     _PixelOfNode *nodes
@@ -373,7 +373,8 @@ uint32_t getNode(unsigned int cur, bool use_two_level
                     ,
                     int *node_hist
 #endif
-                    ) 
+                    ,
+                    dpct::image_accessor_ext<sycl::uint4, 2> nodetex) 
 {
 #if TREE_ACCESS_HISTOGRAM
   int id = addr2id(cur);
@@ -386,7 +387,7 @@ uint32_t getNode(unsigned int cur, bool use_two_level
 #endif
 
 #if NODETEX
-#if REORDER_TREE 
+#if REORDER_TREE
   return nodetex.read(cur & 0x0000FFFF, (cur & 0xFFFF0000) >> 16);
 #else
   return tex1Dfetch(nodetex, cur);
@@ -408,7 +409,7 @@ uint32_t getNode(unsigned int cur, bool use_two_level
 /// getChildren
 //////////////////////////////////
 
-uint32_t getChildren(unsigned int cur, bool use_two_level
+sycl::uint4 getChildren(unsigned int cur, bool use_two_level
 #if !CHILDTEX
                         ,
                         _PixelOfChildren *childrenarr
@@ -417,7 +418,8 @@ uint32_t getChildren(unsigned int cur, bool use_two_level
                         ,
                         int *child_hist
 #endif
-                        )
+                        ,
+                        dpct::image_accessor_ext<sycl::uint4, 2> childrentex)
 {
 #if TREE_ACCESS_HISTOGRAM
   int id = addr2id(cur);
@@ -782,7 +784,7 @@ mummergpuKernel(void* match_coords,
             XPRINTF("Next edge to follow: %c (%d)\n", c, qry_match_len);
             
 			_PixelOfChildren children;
-            children.data = GETCHILDRENHIST(cur, false);
+            children.data = GETCHILDRENHIST(cur, false, childrentex);
 			prev = cur;
                         sycl::uchar3 next;
             switch (c) 
@@ -810,7 +812,7 @@ mummergpuKernel(void* match_coords,
             }
 
 			_PixelOfNode node;
-			node.data = GETNODEHIST(cur, true);
+			node.data = GETNODEHIST(cur, true, nodetex);
 			node_start = MKI(node.start);
 			unsigned int node_end = MKI(node.end);
 			
@@ -869,7 +871,7 @@ RECORD_RESULT:
 NEXT_SUBSTRING:
 		{
 			_PixelOfNode node;
-			node.data = GETNODEHIST(prev, false);
+			node.data = GETNODEHIST(prev, false, nodetex);
 	        arrayToAddress(node.suffix, cur);
 		}
         //XPRINTF(" following suffix link. mustmatch:%d qry_match_len:%d sl:(" fNID ")\n",
@@ -1119,7 +1121,7 @@ printKernel(MatchInfo * matches,
   unsigned int printParent = cur;
   
   _PixelOfNode node;
-  node.data = GETNODE(cur, true);
+  node.data = GETNODE(cur, true, nodetex);
   
   XPRINTF("starting node: %d " fNID " depth: %d\n", matches[matchid].matchnode, NID(cur), MKI(node.depth));
 
@@ -1127,7 +1129,7 @@ printKernel(MatchInfo * matches,
   {
     printParent = cur;
     arrayToAddress(node.parent, cur);
-    node.data = GETNODE(cur, true);
+    node.data = GETNODE(cur, true, nodetex);
 
     XPRINTF("par: " fNID " depth: %d\n", NID(cur), MKI(node.depth));
   }
@@ -1142,7 +1144,7 @@ printKernel(MatchInfo * matches,
   char curchild = 'A';
   bool forceToParent = false;
   
-  node.data = GETNODE(printParent, true);
+  node.data = GETNODE(printParent, true, nodetex);
   
   int matchlen = MKI(node.depth) - 1;
   int depthToGoldenPath = 0;
@@ -1154,7 +1156,7 @@ printKernel(MatchInfo * matches,
   {
     if (matches[matchid].edgematch > 0)
     {
-      node.data = GETNODE(badParent, true);
+      node.data = GETNODE(badParent, true, nodetex);
       matchlen = MKI(node.depth)-1+matches[matchid].edgematch;
     }
 
@@ -1166,7 +1168,7 @@ printKernel(MatchInfo * matches,
   while (cur != badParent)
   {
     _PixelOfChildren children;
-    children.data = GETCHILDREN(cur, true);
+    children.data = GETCHILDREN(cur, true, childrentex);
     char isLeaf = children.leafchar;
 
     XPRINTF(" cur: " fNID " curchild: %c isLeaf:%d forceToParent:%d\n", 
@@ -1203,13 +1205,13 @@ printKernel(MatchInfo * matches,
       
       // now return to my parent and advance curchild
 
-      node.data = GETNODE(cur, true);
+      node.data = GETNODE(cur, true, nodetex);
 
       unsigned int myParent;
       arrayToAddress(node.parent, myParent);
 
       _PixelOfChildren pchildren;
-      pchildren.data = GETCHILDREN(myParent, true);
+      pchildren.data = GETCHILDREN(myParent, true, childrentex);
 
       unsigned int pa, pc, pg, pt;
       arrayToAddress(pchildren.a, pa);
@@ -1232,7 +1234,7 @@ printKernel(MatchInfo * matches,
 
       if (depthToGoldenPath == 0)
       {
-        node.data = GETNODE(cur, true);
+        node.data = GETNODE(cur, true, nodetex);
         matchlen = MKI(node.depth)-1;
       }
     }
@@ -1240,7 +1242,7 @@ printKernel(MatchInfo * matches,
     {
       // try to walk down the tree
       _PixelOfChildren children;
-      children.data = GETCHILDREN(cur, true);
+      children.data = GETCHILDREN(cur, true, childrentex);
 
       char goldenChild = 0;
 
@@ -1319,7 +1321,7 @@ printKernel(MatchInfo * matches,
         {
           if (curchild == goldenChild)
           {
-            node.data = GETNODE(cur, true);
+            node.data = GETNODE(cur, true, nodetex);
             matchlen = MKI(node.depth)-1;
 
             if (cur == matchaddr)
@@ -1332,7 +1334,7 @@ printKernel(MatchInfo * matches,
 				unsigned int par;
                 arrayToAddress(node.parent, par);
 
-                node.data = GETNODE(par, true);
+                node.data = GETNODE(par, true, nodetex);
                 matchlen = MKI(node.depth) - 1 + matches[matchid].edgematch;
               }
             }
