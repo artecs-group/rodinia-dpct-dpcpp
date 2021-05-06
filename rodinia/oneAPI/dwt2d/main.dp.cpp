@@ -348,9 +348,10 @@ int main(int argc, char **argv)
     /*
     DPCT1005:2: The device version is different. You need to rewrite this code.
     */
-    if (devProp.get_major_version() < 1) {
+    //if (devProp.get_major_version() < 1) {
+    if (!dpct::get_current_device().is_gpu()){
         printf("Device %d does not support CUDA\n", device);
-        return -1;
+        //return -1;
     }
     printf("Using device %d: %s\n", device, devProp.get_name());
     dpct::dev_mgr::instance().select_device(device);
