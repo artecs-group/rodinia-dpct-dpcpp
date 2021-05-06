@@ -35,18 +35,20 @@ bool InitCUDA(void) try {
                          * different. You need to rewrite this code.
 
                          */
-                        if (prop.get_major_version() >= 1) {
+                        //if (prop.get_major_version() >= 1) {
+                        if(dpct::get_current_device().is_gpu()){
                                 break;
 			}
 		}
 	}
 	if(i == count) {
-		fprintf(stderr, "There is no device supporting CUDA.\n");
-		return false;
+		fprintf(stdout, "There is no device supporting CUDA.\n Using first device.\n");
+		//return false;
+                i = 0;
 	}
         dpct::dev_mgr::instance().select_device(i);
 
-        printf("CUDA initialized.\n");
+        printf("SYCL initialized.\n");
 	return true;
 }
 catch (sycl::exception const &exc) {
