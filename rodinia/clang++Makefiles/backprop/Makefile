@@ -19,7 +19,10 @@ endif
 ifeq ($(emu),1)
 	DPCPP_FLAGS += -deviceemu
 endif
-
+# 'make time=1' compiles for time measurement
+ifeq ($(time),1)
+	DPCPP_FLAGS += -DTIME_IT
+endif
 
 backprop: backprop.o facetrain.o imagenet.o backprop_sycl.dp.o 
 	$(DPCPP) $(DPCPP_FLAGS) backprop.o facetrain.o imagenet.o backprop_sycl.dp.o -o backprop 

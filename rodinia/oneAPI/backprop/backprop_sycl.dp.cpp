@@ -56,12 +56,34 @@ main( int argc, char** argv)
 	setup(argc, argv);
 }
 
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 
 extern "C"
 void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
 {
-  dpct::device_ext &dev_ct1 = dpct::get_current_device();
-  sycl::queue &q_ct1 = dev_ct1.default_queue();
+  #ifdef TIME_IT
+  long long time0;
+	long long time1;
+	long long time2;
+	long long time3;
+	long long time4;
+	long long time5;
+	long long time6;
+  long long time7;
+  long long time8;
+  long long time9;
+  long long time10;
+  #endif
+
+  //dpct::device_ext &dev_ct1 = dpct::get_current_device();
+  //sycl::queue &q_ct1 = dev_ct1.default_queue();
   int in, hid, out;
   float out_err, hid_err;
   
@@ -98,10 +120,25 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
     }
   }
 
+  #ifdef TIME_IT
+  time0 = get_time();
+  #endif
+
+  dpct::device_ext &dev_ct1 = dpct::get_current_device();
+  sycl::queue &q_ct1 = dev_ct1.default_queue();
+
+  #ifdef TIME_IT
+  time1 = get_time();
+  #endif
+
   input_cuda = sycl::malloc_device<float>((in + 1), q_ct1);
   output_hidden_cuda = sycl::malloc_device<float>((hid + 1), q_ct1);
   input_hidden_cuda = sycl::malloc_device<float>((in + 1) * (hid + 1), q_ct1);
   hidden_partial_sum = sycl::malloc_device<float>(num_blocks * WIDTH, q_ct1);
+
+  hidden_delta_cuda = sycl::malloc_device<float>((hid + 1), q_ct1);
+  input_prev_weights_cuda =
+      sycl::malloc_device<float>((in + 1) * (hid + 1), q_ct1);
 
 #endif
 
@@ -113,9 +150,11 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
 #endif
 
 #ifdef GPU
- 
+  #ifdef TIME_IT
+  time2 = get_time();
+  #else
   printf("Performing GPU computation\n");
-  
+  #endif
   //printf("in= %d, hid = %d, numblocks = %d\n", in, hid, num_blocks);
 
   q_ct1.memcpy(input_cuda, net->input_units, (in + 1) * sizeof(float)).wait();
@@ -128,7 +167,9 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
    * limit. To get the device limit, query info::device::max_work_group_size.
    * Adjust the workgroup size if needed.
   */
-std::cout << "kernel 1\n";
+  #ifdef TIME_IT
+  time3 = get_time();
+  #endif
   q_ct1.submit([&](sycl::handler &cgh) {
     sycl::range<2> weight_matrix_range_ct1(16 /*HEIGHT*/, 16 /*WIDTH*/);
 
@@ -151,6 +192,9 @@ std::cout << "kernel 1\n";
   });
 
   dev_ct1.queues_wait_and_throw();
+  #ifdef TIME_IT
+  time4 = get_time();
+  #endif
 
   /*
   DPCT1010:2: SYCL uses exceptions to report errors and does not use the
@@ -162,6 +206,10 @@ std::cout << "kernel 1\n";
   q_ct1.memcpy(partial_sum, hidden_partial_sum,
               num_blocks * WIDTH * sizeof(float))
       .wait();
+
+  #ifdef TIME_IT
+  time5 = get_time();
+  #endif
 
   for (int j = 1; j <= hid; j++) {
     sum = 0.0;
@@ -187,10 +235,12 @@ std::cout << "kernel 1\n";
 
 #ifdef GPU
 
-  hidden_delta_cuda = sycl::malloc_device<float>((hid + 1), q_ct1);
-  input_prev_weights_cuda =
-      sycl::malloc_device<float>((in + 1) * (hid + 1), q_ct1);
-
+//  hidden_delta_cuda = sycl::malloc_device<float>((hid + 1), q_ct1);
+//  input_prev_weights_cuda =
+//      sycl::malloc_device<float>((in + 1) * (hid + 1), q_ct1);
+  #ifdef TIME_IT
+  time6 = get_time();
+  #endif
   q_ct1.memcpy(hidden_delta_cuda, net->hidden_delta, (hid + 1) * sizeof(float))
       .wait();
   q_ct1
@@ -201,13 +251,14 @@ std::cout << "kernel 1\n";
       .memcpy(input_hidden_cuda, input_weights_one_dim,
               (in + 1) * (hid + 1) * sizeof(float))
       .wait();
-
+  #ifdef TIME_IT
+  time7 = get_time();
+  #endif
   /*
   DPCT1049:1: The workgroup size passed to the SYCL kernel may exceed the
    * limit. To get the device limit, query info::device::max_work_group_size.
    * Adjust the workgroup size if needed.
   */
- std::cout << "kernel 2\n";
   q_ct1.submit([&](sycl::handler &cgh) {
     cgh.parallel_for(sycl::nd_range<3>(grid * threads, threads),
                      [=](sycl::nd_item<3> item_ct1) {
@@ -217,27 +268,47 @@ std::cout << "kernel 1\n";
                            item_ct1);
                      });
   });
-
+  #ifdef TIME_IT
+  time8 = get_time();
+  #endif
   q_ct1.memcpy(net->input_units, input_cuda, (in + 1) * sizeof(float)).wait();
   q_ct1
       .memcpy(input_weights_one_dim, input_hidden_cuda,
               (in + 1) * (hid + 1) * sizeof(float))
       .wait();
-
+  #ifdef TIME_IT
+  time9 = get_time();
+  #endif
   sycl::free(input_cuda, q_ct1);
   sycl::free(output_hidden_cuda, q_ct1);
   sycl::free(input_hidden_cuda, q_ct1);
   sycl::free(hidden_partial_sum, q_ct1);
   sycl::free(input_prev_weights_cuda, q_ct1);
   sycl::free(hidden_delta_cuda, q_ct1);
+  #ifdef TIME_IT
+  time10 = get_time();
+  #endif
 
   free(partial_sum);
   free(input_weights_one_dim);
   free(input_weights_prev_one_dim);
 
-#endif   
-  
-  
-  std::cout << "end\n"; 
+  #ifdef TIME_IT
+    long long totalTime = (time5-time0)+(time10-time6);
 
+  printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) (time1-time0) / 1000000, (float) (time1-time0) / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) (time2-time1) / 1000000, (float) (time2-time1) / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) ((time3-time2)+(time7-time6)) / 1000000, (float) ((time3-time2)+(time7-time6)) / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) ((time4-time3)+(time8-time7)) / 1000000, (float) ((time4-time3)+(time8-time7)) / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) ((time5-time4)+(time9-time8)) / 1000000, (float) ((time5-time4)+(time9-time8)) / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) (time10-time9) / 1000000, (float) (time10-time9) / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+  #endif
+#endif   
 }
