@@ -1129,19 +1129,43 @@ int main(int argc, char** argv)
 	std::cout  << (sdkGetAverageTimerValue(&timer)/1000.0)  / iterations << " seconds per iteration" << std::endl;
 
 	std::cout << "Saving solution..." << std::endl;
-	cpOtTime += dump(variables, nel, nelr);
+    #ifdef TIME_IT
+	cpOtTime += 
+    #endif
+    dump(variables, nel, nelr);
 	std::cout << "Saved solution..." << std::endl;
 
 	
 	std::cout << "Cleaning up..." << std::endl;
-	freeTime += dealloc<float>(areas);
-	freeTime += dealloc<int>(elements_surrounding_elements);
-	freeTime += dealloc<float>(normals);
+    #ifdef TIME_IT
+	freeTime += 
+    #endif
+    dealloc<float>(areas);
+    #ifdef TIME_IT
+	freeTime += 
+    #endif
+    dealloc<int>(elements_surrounding_elements);
+    #ifdef TIME_IT
+	freeTime += 
+    #endif
+    dealloc<float>(normals);
 	
-	freeTime += dealloc<float>(variables);
-	freeTime += dealloc<float>(old_variables);
-	freeTime += dealloc<float>(fluxes);
-	freeTime += dealloc<float>(step_factors);
+    #ifdef TIME_IT
+	freeTime += 
+    #endif
+    dealloc<float>(variables);
+    #ifdef TIME_IT
+	freeTime += 
+    #endif
+    dealloc<float>(old_variables);
+    #ifdef TIME_IT
+	freeTime += 
+    #endif
+    dealloc<float>(fluxes);
+    #ifdef TIME_IT
+	freeTime += 
+    #endif
+    dealloc<float>(step_factors);
 
 	std::cout << "Done..." << std::endl;
 
