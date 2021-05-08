@@ -24,6 +24,9 @@
 //#include <cuda.h>
 #include "bfs.hpp"
 
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
 
 
 int no_of_nodes;
@@ -52,13 +55,32 @@ void Usage(int argc, char**argv){
 fprintf(stderr,"Usage: %s <input_file>\n", argv[0]);
 
 }
+
+
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 //Apply BFS on a Graph using CUDA
 ////////////////////////////////////////////////////////////////////////////////
 void BFSGraph( int argc, char** argv)
 {
- dpct::device_ext &dev_ct1 = dpct::get_current_device();
- sycl::queue &q_ct1 = dev_ct1.default_queue();
+ //dpct::device_ext &dev_ct1 = dpct::get_current_device();
+ //sycl::queue &q_ct1 = dev_ct1.default_queue();
+	#ifdef TIME_IT
+  	long long time0;
+	long long time1;
+	long long time2;
+	long long time3;
+	long long time4;
+	long long time5;
+	long long time6;
+  	#endif
 
     char *input_f;
 	if(argc!=2){
@@ -133,60 +155,80 @@ void BFSGraph( int argc, char** argv)
 
 	printf("Read File\n");
 
-	//Copy the Node list to device memory
 	Node* d_graph_nodes;
-        d_graph_nodes = sycl::malloc_device<Node>(no_of_nodes, q_ct1);
-        q_ct1.memcpy(d_graph_nodes, h_graph_nodes, sizeof(Node) * no_of_nodes).wait();
-
-        //Copy the Edge List to device Memory
 	int* d_graph_edges;
-        d_graph_edges = sycl::malloc_device<int>(edge_list_size, q_ct1);
-        q_ct1.memcpy(d_graph_edges, h_graph_edges, sizeof(int) * edge_list_size)
-            .wait();
-
-        //Copy the Mask to device memory
 	bool* d_graph_mask;
-        d_graph_mask = sycl::malloc_device<bool>(no_of_nodes, q_ct1);
-        q_ct1.memcpy(d_graph_mask, h_graph_mask, sizeof(bool) * no_of_nodes).wait();
-
-        bool* d_updating_graph_mask;
-        d_updating_graph_mask = sycl::malloc_device<bool>(no_of_nodes, q_ct1);
-        q_ct1
-            .memcpy(d_updating_graph_mask, h_updating_graph_mask,
-                    sizeof(bool) * no_of_nodes)
-            .wait();
-
-        //Copy the Visited nodes array to device memory
+	bool* d_updating_graph_mask;
 	bool* d_graph_visited;
-        d_graph_visited = sycl::malloc_device<bool>(no_of_nodes, q_ct1);
-        q_ct1
-            .memcpy(d_graph_visited, h_graph_visited,
-                    sizeof(bool) * no_of_nodes)
-            .wait();
+	int* d_cost;
+	bool *d_over;
 
-        // allocate mem for the result on host side
+	// allocate mem for the result on host side
 	int* h_cost = (int*) malloc( sizeof(int)*no_of_nodes);
 	for(int i=0;i<no_of_nodes;i++)
 		h_cost[i]=-1;
 	h_cost[source]=0;
-	
-	// allocate device memory for result
-	int* d_cost;
-        d_cost = sycl::malloc_device<int>(no_of_nodes, q_ct1);
-        q_ct1.memcpy(d_cost, h_cost, sizeof(int) * no_of_nodes).wait();
-
-        //make a bool to check if the execution is over
-	bool *d_over;
-        d_over = sycl::malloc_device<bool>(1, q_ct1);
-
-        printf("Copied Everything to GPU memory\n");
 
 	// setup execution parameters
-        sycl::range<3> grid(1, 1, num_of_blocks);
-        sycl::range<3> threads(1, 1, num_of_threads_per_block);
+    sycl::range<3> grid(1, 1, num_of_blocks);
+    sycl::range<3> threads(1, 1, num_of_threads_per_block);
+	int k=0;
 
-        int k=0;
-	printf("Start traversing the tree\n");
+  #ifdef TIME_IT
+  time0 = get_time();
+  #endif
+	// DEVICE / DRIVER INIT
+	dpct::device_ext &dev_ct1 = dpct::get_current_device();
+ 	sycl::queue &q_ct1 = dev_ct1.default_queue();
+
+  #ifdef TIME_IT
+  time1 = get_time();
+  #endif
+
+	d_graph_nodes = sycl::malloc_device<Node>(no_of_nodes, q_ct1);
+	d_graph_edges = sycl::malloc_device<int>(edge_list_size, q_ct1);
+	d_graph_mask = sycl::malloc_device<bool>(no_of_nodes, q_ct1);
+	d_updating_graph_mask = sycl::malloc_device<bool>(no_of_nodes, q_ct1);
+	d_graph_visited = sycl::malloc_device<bool>(no_of_nodes, q_ct1);
+	// allocate device memory for result
+	d_cost = sycl::malloc_device<int>(no_of_nodes, q_ct1);
+	//make a bool to check if the execution is over
+	d_over = sycl::malloc_device<bool>(1, q_ct1);
+
+	#ifdef TIME_IT
+  	time2 = get_time();
+  	#endif
+
+		//Copy the Node list to device memory
+        q_ct1.memcpy(d_graph_nodes, h_graph_nodes, sizeof(Node) * no_of_nodes).wait();
+
+        //Copy the Edge List to device Memory
+        q_ct1.memcpy(d_graph_edges, h_graph_edges, sizeof(int) * edge_list_size)
+            .wait();
+
+        //Copy the Mask to device memory
+        q_ct1.memcpy(d_graph_mask, h_graph_mask, sizeof(bool) * no_of_nodes).wait();
+
+        
+        q_ct1.memcpy(d_updating_graph_mask, h_updating_graph_mask,
+                    sizeof(bool) * no_of_nodes).wait();
+
+        //Copy the Visited nodes array to device memory
+        q_ct1.memcpy(d_graph_visited, h_graph_visited,
+                    sizeof(bool) * no_of_nodes).wait();
+
+        
+        q_ct1.memcpy(d_cost, h_cost, sizeof(int) * no_of_nodes).wait();
+
+  	#ifdef TIME_IT
+  		time3 = get_time();
+  		#else
+        printf("Copied Everything to GPU memory\n");
+		
+
+
+		printf("Start traversing the tree\n");
+	#endif
 	bool stop;
 	//Call the Kernel untill all the elements of Frontier are not false
 	do
@@ -238,11 +280,28 @@ void BFSGraph( int argc, char** argv)
 	}
 	while(stop);
 
-
+	#ifdef TIME_IT
+  	time4 = get_time();
+  	#else
 	printf("Kernel Executed %d times\n",k);
-
+	#endif
 	// copy result from device to host
         q_ct1.memcpy(h_cost, d_cost, sizeof(int) * no_of_nodes).wait();
+
+  	#ifdef TIME_IT
+  	time5 = get_time();
+ 	#endif	
+
+	sycl::free(d_graph_nodes, q_ct1);
+    sycl::free(d_graph_edges, q_ct1);
+    sycl::free(d_graph_mask, q_ct1);
+    sycl::free(d_updating_graph_mask, q_ct1);
+    sycl::free(d_graph_visited, q_ct1);
+    sycl::free(d_cost, q_ct1);
+ 
+  	#ifdef TIME_IT
+  	time6 = get_time();
+  	#endif
 
         //Store the result into a file
 	FILE *fpo = fopen("result.txt","w");
@@ -259,10 +318,21 @@ void BFSGraph( int argc, char** argv)
 	free( h_updating_graph_mask);
 	free( h_graph_visited);
 	free( h_cost);
-        sycl::free(d_graph_nodes, q_ct1);
-        sycl::free(d_graph_edges, q_ct1);
-        sycl::free(d_graph_mask, q_ct1);
-        sycl::free(d_updating_graph_mask, q_ct1);
-        sycl::free(d_graph_visited, q_ct1);
-        sycl::free(d_cost, q_ct1);
+
+	#ifdef TIME_IT
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) (time1-time0) / 1000000, (float) (time1-time0) / (float) (time6-time0) * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) (time2-time1) / 1000000, (float) (time2-time1) / (float) (time6-time0) * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) (time3-time2) / 1000000, (float) (time3-time2) / (float) (time6-time0) * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) (time4-time3) / 1000000, (float) (time4-time3) / (float) (time6-time0) * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) (time5-time4) / 1000000, (float) (time5-time4) / (float) (time6-time0) * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) (time6-time5) / 1000000, (float) (time6-time5) / (float) (time6-time0) * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) (time6-time0) / 1000000);
+	#endif
+
 }
