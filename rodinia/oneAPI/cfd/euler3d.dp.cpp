@@ -99,10 +99,28 @@
 /*
  * Generic functions
  */
+
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
+
 template <typename T>
+#ifdef TIME_IT
+T* alloc(int N, long long &time)
+#else
 T* alloc(int N)
+#endif
 {
 	T* t;
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
         /*
         DPCT1003:47: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
@@ -110,22 +128,49 @@ T* alloc(int N)
         checkCudaErrors((t = (T *)sycl::malloc_device(
                              sizeof(T) * N, dpct::get_default_queue()),
                          0));
-        return t;
+
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    time = time1-time0;
+    #endif
+    return t;
 }
 
 template <typename T>
+#ifdef TIME_IT
+long long dealloc(T* array)
+#else
 void dealloc(T* array)
+#endif
 {
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
         /*
         DPCT1003:48: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
         */
         checkCudaErrors((sycl::free((void *)array, dpct::get_default_queue()), 0));
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
 
 template <typename T>
+#ifdef TIME_IT
+long long copy(T* dst, T* src, int N)
+#else
 void copy(T* dst, T* src, int N)
+#endif
 {
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
         /*
         DPCT1003:49: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
@@ -134,11 +179,23 @@ void copy(T* dst, T* src, int N)
                              .memcpy((void *)dst, (void *)src, N * sizeof(T))
                              .wait(),
                          0));
+    #ifdef TIME_IT
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
 
 template <typename T>
+#ifdef TIME_IT
+long long upload(T* dst, T* src, int N)
+#else
 void upload(T* dst, T* src, int N)
+#endif
 {
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
         /*
         DPCT1003:50: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
@@ -147,11 +204,23 @@ void upload(T* dst, T* src, int N)
                              .memcpy((void *)dst, (void *)src, N * sizeof(T))
                              .wait(),
                          0));
+    #ifdef TIME_IT
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
 
 template <typename T>
+#ifdef TIME_IT
+long long download(T* dst, T* src, int N)
+#else
 void download(T* dst, T* src, int N)
+#endif
 {
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
         /*
         DPCT1003:51: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
@@ -160,11 +229,21 @@ void download(T* dst, T* src, int N)
                              .memcpy((void *)dst, (void *)src, N * sizeof(T))
                              .wait(),
                          0));
+    #ifdef TIME_IT
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
-
+#ifdef TIME_IT
+long long dump(float* variables, int nel, int nelr)
+#else
 void dump(float* variables, int nel, int nelr)
+#endif
 {
 	float* h_variables = new float[nelr*NVAR];
+    #ifdef TIME_IT
+    long long time =
+    #endif
 	download(h_variables, variables, nelr*NVAR);
 
 	{
@@ -191,6 +270,10 @@ void dump(float* variables, int nel, int nelr)
 		for(int i = 0; i < nel; i++) file << h_variables[i + VAR_DENSITY_ENERGY*nelr] << std::endl;
 	}
 	delete[] h_variables;
+
+    #ifdef TIME_IT
+    return time;
+    #endif
 }
 
 /*
@@ -212,9 +295,20 @@ SYCL_EXTERNAL void cuda_initialize_variables(int nelr, float *variables,
         for(int j = 0; j < NVAR; j++)
 		variables[i + j*nelr] = ff_variable[j];
 }
+
+#ifdef TIME_IT
+long long initialize_variables(int nelr, float* variables)
+#else
 void initialize_variables(int nelr, float* variables)
+#endif
 {
         sycl::range<3> Dg(1, 1, nelr / BLOCK_SIZE_1), Db(1, 1, BLOCK_SIZE_1);
+
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
+
         /*
         DPCT1049:52: The workgroup size passed to the SYCL kernel may exceed the
         limit. To get the device limit, query info::device::max_work_group_size.
@@ -234,7 +328,12 @@ void initialize_variables(int nelr, float* variables)
                                              ff_variable_ptr_ct1);
                                  });
         });
-        getLastCudaError("initialize_variables failed");
+        //getLastCudaError("initialize_variables failed");
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
 
 SYCL_EXTERNAL inline void compute_flux_contribution(
@@ -305,17 +404,27 @@ SYCL_EXTERNAL void cuda_compute_step_factor(int nelr, float *variables,
 
         sycl::float3 velocity; compute_velocity(density, momentum, velocity);
         float speed_sqd      = compute_speed_sqd(velocity);
-	float pressure       = compute_pressure(density, density_energy, speed_sqd);
-	float speed_of_sound = compute_speed_of_sound(density, pressure);
+	    float pressure       = compute_pressure(density, density_energy, speed_sqd);
+	    float speed_of_sound = compute_speed_of_sound(density, pressure);
 
 	// dt = float(0.5f) * sqrtf(areas[i]) /  (||v|| + c).... but when we do time stepping, this later would need to be divided by the area, so we just do it all at once
         step_factors[i] =
             float(0.5f) /
             (sycl::sqrt(areas[i]) * (sycl::sqrt(speed_sqd) + speed_of_sound));
 }
+#ifdef TIME_IT
+long long compute_step_factor(int nelr, float* variables, float* areas, float* step_factors)
+#else
 void compute_step_factor(int nelr, float* variables, float* areas, float* step_factors)
+#endif
 {
         sycl::range<3> Dg(1, 1, nelr / BLOCK_SIZE_2), Db(1, 1, BLOCK_SIZE_2);
+
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
+
         /*
         DPCT1049:53: The workgroup size passed to the SYCL kernel may exceed the
         limit. To get the device limit, query info::device::max_work_group_size.
@@ -329,7 +438,12 @@ void compute_step_factor(int nelr, float* variables, float* areas, float* step_f
                                              step_factors, item_ct1);
                                  });
         });
-        getLastCudaError("compute_step_factor failed");
+        //getLastCudaError("compute_step_factor failed");
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
 
 /*
@@ -536,9 +650,20 @@ void cuda_compute_flux(int nelr, int* elements_surrounding_elements, float* norm
         fluxes[i + (VAR_MOMENTUM + 2) * nelr] = flux_i_momentum.z();
         fluxes[i + VAR_DENSITY_ENERGY*nelr] = flux_i_density_energy;
 }
+
+#ifdef TIME_IT
+long long compute_flux(int nelr, int* elements_surrounding_elements, float* normals, float* variables, float* fluxes)
+#else
 void compute_flux(int nelr, int* elements_surrounding_elements, float* normals, float* variables, float* fluxes)
+#endif
 {
         sycl::range<3> Dg(1, 1, nelr / BLOCK_SIZE_3), Db(1, 1, BLOCK_SIZE_3);
+
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
+
         /*
         DPCT1049:54: The workgroup size passed to the SYCL kernel may exceed the
         limit. To get the device limit, query info::device::max_work_group_size.
@@ -574,7 +699,12 @@ void compute_flux(int nelr, int* elements_surrounding_elements, float* normals, 
                                 ff_flux_contribution_density_energy_ptr_ct1);
                     });
         });
-        getLastCudaError("compute_flux failed");
+        //getLastCudaError("compute_flux failed");
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
 
 SYCL_EXTERNAL void cuda_time_step(int j, int nelr, float *old_variables,
@@ -593,9 +723,20 @@ SYCL_EXTERNAL void cuda_time_step(int j, int nelr, float *old_variables,
 	variables[i + (VAR_MOMENTUM+1)*nelr] = old_variables[i + (VAR_MOMENTUM+1)*nelr] + factor*fluxes[i + (VAR_MOMENTUM+1)*nelr];	
 	variables[i + (VAR_MOMENTUM+2)*nelr] = old_variables[i + (VAR_MOMENTUM+2)*nelr] + factor*fluxes[i + (VAR_MOMENTUM+2)*nelr];	
 }
+
+#ifdef TIME_IT
+long long time_step(int j, int nelr, float* old_variables, float* variables, float* step_factors, float* fluxes)
+#else
 void time_step(int j, int nelr, float* old_variables, float* variables, float* step_factors, float* fluxes)
+#endif
 {
         sycl::range<3> Dg(1, 1, nelr / BLOCK_SIZE_4), Db(1, 1, BLOCK_SIZE_4);
+
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
+
         /*
         DPCT1049:55: The workgroup size passed to the SYCL kernel may exceed the
         limit. To get the device limit, query info::device::max_work_group_size.
@@ -609,7 +750,12 @@ void time_step(int j, int nelr, float* old_variables, float* variables, float* s
                                                         fluxes, item_ct1);
                                  });
         });
-        getLastCudaError("update failed");
+        //getLastCudaError("update failed");
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    return time1-time0;
+    #endif
 }
 
 /*
@@ -617,6 +763,17 @@ void time_step(int j, int nelr, float* old_variables, float* variables, float* s
  */
 int main(int argc, char** argv)
 {
+    #ifdef TIME_IT
+    long long initTime = 0;
+    long long alocTime = 0;
+    long long cpInTime = 0;
+    long long kernTime = 0;
+    long long cpOtTime = 0;
+    long long freeTime = 0;
+    long long auxTime1 = 0;
+    long long auxTime2 = 0;
+    #endif
+
   printf("WG size of kernel:initialize = %d, WG size of kernel:compute_step_factor = %d, WG size of kernel:compute_flux = %d, WG size of kernel:time_step = %d\n", BLOCK_SIZE_1, BLOCK_SIZE_2, BLOCK_SIZE_3, BLOCK_SIZE_4);
 
 	if (argc < 2)
@@ -633,8 +790,17 @@ int main(int argc, char** argv)
         DPCT1003:56: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
         */
+       #ifdef TIME_IT
+        auxTime1 = get_time();
         checkCudaErrors((dpct::dev_mgr::instance().select_device(0), 0));
         checkCudaErrors(dev = dpct::dev_mgr::instance().current_device_id());
+        auxTime2 = get_time();
+        initTime = auxTime2-auxTime1;
+        #else
+        checkCudaErrors((dpct::dev_mgr::instance().select_device(0), 0));
+        checkCudaErrors(dev = dpct::dev_mgr::instance().current_device_id());
+        #endif
+
         /*
         DPCT1003:57: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
@@ -685,12 +851,68 @@ int main(int argc, char** argv)
                 DPCT1003:58: Migrated API does not return error code. (*, 0) is
                 inserted. You may need to rewrite this code.
                 */
+               #ifdef TIME_IT
+                auxTime1 = get_time();
                 checkCudaErrors(
                     (dpct::get_default_queue()
                          .memcpy(ff_variable.get_ptr(), h_ff_variable,
                                  NVAR * sizeof(float))
                          .wait(),
                      0));
+                auxTime2 = get_time();
+                cpInTime += auxTime2-auxTime1;
+                
+                auxTime1 = get_time();
+                checkCudaErrors(
+                    (dpct::get_default_queue()
+                         .memcpy(ff_flux_contribution_momentum_x.get_ptr(),
+                                 &h_ff_flux_contribution_momentum_x,
+                                 sizeof(sycl::float3))
+                         .wait(),
+                     0));
+                auxTime2 = get_time();
+                cpInTime += auxTime2-auxTime1;
+
+                auxTime1 = get_time();
+                checkCudaErrors(
+                    (dpct::get_default_queue()
+                         .memcpy(ff_flux_contribution_momentum_y.get_ptr(),
+                                 &h_ff_flux_contribution_momentum_y,
+                                 sizeof(sycl::float3))
+                         .wait(),
+                     0));
+                auxTime2 = get_time();
+                cpInTime += auxTime2-auxTime1;
+
+                auxTime1 = get_time();
+                checkCudaErrors(
+                    (dpct::get_default_queue()
+                         .memcpy(ff_flux_contribution_momentum_z.get_ptr(),
+                                 &h_ff_flux_contribution_momentum_z,
+                                 sizeof(sycl::float3))
+                         .wait(),
+                     0));
+                auxTime2 = get_time();
+                cpInTime += auxTime2-auxTime1;
+
+                auxTime1 = get_time();
+                checkCudaErrors(
+                    (dpct::get_default_queue()
+                         .memcpy(ff_flux_contribution_density_energy.get_ptr(),
+                                 &h_ff_flux_contribution_density_energy,
+                                 sizeof(sycl::float3))
+                         .wait(),
+                     0));
+                auxTime2 = get_time();
+                cpInTime += auxTime2-auxTime1;
+                #else
+                checkCudaErrors(
+                    (dpct::get_default_queue()
+                         .memcpy(ff_variable.get_ptr(), h_ff_variable,
+                                 NVAR * sizeof(float))
+                         .wait(),
+                     0));
+        
                 /*
                 DPCT1003:59: Migrated API does not return error code. (*, 0) is
                 inserted. You may need to rewrite this code.
@@ -736,6 +958,7 @@ int main(int argc, char** argv)
                                  sizeof(sycl::float3))
                          .wait(),
                      0));
+                #endif
         }
 	int nel;
 	int nelr;
@@ -786,21 +1009,61 @@ int main(int argc, char** argv)
 				for(int k = 0; k < NDIM; k++) h_normals[last + (j + k*NNB)*nelr] = h_normals[last + (j + k*NNB)*nelr];
 			}
 		}
+        #ifdef TIME_IT
+		areas = alloc<float>(nelr, auxTime1);
+        alocTime += auxTime1;
+        
+        cpInTime += upload<float>(areas, h_areas, nelr);
+
+        elements_surrounding_elements = alloc<int>(nelr*NNB, auxTime1);
+        alocTime += auxTime1;
+		cpInTime += upload<int>(elements_surrounding_elements, h_elements_surrounding_elements, nelr*NNB);
+
+		normals = alloc<float>(nelr*NDIM*NNB, auxTime1);
+        alocTime += auxTime1;
+		cpInTime += upload<float>(normals, h_normals, nelr*NDIM*NNB);
+        #else
+        areas = alloc<float>(nelr);
+        upload<float>(areas, h_areas, nelr);
+       
 		
-		areas = alloc<float>(nelr);
-		upload<float>(areas, h_areas, nelr);
 
 		elements_surrounding_elements = alloc<int>(nelr*NNB);
 		upload<int>(elements_surrounding_elements, h_elements_surrounding_elements, nelr*NNB);
 
 		normals = alloc<float>(nelr*NDIM*NNB);
-		upload<float>(normals, h_normals, nelr*NDIM*NNB);
-				
+		upload<float>(normals, h_normals, nelr*NDIM*NNB);		
+        #endif
+
 		delete[] h_areas;
 		delete[] h_elements_surrounding_elements;
 		delete[] h_normals;
 	}
+    #ifdef TIME_IT
+    float* variables = alloc<float>(nelr*NVAR, auxTime1);
+    alocTime += auxTime1;
 
+    kernTime += initialize_variables(nelr, variables);
+
+    float* old_variables = alloc<float>(nelr*NVAR, auxTime1); 
+    alocTime += auxTime1;
+
+	float* fluxes = alloc<float>(nelr*NVAR, auxTime1);
+    alocTime += auxTime1;
+
+	float* step_factors = alloc<float>(nelr, auxTime1);
+    alocTime += auxTime1;
+
+    kernTime += initialize_variables(nelr, old_variables);
+    kernTime += initialize_variables(nelr, fluxes);
+
+    dpct::get_default_queue()
+            .memset((void *)step_factors, 0, sizeof(float) * nelr)
+            .wait();
+        // make sure CUDA isn't still doing something before we start timing
+        dpct::get_current_device().queues_wait_and_throw();
+
+    #else
 	// Create arrays and set initial conditions
 	float* variables = alloc<float>(nelr*NVAR);
 	initialize_variables(nelr, variables);
@@ -818,6 +1081,8 @@ int main(int argc, char** argv)
         // make sure CUDA isn't still doing something before we start timing
         dpct::get_current_device().queues_wait_and_throw();
 
+    #endif
+
         // these need to be computed the first time in order to compute time step
 	std::cout << "Starting..." << std::endl;
 
@@ -831,6 +1096,16 @@ int main(int argc, char** argv)
 	// Begin iterations
 	for(int i = 0; i < iterations; i++)
 	{
+        #ifdef TIME_IT
+        copy<float>(old_variables, variables, nelr*NVAR);
+        kernTime += compute_step_factor(nelr, variables, areas, step_factors);
+
+        for(int j = 0; j < RK; j++)
+		{
+			kernTime += compute_flux(nelr, elements_surrounding_elements, normals, variables, fluxes);
+			kernTime += time_step(j, nelr, old_variables, variables, step_factors, fluxes);
+		}
+        #else
 		copy<float>(old_variables, variables, nelr*NVAR);
 		
 		// for the first iteration we compute the time step
@@ -844,6 +1119,7 @@ int main(int argc, char** argv)
 			time_step(j, nelr, old_variables, variables, step_factors, fluxes);
 			getLastCudaError("time_step failed");			
 		}
+        #endif
 	}
 
         dpct::get_current_device().queues_wait_and_throw();
@@ -853,21 +1129,39 @@ int main(int argc, char** argv)
 	std::cout  << (sdkGetAverageTimerValue(&timer)/1000.0)  / iterations << " seconds per iteration" << std::endl;
 
 	std::cout << "Saving solution..." << std::endl;
-	dump(variables, nel, nelr);
+	cpOtTime += dump(variables, nel, nelr);
 	std::cout << "Saved solution..." << std::endl;
 
 	
 	std::cout << "Cleaning up..." << std::endl;
-	dealloc<float>(areas);
-	dealloc<int>(elements_surrounding_elements);
-	dealloc<float>(normals);
+	freeTime += dealloc<float>(areas);
+	freeTime += dealloc<int>(elements_surrounding_elements);
+	freeTime += dealloc<float>(normals);
 	
-	dealloc<float>(variables);
-	dealloc<float>(old_variables);
-	dealloc<float>(fluxes);
-	dealloc<float>(step_factors);
+	freeTime += dealloc<float>(variables);
+	freeTime += dealloc<float>(old_variables);
+	freeTime += dealloc<float>(fluxes);
+	freeTime += dealloc<float>(step_factors);
 
 	std::cout << "Done..." << std::endl;
+
+
+    #ifdef TIME_IT
+    long long totalTime = initTime + alocTime + cpInTime + kernTime + cpOtTime + freeTime;
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initTime / 1000000, (float) initTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocTime / 1000000, (float) alocTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpInTime / 1000000, (float) cpInTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernTime / 1000000, (float) kernTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpOtTime / 1000000, (float) cpOtTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+	#endif
 
 	return 0;
 }
