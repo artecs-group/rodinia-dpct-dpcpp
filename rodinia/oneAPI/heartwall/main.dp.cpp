@@ -18,6 +18,10 @@
 #include <avilib.h>
 #include <avimod.h>
 
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
+
 //======================================================================================================================================================
 //	STRUCTURES, GLOBAL STRUCTURE VARIABLES
 //======================================================================================================================================================
@@ -109,6 +113,13 @@ void write_data(	char* filename,
 
 }
 
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
 
 //===============================================================================================================================================================================================================
 //===============================================================================================================================================================================================================
@@ -116,9 +127,26 @@ void write_data(	char* filename,
 //===============================================================================================================================================================================================================
 //===============================================================================================================================================================================================================
 int main(int argc, char *argv[]) {
- dpct::device_ext &dev_ct1 = dpct::get_current_device();
- sycl::queue &q_ct1 = dev_ct1.default_queue();
+	#ifdef TIME_IT
+	long long initT=0;
+	long long alocT=0;
+	long long cpinT=0;
+	long long kernT=0;
+	long long cpouT=0;
+	long long freeT=0;
+	long long aux1T;
+	long long aux2T;
+	#endif
 
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
+ 	dpct::device_ext &dev_ct1 = dpct::get_current_device();
+ 	sycl::queue &q_ct1 = dev_ct1.default_queue();
+	#ifdef TIME_IT
+    aux2T = get_time();
+	initT = aux2T-aux1T;
+    #endif
   printf("WG size of kernel = %d \n", NUMBER_THREADS);
 	//======================================================================================================================================================
 	//	VARIABLES
@@ -162,7 +190,14 @@ int main(int argc, char *argv[]) {
 	common.frame_mem = sizeof(fp) * common.frame_elem;
 
 	// pointers
-        common_change.d_frame = (float *)sycl::malloc_device(common.frame_mem, q_ct1);
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
+    common_change.d_frame = (float *)sycl::malloc_device(common.frame_mem, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
         //======================================================================================================================================================
 	// 	CHECK INPUT ARGUMENTS
@@ -216,10 +251,24 @@ int main(int argc, char *argv[]) {
 	common.endoRow[17] = 287;
 	common.endoRow[18] = 311;
 	common.endoRow[19] = 339;
-        common.d_endoRow = (int *)sycl::malloc_device(common.endo_mem, q_ct1);
-        q_ct1.memcpy(common.d_endoRow, common.endoRow, common.endo_mem).wait();
 
-        common.endoCol = (int *)malloc(common.endo_mem);
+	#ifdef TIME_IT
+	aux1T = get_time();
+	#endif
+    common.d_endoRow = (int *)sycl::malloc_device(common.endo_mem, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
+	#ifdef TIME_IT
+	aux1T = get_time();
+	#endif
+    q_ct1.memcpy(common.d_endoRow, common.endoRow, common.endo_mem).wait();
+	#ifdef TIME_IT
+    aux2T = get_time();
+	cpinT += aux2T-aux1T;
+    #endif
+    common.endoCol = (int *)malloc(common.endo_mem);
 	common.endoCol[ 0] = 408;
 	common.endoCol[ 1] = 406;
 	common.endoCol[ 2] = 397;
@@ -240,18 +289,43 @@ int main(int argc, char *argv[]) {
 	common.endoCol[17] = 383;
 	common.endoCol[18] = 401;
 	common.endoCol[19] = 411;
-        common.d_endoCol = (int *)sycl::malloc_device(common.endo_mem, q_ct1);
-        q_ct1.memcpy(common.d_endoCol, common.endoCol, common.endo_mem).wait();
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
+    common.d_endoCol = (int *)sycl::malloc_device(common.endo_mem, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+	aux1T = get_time();
+    #endif
+    q_ct1.memcpy(common.d_endoCol, common.endoCol, common.endo_mem).wait();
+	#ifdef TIME_IT
+    aux2T = get_time();
+	cpinT += aux2T-aux1T;
+    #endif
 
-        common.tEndoRowLoc = (int *)malloc(common.endo_mem * common.no_frames);
+    common.tEndoRowLoc = (int *)malloc(common.endo_mem * common.no_frames);
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         common.d_tEndoRowLoc = (int *)sycl::malloc_device(
             common.endo_mem * common.no_frames, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
         common.tEndoColLoc = (int *)malloc(common.endo_mem * common.no_frames);
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         common.d_tEndoColLoc = (int *)sycl::malloc_device(
             common.endo_mem * common.no_frames, q_ct1);
-
-        //====================================================================================================
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
+    //====================================================================================================
 	//	EPI POINTS
 	//====================================================================================================
 
@@ -290,10 +364,22 @@ int main(int argc, char *argv[]) {
 	common.epiRow[28] = 305;
 	common.epiRow[29] = 331;
 	common.epiRow[30] = 360;
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         common.d_epiRow = (int *)sycl::malloc_device(common.epi_mem, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+	aux1T = get_time();
+    #endif
         q_ct1.memcpy(common.d_epiRow, common.epiRow, common.epi_mem).wait();
+	#ifdef TIME_IT
+    aux2T = get_time();
+	cpinT += aux2T-aux1T;
+    #endif
 
-        common.epiCol = (int *)malloc(common.epi_mem);
+    common.epiCol = (int *)malloc(common.epi_mem);
 	common.epiCol[ 0] = 457;
 	common.epiCol[ 1] = 454;
 	common.epiCol[ 2] = 446;
@@ -325,16 +411,41 @@ int main(int argc, char *argv[]) {
 	common.epiCol[28] = 434;
 	common.epiCol[29] = 448;
 	common.epiCol[30] = 455;
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         common.d_epiCol = (int *)sycl::malloc_device(common.epi_mem, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+	aux1T = get_time();
+    #endif
         q_ct1.memcpy(common.d_epiCol, common.epiCol, common.epi_mem).wait();
-
+	#ifdef TIME_IT
+    aux2T = get_time();
+	cpinT += aux2T-aux1T;
+    #endif
         common.tEpiRowLoc = (int *)malloc(common.epi_mem * common.no_frames);
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         common.d_tEpiRowLoc = (int *)sycl::malloc_device(
             common.epi_mem * common.no_frames, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
         common.tEpiColLoc = (int *)malloc(common.epi_mem * common.no_frames);
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         common.d_tEpiColLoc = (int *)sycl::malloc_device(
             common.epi_mem * common.no_frames, q_ct1);
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
         //====================================================================================================
 	//	ALL POINTS
@@ -357,12 +468,18 @@ int main(int argc, char *argv[]) {
 	//======================================================================================================================================================
 
 	// common
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         common.d_endoT = (float *)sycl::malloc_device(
             common.in_mem * common.endoPoints, q_ct1);
         common.d_epiT = (float *)sycl::malloc_device(
             common.in_mem * common.epiPoints, q_ct1);
-
-        //======================================================================================================================================================
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
+    //======================================================================================================================================================
 	//	SPECIFIC TO ENDO OR EPI TO BE SET HERE
 	//======================================================================================================================================================
 
@@ -403,9 +520,16 @@ int main(int argc, char *argv[]) {
 	common.in2_mem = sizeof(float) * common.in2_elem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
-                unique[i].d_in2 = (float *)sycl::malloc_device(common.in2_mem, q_ct1);
-        }
+        unique[i].d_in2 = (float *)sycl::malloc_device(common.in2_mem, q_ct1);
+    }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//======================================================================================================================================================
 	// 	CONVOLUTION
@@ -420,9 +544,16 @@ int main(int argc, char *argv[]) {
 	common.joffset = 0;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_conv = (float *)sycl::malloc_device(common.conv_mem, q_ct1);
-        }
+	}
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//======================================================================================================================================================
 	// 	CUMULATIVE SUM
@@ -442,10 +573,17 @@ int main(int argc, char *argv[]) {
 	common.in2_pad_cumv_mem = sizeof(float) * common.in2_pad_cumv_elem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in2_pad_cumv = (float *)sycl::malloc_device(
                     common.in2_pad_cumv_mem, q_ct1);
-        }
+    }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//====================================================================================================
 	// 	SELECTION
@@ -462,10 +600,17 @@ int main(int argc, char *argv[]) {
 	common.in2_pad_cumv_sel_mem = sizeof(float) * common.in2_pad_cumv_sel_elem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in2_pad_cumv_sel = (float *)sycl::malloc_device(
                     common.in2_pad_cumv_sel_mem, q_ct1);
-        }
+    }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//====================================================================================================
 	// 	SELECTION	2, SUBTRACTION, HORIZONTAL CUMULATIVE SUM
@@ -482,10 +627,17 @@ int main(int argc, char *argv[]) {
 	common.in2_sub_cumh_mem = sizeof(float) * common.in2_sub_cumh_elem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in2_sub_cumh = (float *)sycl::malloc_device(
                     common.in2_sub_cumh_mem, q_ct1);
-        }
+    }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//====================================================================================================
 	// 	SELECTION
@@ -502,10 +654,17 @@ int main(int argc, char *argv[]) {
 	common.in2_sub_cumh_sel_mem = sizeof(float) * common.in2_sub_cumh_sel_elem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in2_sub_cumh_sel = (float *)sycl::malloc_device(
                     common.in2_sub_cumh_sel_mem, q_ct1);
         }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//====================================================================================================
 	//	SELECTION 2, SUBTRACTION
@@ -522,10 +681,17 @@ int main(int argc, char *argv[]) {
 	common.in2_sub2_mem = sizeof(float) * common.in2_sub2_elem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in2_sub2 =
                     (float *)sycl::malloc_device(common.in2_sub2_mem, q_ct1);
         }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//======================================================================================================================================================
 	//	CUMULATIVE SUM 2
@@ -542,9 +708,16 @@ int main(int argc, char *argv[]) {
 	common.in2_sqr_mem = common.in2_mem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in2_sqr = (float *)sycl::malloc_device(common.in2_sqr_mem, q_ct1);
         }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//====================================================================================================
 	//	SELECTION 2, SUBTRACTION
@@ -557,10 +730,17 @@ int main(int argc, char *argv[]) {
 	common.in2_sqr_sub2_mem = common.in2_sub2_mem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in2_sqr_sub2 = (float *)sycl::malloc_device(
                     common.in2_sqr_sub2_mem, q_ct1);
         }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//======================================================================================================================================================
 	//	FINAL
@@ -573,10 +753,16 @@ int main(int argc, char *argv[]) {
 	common.in_sqr_mem = common.in_mem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_in_sqr = (float *)sycl::malloc_device(common.in_sqr_mem, q_ct1);
         }
-
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 	//======================================================================================================================================================
 	//	TEMPLATE MASK CREATE
 	//======================================================================================================================================================
@@ -588,9 +774,16 @@ int main(int argc, char *argv[]) {
 	common.tMask_mem = sizeof(float) * common.tMask_elem;
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_tMask = (float *)sycl::malloc_device(common.tMask_mem, q_ct1);
         }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//======================================================================================================================================================
 	//	POINT MASK INITIALIZE
@@ -621,10 +814,17 @@ int main(int argc, char *argv[]) {
 	}
 
 	// pointers
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 unique[i].d_mask_conv =
                     (float *)sycl::malloc_device(common.mask_conv_mem, q_ct1);
         }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	alocT += aux2T-aux1T;
+    #endif
 
 	//======================================================================================================================================================
 	//	KERNEL
@@ -640,15 +840,20 @@ int main(int argc, char *argv[]) {
         blocks[2] = common.allPoints; // define the number of blocks in the grid
         blocks[1] = 1;
 
-        //====================================================================================================
+    //====================================================================================================
 	//	COPY ARGUMENTS
 	//====================================================================================================
-
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
         q_ct1.memcpy(d_common.get_ptr(), &common, sizeof(params_common)).wait();
-        q_ct1
-            .memcpy(d_unique.get_ptr(), &unique,
+        q_ct1.memcpy(d_unique.get_ptr(), &unique,
                     sizeof(params_unique) * ALL_POINTS)
             .wait();
+	#ifdef TIME_IT
+    aux2T = get_time();
+	cpinT += aux2T-aux1T;
+    #endif
 
         //====================================================================================================
 	//	PRINT FRAME PROGRESS START
@@ -671,12 +876,18 @@ int main(int argc, char *argv[]) {
 										1);							// converted
 
 		// copy frame to GPU memory
+		#ifdef TIME_IT
+    	aux1T = get_time();
+    	#endif
                 q_ct1.memcpy(common_change.d_frame, frame, common.frame_mem).wait();
-                q_ct1
-                    .memcpy(d_common_change.get_ptr(), &common_change,
+                q_ct1.memcpy(d_common_change.get_ptr(), &common_change,
                             sizeof(params_common_change))
                     .wait();
-
+		#ifdef TIME_IT
+    	aux2T = get_time();
+		cpinT += aux2T-aux1T;
+		aux1T = get_time();
+    	#endif
                 // launch GPU kernel
                 /*
                 DPCT1049:0: The workgroup size passed to the SYCL kernel may
@@ -736,7 +947,10 @@ int main(int argc, char *argv[]) {
                                         d_in_mod_temp_acc_ct1.get_pointer());
                             });
                 });
-
+			#ifdef TIME_IT
+    		aux2T = get_time();
+			kernT += aux2T-aux1T;
+    		#endif
                 // free frame after each loop iteration, since AVI library allocates memory for every frame fetched
 		free(frame);
 
@@ -756,7 +970,9 @@ int main(int argc, char *argv[]) {
 	//====================================================================================================
 	//	OUTPUT
 	//====================================================================================================
-
+		#ifdef TIME_IT
+    	aux1T = get_time();
+    	#endif
         q_ct1
             .memcpy(common.tEndoRowLoc, common.d_tEndoRowLoc,
                     common.endo_mem * common.no_frames)
@@ -774,7 +990,10 @@ int main(int argc, char *argv[]) {
             .memcpy(common.tEpiColLoc, common.d_tEpiColLoc,
                     common.epi_mem * common.no_frames)
             .wait();
-
+		#ifdef TIME_IT
+   	 	aux2T = get_time();
+		cpouT += aux2T-aux1T;
+    	#endif
 #ifdef OUTPUT
 
 	//==================================================50
@@ -807,38 +1026,57 @@ int main(int argc, char *argv[]) {
 	//====================================================================================================
 
 	// frame
+		#ifdef TIME_IT
+    	aux1T = get_time();
+    	#endif
         sycl::free(common_change.d_frame, q_ct1);
+		#ifdef TIME_IT
+    	aux2T = get_time();
+		freeT += aux2T-aux1T;
+    	#endif
 
         // endo points
 	free(common.endoRow);
 	free(common.endoCol);
 	free(common.tEndoRowLoc);
 	free(common.tEndoColLoc);
-
+		#ifdef TIME_IT
+    	aux1T = get_time();
+    	#endif
         sycl::free(common.d_endoRow, q_ct1);
         sycl::free(common.d_endoCol, q_ct1);
         sycl::free(common.d_tEndoRowLoc, q_ct1);
         sycl::free(common.d_tEndoColLoc, q_ct1);
 
         sycl::free(common.d_endoT, q_ct1);
-
+		#ifdef TIME_IT
+    	aux2T = get_time();
+		freeT += aux2T-aux1T;
+    	#endif
         // epi points
 	free(common.epiRow);
 	free(common.epiCol);
 	free(common.tEpiRowLoc);
 	free(common.tEpiColLoc);
-
+		#ifdef TIME_IT
+    	aux1T = get_time();
+    	#endif
         sycl::free(common.d_epiRow, q_ct1);
         sycl::free(common.d_epiCol, q_ct1);
         sycl::free(common.d_tEpiRowLoc, q_ct1);
         sycl::free(common.d_tEpiColLoc, q_ct1);
 
         sycl::free(common.d_epiT, q_ct1);
-
+		#ifdef TIME_IT
+    	aux2T = get_time();
+		freeT += aux2T-aux1T;
+    	#endif
         //====================================================================================================
 	//	POINTERS
 	//====================================================================================================
-
+	#ifdef TIME_IT
+    aux1T = get_time();
+    #endif
 	for(i=0; i<common.allPoints; i++){
                 sycl::free(unique[i].d_in2, q_ct1);
 
@@ -854,8 +1092,28 @@ int main(int argc, char *argv[]) {
 
                 sycl::free(unique[i].d_tMask, q_ct1);
                 sycl::free(unique[i].d_mask_conv, q_ct1);
-        }
+    }
+	#ifdef TIME_IT
+    aux2T = get_time();
+	freeT += aux2T-aux1T;
+    #endif
 
+	#ifdef TIME_IT
+	long long totalTime = initT+alocT+cpinT+kernT+cpouT+freeT;
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initT / 1000000, (float) initT / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocT / 1000000, (float) alocT / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpinT / 1000000, (float) cpinT / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernT / 1000000, (float) kernT / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouT / 1000000, (float) cpouT / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeT / 1000000, (float) freeT / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+	#endif
 }
 
 //===============================================================================================================================================================================================================
