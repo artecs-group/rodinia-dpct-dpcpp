@@ -387,6 +387,15 @@ void Fan2(float *m_cuda, float *a_cuda, float *b_cuda,int Size, int j1, int t,
         }
 }
 
+
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 /*------------------------------------------------------
  ** ForwardSub() -- Forward substitution of Gaussian
  ** elimination.
@@ -394,11 +403,28 @@ void Fan2(float *m_cuda, float *a_cuda, float *b_cuda,int Size, int j1, int t,
  */
 void ForwardSub(){
         try{
-                dpct::device_ext &dev_ct1 = dpct::get_current_device();
-                sycl::queue &q_ct1 = dev_ct1.default_queue();
+                #ifdef TIME_IT
+                long long time0;
+	        long long time1;
+	        long long time2;
+	        long long time3;
+	        long long time4;
+	        long long time5;
+	        long long time6;
+                #endif
+
                 int t;
                 float *m_cuda,*a_cuda,*b_cuda;
 
+                #ifdef TIME_IT
+                time0 = get_time();
+                #endif
+                dpct::device_ext &dev_ct1 = dpct::get_current_device();
+                sycl::queue &q_ct1 = dev_ct1.default_queue();
+                
+                #ifdef TIME_IT
+                time1 = get_time();
+                #endif
                 // allocate memory on GPU
                 m_cuda = sycl::malloc_device<float>(Size * Size, q_ct1);
 
@@ -406,10 +432,18 @@ void ForwardSub(){
 
                 b_cuda = sycl::malloc_device<float>(Size, q_ct1);
 
+                #ifdef TIME_IT
+                time2 = get_time();
+                #endif
+
                 // copy memory to GPU
                 q_ct1.memcpy(m_cuda, m, Size * Size * sizeof(float)).wait();
                 q_ct1.memcpy(a_cuda, a, Size * Size * sizeof(float)).wait();
                 q_ct1.memcpy(b_cuda, b, Size * sizeof(float)).wait();
+
+                #ifdef TIME_IT
+                time3 = get_time();
+                #endif
 
                 int block_size,grid_size;
 
@@ -474,13 +508,40 @@ void ForwardSub(){
                 gettimeofday(&time_end, NULL);
                 totalKernelTime = (time_end.tv_sec * 1000000 + time_end.tv_usec) - (time_start.tv_sec * 1000000 + time_start.tv_usec);
 
+                #ifdef TIME_IT
+                time4 = get_time();
+                #endif
                 // copy memory back to CPU
                 q_ct1.memcpy(m, m_cuda, Size * Size * sizeof(float)).wait();
                 q_ct1.memcpy(a, a_cuda, Size * Size * sizeof(float)).wait();
                 q_ct1.memcpy(b, b_cuda, Size * sizeof(float)).wait();
+                #ifdef TIME_IT
+                time5 = get_time();
+                #endif
                 sycl::free(m_cuda, q_ct1);
                 sycl::free(a_cuda, q_ct1);
                 sycl::free(b_cuda, q_ct1);
+                #ifdef TIME_IT
+                time6 = get_time();
+                #endif
+
+                #ifdef TIME_IT
+                long long totalTime = (time3-time0)+(time6-time4)+totalKernelTime;
+                printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+                printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	                (float) (time1-time0) / 1000000, (float) (time1-time0) / (float) totalTime * 100);
+                printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) (time2-time1) / 1000000, (float) (time2-time1) / (float) totalTime * 100);
+                printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) (time3-time2) / 1000000, (float) (time3-time2) / (float) totalTime * 100);
+
+                printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) totalKernelTime / 1000000, (float) totalKernelTime / (float) totalTime * 100);
+
+                printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				        (float) (time5-time4) / 1000000, (float) (time5-time4) / (float) totalTime * 100);
+                printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) (time6-time5) / 1000000, (float) (time6-time5) / (float) totalTime * 100);
+
+                printf("Total time:\n");
+                printf("%.12f s\n", 												(float) totalTime / 1000000);
+                #endif
+
         }
         catch (sycl::exception const &e) {
                 std::cerr << e.what() << "Exception caught at file:" << __FILE__
