@@ -124,7 +124,7 @@ T* alloc(int N)
 	checkCudaErrors(cudaMalloc((void**)&t, sizeof(T)*N));
 
 	#ifdef TIME_IT
-    dpct::get_current_device().queues_wait_and_throw();
+    cudaThreadSynchronize();
     time1 = get_time();
     time = time1-time0;
     #endif
@@ -147,7 +147,7 @@ void dealloc(T* array)
 	checkCudaErrors(cudaFree((void*)array));
 
 	#ifdef TIME_IT
-    dpct::get_current_device().queues_wait_and_throw();
+    cudaThreadSynchronize();
     time1 = get_time();
     return time1-time0;
     #endif

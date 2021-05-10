@@ -10,6 +10,8 @@ ifeq ($(shell uname -m), x86_64)
      endif
 endif
 
+FLAGS = -arch sm_61
+
 # 'make time=1' compiles for time measurement
 ifeq ($(time),1)
 	FLAGS += -DTIME_IT
