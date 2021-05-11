@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
 
 #ifdef RD_WG_SIZE_0_0                                                            
         #define BLOCK_SIZE RD_WG_SIZE_0_0                                        
@@ -222,6 +225,14 @@ void calculate_temp(int iteration,  //number of iteration
    compute N time steps
 */
 
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 int compute_tran_temp(float *MatrixPower,float *MatrixTemp[2], int col, int row, \
 		int total_iterations, int num_iterations, int blockCols, int blockRows, int borderCols, int borderRows) 
 {
@@ -321,8 +332,28 @@ int main(int argc, char** argv)
 
 void run(int argc, char** argv)
 {
+
+    #ifdef TIME_IT
+    long long initTime;
+    long long alocTime = 0;
+    long long cpinTime = 0;
+    long long kernTime = 0;
+    long long cpouTime = 0;
+    long long freeTime = 0;
+    long long aux1Time;
+    long long aux2Time;
+    #endif
+
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
  dpct::device_ext &dev_ct1 = dpct::get_current_device();
  sycl::queue &q_ct1 = dev_ct1.default_queue();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    initTime = aux2Time-aux1Time;
+    #endif
+
     int size;
     int grid_rows,grid_cols;
     float *FilesavingTemp,*FilesavingPower,*MatrixOut; 
@@ -368,22 +399,81 @@ void run(int argc, char** argv)
     readinput(FilesavingPower, grid_rows, grid_cols, pfile);
 
     float *MatrixTemp[2], *MatrixPower;
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     MatrixTemp[0] = sycl::malloc_device<float>(size, q_ct1);
     MatrixTemp[1] = sycl::malloc_device<float>(size, q_ct1);
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    alocTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
     q_ct1.memcpy(MatrixTemp[0], FilesavingTemp, sizeof(float) * size).wait();
-
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpinTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
     MatrixPower = sycl::malloc_device<float>(size, q_ct1);
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    alocTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
     q_ct1.memcpy(MatrixPower, FilesavingPower, sizeof(float) * size).wait();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpinTime += aux2Time-aux1Time;
+    #endif
     printf("Start computing the transient temperature\n");
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     int ret = compute_tran_temp(MatrixPower,MatrixTemp,grid_cols,grid_rows, \
-	 total_iterations,pyramid_height, blockCols, blockRows, borderCols, borderRows);
+	total_iterations,pyramid_height, blockCols, blockRows, borderCols, borderRows);
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    kernTime += aux2Time-aux1Time;
+    #endif
 	printf("Ending simulation\n");
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     q_ct1.memcpy(MatrixOut, MatrixTemp[ret], sizeof(float) * size).wait();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpouTime += aux2Time-aux1Time;
+    #endif
 
     writeoutput(MatrixOut,grid_rows, grid_cols, ofile);
 
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     sycl::free(MatrixPower, q_ct1);
     sycl::free(MatrixTemp[0], q_ct1);
     sycl::free(MatrixTemp[1], q_ct1);
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    freeTime += aux2Time-aux1Time;
+    #endif
     free(MatrixOut);
+
+    #ifdef TIME_IT
+    long long totalTime = initTime + alocTime + cpinTime + kernTime + cpouTime + freeTime;
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initTime / 1000000, (float) initTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocTime / 1000000, (float) alocTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpinTime / 1000000, (float) cpinTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernTime / 1000000, (float) kernTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouTime / 1000000, (float) cpouTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+	#endif
 }
