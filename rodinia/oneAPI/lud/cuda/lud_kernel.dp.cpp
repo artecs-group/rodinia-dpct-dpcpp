@@ -2,6 +2,10 @@
 #include <dpct/dpct.hpp>
 #include <stdio.h>
 
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
+
 #ifdef RD_WG_SIZE_0_0
         #define BLOCK_SIZE RD_WG_SIZE_0_0
 #elif defined(RD_WG_SIZE_0)
@@ -234,14 +238,31 @@ lud_internal(float *m, int matrix_dim, int offset, sycl::nd_item<3> item_ct1,
     item_ct1.get_local_id(2)] -= sum;
 }
 
+#ifdef TIME_IT
+long long get_time1() {
+        struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
 
-void lud_cuda(float *m, int matrix_dim)
+#ifdef TIME_IT
+long long
+#else
+void 
+#endif
+lud_cuda(float *m, int matrix_dim)
 {
     dpct::device_ext &dev_ct1 = dpct::get_current_device();
     sycl::queue &q_ct1 = dev_ct1.default_queue();
   int i=0;
   sycl::range<3> dimBlock(1, BLOCK_SIZE, BLOCK_SIZE);
   float *m_debug = (float*)malloc(matrix_dim*matrix_dim*sizeof(float));
+
+  #ifdef TIME_IT
+  long long time2;
+  long long time1 = get_time1();
+  #endif
 
   for (i=0; i < matrix_dim-BLOCK_SIZE; i += BLOCK_SIZE) {
       q_ct1.submit([&](sycl::handler &cgh) {
@@ -338,5 +359,10 @@ void lud_cuda(float *m, int matrix_dim)
                                            shadow_acc_ct1, shadow_range_ct1));
                        });
    });
+
+   #ifdef TIME_IT
+   time2 = get_time1();
+   return time2-time1;
+   #endif
 }
 
