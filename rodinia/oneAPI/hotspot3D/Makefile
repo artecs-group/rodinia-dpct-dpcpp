@@ -10,10 +10,13 @@ EXE = 3D
 
 OUTPUT = *.out
 
-FLAGS = -g # -G -arch sm_20 --ptxas-options=-v
+# 'make time=1' compiles for time measurement
+ifeq ($(time),1)
+	FLAGS = -DTIME_IT
+endif
+
 release: $(SRC)
 	$(CC) $(KERNEL_DIM) $(FLAGS) $(SRC) -o $(EXE) 
-#-I$(INCLUDE) -L$(CUDA_LIB_DIR) 
 
 enum: $(SRC)
 	$(CC) $(KERNEL_DIM) $(FLAGS) -deviceemu $(SRC) -o $(EXE)

@@ -64,8 +64,26 @@ void hotspot_opt1(float *p, float *tIn, float *tOut,
         float Rx, float Ry, float Rz, 
         float dt, int numiter)
 {
+    #ifdef TIME_IT
+    long long initTime;
+    long long alocTime = 0;
+    long long cpinTime = 0;
+    long long kernTime = 0;
+    long long cpouTime = 0;
+    long long freeTime = 0;
+    long long aux1Time;
+    long long aux2Time;
+    #endif
+
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
  dpct::device_ext &dev_ct1 = dpct::get_current_device();
  sycl::queue &q_ct1 = dev_ct1.default_queue();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    initTime = aux2Time-aux1Time;
+    #endif
     float ce, cw, cn, cs, ct, cb, cc;
     float stepDivCap = dt / Cap;
     ce = cw =stepDivCap/ Rx;
@@ -76,11 +94,24 @@ void hotspot_opt1(float *p, float *tIn, float *tOut,
 
     size_t s = sizeof(float) * nx * ny * nz;  
     float  *tIn_d, *tOut_d, *p_d;
+
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     p_d = (float *)sycl::malloc_device(s, q_ct1);
     tIn_d = (float *)sycl::malloc_device(s, q_ct1);
     tOut_d = (float *)sycl::malloc_device(s, q_ct1);
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    alocTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
     q_ct1.memcpy(tIn_d, tIn, s).wait();
     q_ct1.memcpy(p_d, p, s).wait();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpinTime += aux2Time-aux1Time;
+    #endif
 
     /*
     DPCT1004:0: Could not generate replacement.
@@ -111,12 +142,48 @@ void hotspot_opt1(float *p, float *tIn, float *tOut,
     }
     dev_ct1.queues_wait_and_throw();
     long long stop = get_time();
+    #ifdef TIME_IT
+    kernTime = stop-start;
+    #endif
     float time = (float)((stop - start)/(1000.0 * 1000.0));
     printf("Time: %.3f (s)\n",time);
+
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     q_ct1.memcpy(tOut, tOut_d, s).wait();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpouTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
+
     sycl::free(p_d, q_ct1);
     sycl::free(tIn_d, q_ct1);
     sycl::free(tOut_d, q_ct1);
+
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    freeTime += aux2Time-aux1Time;
+    #endif
+
+    #ifdef TIME_IT
+    long long totalTime = initTime + alocTime + cpinTime + kernTime + cpouTime + freeTime;
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initTime / 1000000, (float) initTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocTime / 1000000, (float) alocTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpinTime / 1000000, (float) cpinTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernTime / 1000000, (float) kernTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouTime / 1000000, (float) cpouTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+	#endif
+
     return;
 }
 
