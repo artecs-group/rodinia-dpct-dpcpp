@@ -6,7 +6,9 @@
 #include <string.h>
 #include <math.h>
 #include "needle.h"
-
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
 // includes, kernels
 #include "needle_kernel.dp.cpp"
 
@@ -42,6 +44,14 @@ int blosum62[24][24] = {
 {-4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4,  1}
 };
 
+#ifdef TIME_IT
+long long get_time() {
+        struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 // Program main
 ////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +60,7 @@ int main(int argc, char **argv) try {
 
     version = dpct::get_current_device().get_info<sycl::info::device::version>();
     
-    std::cout << "CUDA driver version: " << version << std::endl;
+    std::cout << "oneAPI version: " << version << std::endl;
 
     printf("WG size of kernel = %d \n", BLOCK_SIZE);
     runTest( argc, argv);
@@ -73,8 +83,27 @@ void usage(int argc, char **argv)
 
 void runTest(int argc, char** argv)
 {
-dpct::device_ext &dev_ct1 = dpct::get_current_device();
-sycl::queue &q_ct1 = dev_ct1.default_queue();
+    #ifdef TIME_IT
+    long long initTime;
+    long long alocTime = 0;
+    long long cpinTime = 0;
+    long long kernTime = 0;
+    long long cpouTime = 0;
+    long long freeTime = 0;
+    long long aux1Time;
+    long long aux2Time;
+    #endif
+
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
+    dpct::device_ext &dev_ct1 = dpct::get_current_device();
+    sycl::queue &q_ct1 = dev_ct1.default_queue();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    initTime = aux2Time-aux1Time;
+    #endif
+
     int max_rows, max_cols, penalty;
     int *input_itemsets, *output_itemsets, *referrence;
     int *matrix_cuda,  *referrence_cuda;
@@ -141,11 +170,23 @@ sycl::queue &q_ct1 = dev_ct1.default_queue();
 
 
     size = max_cols * max_rows;
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     referrence_cuda = sycl::malloc_device<int>(size, q_ct1);
     matrix_cuda = sycl::malloc_device<int>(size, q_ct1);
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    alocTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
 
     q_ct1.memcpy(referrence_cuda, referrence, sizeof(int) * size).wait();
     q_ct1.memcpy(matrix_cuda, input_itemsets, sizeof(int) * size).wait();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpinTime += aux2Time-aux1Time;
+    #endif 
 
     sycl::range<3> dimGrid(1, 1, 1);
     sycl::range<3> dimBlock(1, 1, BLOCK_SIZE);
@@ -153,6 +194,9 @@ sycl::queue &q_ct1 = dev_ct1.default_queue();
 
     printf("Processing top-left matrix\n");
     //process top-left matrix
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     for( int i = 1 ; i <= block_width ; i++){
         dimGrid[2] = i;
         dimGrid[1] = 1;
@@ -209,8 +253,18 @@ sycl::queue &q_ct1 = dev_ct1.default_queue();
                              });
         });
     }
-
+    
+  #ifdef TIME_IT
+  dpct::get_current_device().queues_wait_and_throw();
+  aux2Time = get_time();
+  kernTime += aux2Time-aux1Time;
+  aux1Time = get_time();
+  #endif
     q_ct1.memcpy(output_itemsets, matrix_cuda, sizeof(int) * size).wait();
+  #ifdef TIME_IT
+  aux2Time = get_time();
+  cpouTime += aux2Time-aux1Time;
+  #endif
 
 #define TRACEBACK
 #ifdef TRACEBACK
@@ -276,12 +330,33 @@ sycl::queue &q_ct1 = dev_ct1.default_queue();
     fclose(fpo);
 
 #endif
-
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     sycl::free(referrence_cuda, q_ct1);
     sycl::free(matrix_cuda, q_ct1);
-
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    freeTime += aux2Time-aux1Time;
+    #endif
     free(referrence);
     free(input_itemsets);
     free(output_itemsets);
 
+    #ifdef TIME_IT
+    long long totalTime = initTime + alocTime + cpinTime + kernTime + cpouTime + freeTime;
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initTime / 1000000, (float) initTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocTime / 1000000, (float) alocTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpinTime / 1000000, (float) cpinTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernTime / 1000000, (float) kernTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouTime / 1000000, (float) cpouTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+	#endif
 }
