@@ -361,6 +361,7 @@ lud_cuda(float *m, int matrix_dim)
    });
 
    #ifdef TIME_IT
+   q_ct1.wait();
    time2 = get_time1();
    return time2-time1;
    #endif
