@@ -64,16 +64,35 @@ void euclid(LatLong *d_locations, float *d_distances, int numRecords,float lat, 
         }
 }
 
+
+long long get_time() {
+  struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+
 /**
 * This program finds the k-nearest neighbors
 **/
 
 int main(int argc, char* argv[])
 {
-  
+  long long initTime;
+  long long alocTime = 0;
+  long long cpinTime = 0;
+  long long kernTime = 0;
+  long long cpouTime = 0;
+  long long freeTime = 0;
+  long long aux1Time;
+  long long aux2Time;
+
+  aux1Time = get_time();
   dpct::device_ext &dev_ct1 = dpct::get_current_device();
   sycl::queue &q_ct1 = dev_ct1.default_queue();
-        int    i=0;
+  aux2Time = get_time();
+  initTime = aux2Time-aux1Time;
+
+  int i=0;
 	float lat, lng;
 	int quiet=0,timing=0,platform=0,device=0;
 
@@ -151,14 +170,18 @@ int main(int argc, char* argv[])
 	* Allocate memory on host and device
 	*/
 	distances = (float *)malloc(sizeof(float) * numRecords);
-        d_locations = sycl::malloc_device<LatLong>(numRecords, q_ct1);
-        d_distances = sycl::malloc_device<float>(numRecords, q_ct1);
-
+  aux1Time = get_time();
+  d_locations = sycl::malloc_device<LatLong>(numRecords, q_ct1);
+  d_distances = sycl::malloc_device<float>(numRecords, q_ct1);
+  aux2Time = get_time();
+  alocTime += aux2Time-aux1Time;
    /**
     * Transfer data from host to device
     */
-    q_ct1.memcpy(d_locations, &locations[0], sizeof(LatLong) * numRecords).wait();
-
+  aux1Time = get_time();
+  q_ct1.memcpy(d_locations, &locations[0], sizeof(LatLong) * numRecords).wait();
+  aux2Time = get_time();
+  cpinTime += aux2Time-aux1Time;
     /**
     * Execute kernel
     */
@@ -167,6 +190,7 @@ int main(int argc, char* argv[])
     limit. To get the device limit, query info::device::max_work_group_size.
     Adjust the workgroup size if needed.
     */
+  aux1Time = get_time();
     q_ct1.submit([&](sycl::handler &cgh) {
         cgh.parallel_for(
             sycl::nd_range<3>(gridDim * sycl::range<3>(1, 1, threadsPerBlock),
@@ -178,9 +202,14 @@ int main(int argc, char* argv[])
     });
     dev_ct1.queues_wait_and_throw();
 
-    //Copy data from device memory to host memory
-    q_ct1.memcpy(distances, d_distances, sizeof(float) * numRecords).wait();
+  aux2Time = get_time();
+  kernTime += aux2Time-aux1Time;
 
+    //Copy data from device memory to host memory
+  aux1Time = get_time();
+    q_ct1.memcpy(distances, d_distances, sizeof(float) * numRecords).wait();
+  aux2Time = get_time();
+  cpouTime += aux2Time-aux1Time;
         // find the resultsCount least distances
     findLowest(records,distances,numRecords,resultsCount);
 
@@ -191,8 +220,29 @@ int main(int argc, char* argv[])
     }
     free(distances);
     //Free memory
-        sycl::free(d_locations, q_ct1);
-        sycl::free(d_distances, q_ct1);
+    aux1Time = get_time();
+      sycl::free(d_locations, q_ct1);
+      sycl::free(d_distances, q_ct1);
+    aux2Time = get_time();
+    freeTime += aux2Time-aux1Time;
+
+    if(timing){
+      long long totalTime = initTime + alocTime + cpinTime + kernTime + cpouTime + freeTime;
+    	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	    printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initTime / 1000000, (float) initTime / (float) totalTime * 100);
+      printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocTime / 1000000, (float) alocTime / (float) totalTime * 100);
+      printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpinTime / 1000000, (float) cpinTime / (float) totalTime * 100);
+
+      printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernTime / 1000000, (float) kernTime / (float) totalTime * 100);
+
+      printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouTime / 1000000, (float) cpouTime / (float) totalTime * 100);
+      printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
+
+      printf("Total time:\n");
+      printf("%.12f s\n", 												(float) totalTime / 1000000);
+
+    }
 }
 
 int loadData(char *filename,std::vector<Record> &records,std::vector<LatLong> &locations){
