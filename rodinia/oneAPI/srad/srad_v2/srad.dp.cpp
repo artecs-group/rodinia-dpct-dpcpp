@@ -6,7 +6,9 @@
 #include <string.h>
 #include <math.h>
 #include "srad.h"
-
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
 // includes, project
 
 // includes, kernels
@@ -40,12 +42,30 @@ main( int argc, char** argv)
     return EXIT_SUCCESS;
 }
 
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
 
 void
 runTest( int argc, char** argv) 
 {
     int rows, cols, size_I, size_R, niter = 10, iter;
     float *I, *J, lambda, q0sqr, sum, sum2, tmp, meanROI,varROI ;
+
+    #ifdef TIME_IT
+    long long initTime = 0;
+    long long alocTime = 0;
+    long long cpinTime = 0;
+    long long kernTime = 0;
+    long long cpouTime = 0;
+    long long freeTime = 0;
+    long long aux1Time;
+    long long aux2Time;
+    #endif
 
 #ifdef CPU
 	float Jc, G2, L, num, den, qsqr;
@@ -129,12 +149,17 @@ runTest( int argc, char** argv)
 #ifdef GPU
 
 	//Allocate device memory
-    J_cuda = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
-    C_cuda = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
-        E_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
-        W_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
-        S_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
-        N_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif 
+    E_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
+    W_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
+    S_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
+    N_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    alocTime += aux2Time-aux1Time;
+    #endif
 
 #endif 
 
@@ -221,11 +246,18 @@ runTest( int argc, char** argv)
     int block_y = rows/BLOCK_SIZE ;
 
     sycl::range<3> dimBlock(1, BLOCK_SIZE, BLOCK_SIZE);
-        sycl::range<3> dimGrid(1, block_y, block_x);
+    sycl::range<3> dimGrid(1, block_y, block_x);
 
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif 
         //Copy data from main memory to device memory
         dpct::get_default_queue().memcpy(J_cuda, J, sizeof(float) * size_I).wait();
-
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpinTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
         //Run kernels
         /*
 	DPCT1049:23: The workgroup size passed to the SYCL kernel may
@@ -341,10 +373,18 @@ runTest( int argc, char** argv)
                                             temp_acc_ct1, temp_range_ct1));
                             });
                 });
-
+    #ifdef TIME_IT
+    //dpct::get_current_device().queues_wait_and_throw();
+    aux2Time = get_time();
+    kernTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
         //Copy data from device memory to main memory
     dpct::get_default_queue().memcpy(J, J_cuda, sizeof(float) * size_I).wait();
-
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpouTime += aux2Time-aux1Time;
+    #endif
 #endif   
 }
 
@@ -370,14 +410,38 @@ runTest( int argc, char** argv)
     free(dN); free(dS); free(dW); free(dE);
 #endif
 #ifdef GPU
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     sycl::free(C_cuda, dpct::get_default_queue());
-        sycl::free(J_cuda, dpct::get_default_queue());
-        sycl::free(E_C, dpct::get_default_queue());
-        sycl::free(W_C, dpct::get_default_queue());
-        sycl::free(N_C, dpct::get_default_queue());
-        sycl::free(S_C, dpct::get_default_queue());
+    sycl::free(J_cuda, dpct::get_default_queue());
+    sycl::free(E_C, dpct::get_default_queue());
+    sycl::free(W_C, dpct::get_default_queue());
+    sycl::free(N_C, dpct::get_default_queue());
+    sycl::free(S_C, dpct::get_default_queue());
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    freeTime += aux2Time-aux1Time;
+    #endif
 #endif 
 	free(c);
+
+    #ifdef TIME_IT
+    long long totalTime = initTime + alocTime + cpinTime + kernTime + cpouTime + freeTime;
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initTime / 1000000, (float) initTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocTime / 1000000, (float) alocTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpinTime / 1000000, (float) cpinTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernTime / 1000000, (float) kernTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouTime / 1000000, (float) cpouTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+	#endif
   
 }
 
