@@ -66,7 +66,7 @@ template <typename T>
 #ifdef TIME_IT
 T* alloc(int N, long long &time)
 #else
-T* alloc(int N, long long &time)
+T* alloc(int N)
 #endif
 {
 	T* t;
