@@ -5,13 +5,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
 
-#define BLOCK_SIZE 256
-#define STR_SIZE 256
+//#define BLOCK_SIZE 256
+//#define STR_SIZE 256
+#define BLOCK_SIZE 128
+#define STR_SIZE 128
 #define DEVICE 0
 #define HALO 1 // halo width along one direction when advancing to the next iteration
 
-#define BENCH_PRINT
+//#define BENCH_PRINT
 
 void run(int argc, char** argv);
 
@@ -242,8 +247,27 @@ int main(int argc, char** argv)
     return EXIT_SUCCESS;
 }
 
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 void run(int argc, char** argv)
 {
+    #ifdef TIME_IT
+    long long initTime = 0;
+    long long alocTime = 0;
+    long long cpinTime = 0;
+    long long kernTime = 0;
+    long long cpouTime = 0;
+    long long freeTime = 0;
+    long long aux1Time;
+    long long aux2Time;
+    #endif
+
     init(argc, argv);
 
     /* --------------- pyramid parameters --------------- */
@@ -257,22 +281,45 @@ void run(int argc, char** argv)
     int *gpuWall, *gpuResult[2];
     int size = rows*cols;
 
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif      
     gpuResult[0] = sycl::malloc_device<int>(cols, dpct::get_default_queue());
     gpuResult[1] = sycl::malloc_device<int>(cols, dpct::get_default_queue());
+    gpuWall = sycl::malloc_device<int>((size - cols), dpct::get_default_queue());
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    alocTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
     dpct::get_default_queue()
         .memcpy(gpuResult[0], data, sizeof(int) * cols)
         .wait();
-    gpuWall = sycl::malloc_device<int>((size - cols), dpct::get_default_queue());
+    
     dpct::get_default_queue()
         .memcpy(gpuWall, data + cols, sizeof(int) * (size - cols))
         .wait();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpinTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
 
     int final_ret = calc_path(gpuWall, gpuResult, rows, cols, \
 	 pyramid_height, blockCols, borderCols);
 
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    kernTime += aux2Time-aux1Time;
+    aux1Time = get_time();
+    #endif
     dpct::get_default_queue()
         .memcpy(result, gpuResult[final_ret], sizeof(int) * cols)
         .wait();
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    cpouTime += aux2Time-aux1Time;
+    #endif
 
 #ifdef BENCH_PRINT
 
@@ -289,10 +336,33 @@ void run(int argc, char** argv)
     printf("\n") ;
 
 #endif
-
+    #ifdef TIME_IT
+    aux1Time = get_time();
+    #endif
     sycl::free(gpuWall, dpct::get_default_queue());
     sycl::free(gpuResult[0], dpct::get_default_queue());
     sycl::free(gpuResult[1], dpct::get_default_queue());
+    #ifdef TIME_IT
+    aux2Time = get_time();
+    freeTime += aux2Time-aux1Time;
+    #endif
+
+    #ifdef TIME_IT
+    long long totalTime = initTime + alocTime + cpinTime + kernTime + cpouTime + freeTime;
+	printf("Time spent in different stages of GPU_CUDA KERNEL:\n");
+
+	printf("%15.12f s, %15.12f % : GPU: SET DEVICE / DRIVER INIT\n",	(float) initTime / 1000000, (float) initTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: ALO\n", 					(float) alocTime / 1000000, (float) alocTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY IN\n",					(float) cpinTime / 1000000, (float) cpinTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU: KERNEL\n",						(float) kernTime / 1000000, (float) kernTime / (float) totalTime * 100);
+
+	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouTime / 1000000, (float) cpouTime / (float) totalTime * 100);
+	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
+
+	printf("Total time:\n");
+	printf("%.12f s\n", 												(float) totalTime / 1000000);
+	#endif
 
     delete [] data;
     delete [] wall;
