@@ -421,6 +421,7 @@ void particleFilter(int *I, int IszX, int IszY, int Nfr, int *seed,
  sycl::queue &q_ct1 = dev_ct1.default_queue();
         int max_size = IszX*IszY*Nfr;
 	long long start = get_time();
+	float totalKernelTime = 0.0;
 	//original particle centroid
 	double xe = roundDouble(IszY/2.0);
 	double ye = roundDouble(IszX/2.0);
@@ -444,9 +445,7 @@ void particleFilter(int *I, int IszX, int IszY, int Nfr, int *seed,
 	long long get_neighbors = get_time();
 	printf("TIME TO GET NEIGHBORS TOOK: %f\n", elapsed_time(start, get_neighbors));
 	//initial weights are all equal (1/Nparticles)
-std::cout << "before malloc\n"; // debug malloc
 	int * weights = (int *)malloc(sizeof(int)*Nparticles);
-std::cout << "after malloc\n";
 	for(x = 0; x < Nparticles; x++){
 		weights[x] = 1/((int)(Nparticles));
 	}
@@ -628,6 +627,7 @@ std::cout << "after malloc\n";
                 long long end_copy_back = get_time();
 		printf("SENDING TO GPU TOOK: %lf\n", elapsed_time(start_copy, end_copy));
 		printf("CUDA EXEC TOOK: %lf\n", elapsed_time(end_copy, start_copy_back));
+		totalKernelTime += elapsed_time(end_copy, start_copy_back);
 		printf("SENDING BACK FROM GPU TOOK: %lf\n", elapsed_time(start_copy_back, end_copy_back));
 		long long xyj_time = get_time();
 		printf("TIME TO CALC NEW ARRAY X AND Y TOOK: %f\n", elapsed_time(u_time, xyj_time));
@@ -642,6 +642,8 @@ std::cout << "after malloc\n";
 		printf("TIME TO RESET WEIGHTS TOOK: %f\n", elapsed_time(xyj_time, reset));
 	}
 	
+	printf("TOTAL KERNEL TIME: %f\n", totalKernelTime);
+
 	//CUDA freeing of memory
         sycl::free(u_GPU, q_ct1);
         sycl::free(CDF_GPU, q_ct1);
