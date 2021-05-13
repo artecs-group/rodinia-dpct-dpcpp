@@ -374,7 +374,7 @@ runTest( int argc, char** argv)
                             });
                 });
     #ifdef TIME_IT
-    //dpct::get_current_device().queues_wait_and_throw();
+    dpct::get_current_device().queues_wait_and_throw();
     aux2Time = get_time();
     kernTime += aux2Time-aux1Time;
     aux1Time = get_time();
