@@ -96,8 +96,16 @@ void usage() {
 }
 
 template <typename T>
-void processDWT(struct dwt *d, int forward, int writeVisual)
+#ifdef TIME_IT
+long long
+#else
+void 
+#endif
+processDWT(struct dwt *d, int forward, int writeVisual)
 {
+    #ifdef TIME_IT
+    long long kernTime = 0;
+    #endif
     dpct::device_ext &dev_ct1 = dpct::get_current_device();
     sycl::queue &q_ct1 = dev_ct1.default_queue();
     int componentSize = d->pixWidth*d->pixHeight*sizeof(T);
@@ -155,6 +163,9 @@ void processDWT(struct dwt *d, int forward, int writeVisual)
         dpct::get_default_queue().memset(c_b, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
 
+        #ifdef TIME_IT
+        kernTime +=
+        #endif
         rgbToComponents(c_r, c_g, c_b, d->srcImg, d->pixWidth, d->pixHeight);
 		
 
@@ -209,7 +220,10 @@ void processDWT(struct dwt *d, int forward, int writeVisual)
         cudaCheckError("Alloc device memory");
         dpct::get_default_queue().memset(c_r, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
-
+        
+        #ifdef TIME_IT
+        kernTime +=
+        #endif
         bwToComponent(c_r, d->srcImg, d->pixWidth, d->pixHeight);
 
         // Compute DWT 
@@ -231,6 +245,10 @@ void processDWT(struct dwt *d, int forward, int writeVisual)
     cudaCheckError("Cuda free device");
     sycl::free(backup, dpct::get_default_queue());
     cudaCheckError("Cuda free device");
+
+    #ifdef TIME_IT
+    return kernTime;
+    #endif
 }
 
 int main(int argc, char **argv) 
@@ -395,20 +413,37 @@ int main(int argc, char **argv)
     if (getImg(d->srcFilename, d->srcImg, inputSize) == -1) 
         return -1;
 
+    #ifdef TIME_IT
+    long long kernTime;
+    #endif
     /* DWT */
     if (forward == 1) {
         if(dwt97 == 1 )
+            #ifdef TIME_IT
+            kernTime =
+            #endif
             processDWT<float>(d, forward, writeVisual);
         else // 5/3
+            #ifdef TIME_IT
+            kernTime =
+            #endif
             processDWT<int>(d, forward, writeVisual);
     }
     else { // reverse
         if(dwt97 == 1 )
+            #ifdef TIME_IT
+            kernTime =
+            #endif
             processDWT<float>(d, forward, writeVisual);
         else // 5/3
+            #ifdef TIME_IT
+            kernTime =
+            #endif
             processDWT<int>(d, forward, writeVisual);
     }
-
+    #ifdef TIME_IT
+    printf("%15.12f s: GPU: KERNEL\n", (float) kernTime / 1000000);
+    #endif
     //writeComponent(r_cuda, pixWidth, pixHeight, srcFilename, ".g");
     //writeComponent(g_wave_cuda, 512000, ".g");
     //writeComponent(g_cuda, componentSize, ".g");

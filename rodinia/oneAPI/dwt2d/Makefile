@@ -80,6 +80,11 @@ endif
 #	override OUTPUT = -DOUTPUT
 #endif
 
+# 'make time=1' compiles for time measurement
+ifeq ($(time),1)
+	NVCCFLAGS += -DTIME_IT
+endif
+
 OUTPUT = -DOUTPUT
 
 # Compilers

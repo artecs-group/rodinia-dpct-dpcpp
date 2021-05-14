@@ -32,6 +32,9 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <assert.h>
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
 
 #include "components.h"
 #include "common.h"
@@ -128,10 +131,23 @@ void c_CopySrcToComponent(T *d_c, unsigned char * d_src, int pixels,
 }
 
 
+#ifdef TIME_IT
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
+
 /* Separate compoents of 8bit RGB source image */
 template<typename T>
-void rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int height)
-{
+#ifdef TIME_IT
+long long
+#else
+void 
+#endif
+rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int height){
     unsigned char * d_src;
     int pixels      = width*height;
     int alignedSize =  DIVANDRND(width*height, THREADS) * THREADS * 3; //aligned to thread block size -- THREADS
@@ -157,6 +173,10 @@ void rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int
     limit. To get the device limit, query info::device::max_work_group_size.
     Adjust the workgroup size if needed.
     */
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
     dpct::get_default_queue().submit([&](sycl::handler &cgh) {
         sycl::accessor<unsigned char, 1, sycl::access::mode::read_write,
                        sycl::access::target::local>
@@ -169,20 +189,38 @@ void rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int
                                                    sData_acc_ct1.get_pointer());
                          });
     });
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    #endif
     cudaCheckAsyncError("CopySrcToComponents kernel")
 
         /* Free Memory */
         sycl::free(d_src, dpct::get_default_queue());
     cudaCheckAsyncError("Free memory")
+        
+    #ifdef TIME_IT
+    return time1-time0;
+    #endif
 }
+#ifdef TIME_IT
+template long long rgbToComponents<float>(float *d_r, float *d_g, float *d_b, unsigned char * src, int width, int height);
+template long long rgbToComponents<int>(int *d_r, int *d_g, int *d_b, unsigned char * src, int width, int height);
+#else
 template void rgbToComponents<float>(float *d_r, float *d_g, float *d_b, unsigned char * src, int width, int height);
-template void rgbToComponents<int>(int *d_r, int *d_g, int *d_b, unsigned char * src, int width, int height);
+template void rgbToComponents<int>(int *d_r, int *d_g, int *d_b, unsigned char * src, int width, int height); 
+#endif
+
 
 
 /* Copy a 8bit source image data into a color compoment of type T */
 template<typename T>
-void bwToComponent(T *d_c, unsigned char * src, int width, int height)
-{
+#ifdef TIME_IT
+long long
+#else
+void 
+#endif
+bwToComponent(T *d_c, unsigned char * src, int width, int height){
     unsigned char * d_src;
     int pixels      = width*height;
     int alignedSize =  DIVANDRND(pixels, THREADS) * THREADS; //aligned to thread block size -- THREADS
@@ -208,6 +246,10 @@ void bwToComponent(T *d_c, unsigned char * src, int width, int height)
     limit. To get the device limit, query info::device::max_work_group_size.
     Adjust the workgroup size if needed.
     */
+    #ifdef TIME_IT
+  	long long time1;
+	long long time0 = get_time();
+    #endif
     dpct::get_default_queue().submit([&](sycl::handler &cgh) {
         sycl::accessor<unsigned char, 1, sycl::access::mode::read_write,
                        sycl::access::target::local>
@@ -219,12 +261,24 @@ void bwToComponent(T *d_c, unsigned char * src, int width, int height)
                                                   sData_acc_ct1.get_pointer());
                          });
     });
+    #ifdef TIME_IT
+    dpct::get_current_device().queues_wait_and_throw();
+    time1 = get_time();
+    #endif
     cudaCheckAsyncError("CopySrcToComponent kernel")
 
         /* Free Memory */
         sycl::free(d_src, dpct::get_default_queue());
     cudaCheckAsyncError("Free memory")
-}
 
+    #ifdef TIME_IT
+    return time1-time0;
+    #endif
+}
+#ifdef TIME_IT
+template long long bwToComponent<float>(float *d_c, unsigned char *src, int width, int height);
+template long long bwToComponent<int>(int *d_c, unsigned char *src, int width, int height);
+#else
 template void bwToComponent<float>(float *d_c, unsigned char *src, int width, int height);
 template void bwToComponent<int>(int *d_c, unsigned char *src, int width, int height);
+#endif
