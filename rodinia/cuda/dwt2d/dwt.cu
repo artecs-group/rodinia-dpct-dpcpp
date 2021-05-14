@@ -31,6 +31,9 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <error.h>
+#ifdef TIME_IT
+#include <sys/time.h>
+#endif
 #include "dwt_cuda/dwt.h"
 #include "dwt_cuda/common.h"
 #include "dwt.h"
@@ -72,8 +75,21 @@ inline void rdwt(int *in, int *out, int width, int height, int levels)
         dwt_cuda::rdwt53(in, out, width, height, levels);
 }
 
+#ifdef TIME_IT
+long long get_time1() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 template<typename T>
-int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int stages, bool forward)
+#ifdef TIME_IT
+long long
+#else
+int 
+#endif
+nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int stages, bool forward)
 {
     printf("\n*** %d stages of 2D forward DWT:\n", stages);
     
@@ -81,7 +97,10 @@ int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int st
     const int size = pixHeight * pixWidth * sizeof(T);
     cudaMemcpy(backup, in, size, cudaMemcpyDeviceToDevice);
     cudaCheckError("Memcopy device to device");
-    
+    #ifdef TIME_IT
+    long long time1;
+    long long time0 = get_time1();
+    #endif
     /* Measure time of individual levels. */
     if(forward)
         fdwt(in, out, pixWidth, pixHeight, stages);
@@ -107,10 +126,25 @@ int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int st
     #endif  // GPU_DWT_TESTING 
     
     cudaCheckAsyncError("DWT Kernel calls");
-*/    return 0;
+*/  
+
+#ifdef TIME_IT
+cudaThreadSynchronize();
+time1=get_time1();
+return time1-time0;
+#else
+return 0; 
+#endif
 }
+
+#ifdef TIME_IT
+template long long nStage2dDWT<float>(float*, float*, float*, int, int, int, bool);
+template long long nStage2dDWT<int>(int*, int*, int*, int, int, int, bool);
+#else
 template int nStage2dDWT<float>(float*, float*, float*, int, int, int, bool);
-template int nStage2dDWT<int>(int*, int*, int*, int, int, int, bool);
+template int nStage2dDWT<int>(int*, int*, int*, int, int, int, bool); 
+#endif
+
 
 
 

@@ -74,8 +74,21 @@ inline void rdwt(int *in, int *out, int width, int height, int levels)
         dwt_cuda::rdwt53(in, out, width, height, levels);
 }
 
+#ifdef TIME_IT
+long long get_time1() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+#endif
+
 template<typename T>
-int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int stages, bool forward)
+#ifdef TIME_IT
+long long
+#else
+int 
+#endif
+nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int stages, bool forward)
 {
     printf("\n*** %d stages of 2D forward DWT:\n", stages);
     
@@ -85,6 +98,10 @@ int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int st
     cudaCheckError("Memcopy device to device");
     
     /* Measure time of individual levels. */
+    #ifdef TIME_IT
+    long long time1;
+    long long time0 = get_time1();
+    #endif
     if(forward)
         fdwt(in, out, pixWidth, pixHeight, stages);
     else
@@ -109,10 +126,23 @@ int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int st
     #endif  // GPU_DWT_TESTING 
     
     cudaCheckAsyncError("DWT Kernel calls");
-*/    return 0;
+*/
+#ifdef TIME_IT
+dpct::get_current_device().queues_wait_and_throw();
+time1=get_time1();
+return time1-time0;
+#else
+return 0; 
+#endif
 }
+
+#ifdef TIME_IT
+template long long nStage2dDWT<float>(float*, float*, float*, int, int, int, bool);
+template long long nStage2dDWT<int>(int*, int*, int*, int, int, int, bool);
+#else
 template int nStage2dDWT<float>(float*, float*, float*, int, int, int, bool);
-template int nStage2dDWT<int>(int*, int*, int*, int, int, int, bool);
+template int nStage2dDWT<int>(int*, int*, int*, int, int, int, bool); 
+#endif
 
 
 

@@ -170,9 +170,17 @@ processDWT(struct dwt *d, int forward, int writeVisual)
 		
 
         /* Compute DWT and always store into file */
-
+        #ifdef TIME_IT
+        kernTime +=
+        #endif
         nStage2dDWT(c_r, c_r_out, backup, d->pixWidth, d->pixHeight, d->dwtLvls, forward);
+        #ifdef TIME_IT
+        kernTime +=
+        #endif
         nStage2dDWT(c_g, c_g_out, backup, d->pixWidth, d->pixHeight, d->dwtLvls, forward);
+        #ifdef TIME_IT
+        kernTime +=
+        #endif
         nStage2dDWT(c_b, c_b_out, backup, d->pixWidth, d->pixHeight, d->dwtLvls, forward);
      
         // -------test----------
