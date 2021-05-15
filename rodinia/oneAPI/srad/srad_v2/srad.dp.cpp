@@ -152,6 +152,8 @@ runTest( int argc, char** argv)
     #ifdef TIME_IT
     aux1Time = get_time();
     #endif 
+    J_cuda = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
+    C_cuda = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
     E_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
     W_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
     S_C = sycl::malloc_device<float>(size_I, dpct::get_default_queue());
