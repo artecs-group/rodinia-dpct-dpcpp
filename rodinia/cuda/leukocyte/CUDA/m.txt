@@ -1,0 +1,8 @@
+gcc -g -O3 -Wall -I../meschach_lib detect_main.c -c
+gcc   -g -O3 -Wall -I../meschach_lib avilib.c -c
+gcc   -g -O3 -Wall -I../meschach_lib find_ellipse.c -c
+/usr/local/cuda/bin/nvcc -I/usr/local/cuda/include -I/usr/local/cuda/samples//common/inc -O3 -c find_ellipse_kernel.cu
+gcc   -g -O3 -Wall -I../meschach_lib track_ellipse.c -c
+/usr/local/cuda/bin/nvcc -I/usr/local/cuda/include -I/usr/local/cuda/samples//common/inc -O3 -I../meschach_lib -c track_ellipse_kernel.cu
+gcc   -g -O3 -Wall -I../meschach_lib misc_math.c -c
+gcc -g -O3 -Wall -I../meschach_lib -lm avilib.o find_ellipse.o find_ellipse_kernel.o track_ellipse.o track_ellipse_kernel.o misc_math.o detect_main.o -o leukocyte ../meschach_lib/meschach.a -L/usr/local/cuda/lib64 -lm -lcuda -lcudart
