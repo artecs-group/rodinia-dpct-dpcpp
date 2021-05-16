@@ -383,6 +383,7 @@ void run(int argc, char** argv)
     int ret = compute_tran_temp(MatrixPower,MatrixTemp,grid_cols,grid_rows, \
 	 total_iterations,pyramid_height, blockCols, blockRows, borderCols, borderRows);
     #ifdef TIME_IT
+    cudaThreadSynchronize();
     aux2Time = get_time();
     kernTime += aux2Time-aux1Time;
     #endif
