@@ -4,6 +4,10 @@ DPCPP = $(SYCL_ROOT)/bin/clang++
 
 DPCPP_FLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
+ifeq ($(time),1)
+	DPCPP_FLAGS += -DTIME_IT
+endif
+
 # Example
 # target: dependencies
 	# command 1

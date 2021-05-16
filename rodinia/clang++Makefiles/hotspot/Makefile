@@ -8,6 +8,10 @@ SRC = hotspot.dp.cpp
 
 EXE = hotspot
 
+ifeq ($(time),1)
+	DPCPP_CXXFLAGS += -DTIME_IT
+endif
+
 release: $(SRC)
 	$(CC) $(KERNEL_DIM) $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
 

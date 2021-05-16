@@ -9,6 +9,11 @@ EXE = 3D
 OUTPUT = *.out
 
 FLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+
+ifeq ($(time),1)
+	FLAGS += -DTIME_IT
+endif
+
 release: $(SRC)
 	$(CC) $(KERNEL_DIM) $(FLAGS) $(SRC) -o $(EXE)  
 

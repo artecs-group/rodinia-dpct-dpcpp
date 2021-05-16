@@ -8,6 +8,11 @@ SRC = srad.dp.cpp
 
 EXE = srad
 
+# 'make time=1' compiles for time measurement
+ifeq ($(time),1)
+	CC_FLAGS += -DTIME_IT
+endif
+
 release: $(SRC)
 	$(CC) $(KERNEL_DIM) $(SRC) -o $(EXE) $(CC_FLAGS)
 

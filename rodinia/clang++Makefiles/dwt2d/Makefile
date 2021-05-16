@@ -70,6 +70,10 @@ else
     CFLAGS      += -fno-strict-aliasing
 endif
 
+ifeq ($(time),1)
+	NVCCFLAGS += -DTIME_IT
+endif
+
 #ifeq ($(performancetest),1)
 #    COMMONFLAGS += -DGPU_DWT_TESTING
 #endif

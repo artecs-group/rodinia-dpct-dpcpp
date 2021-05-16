@@ -6,7 +6,7 @@ DPCPP_LDFLAGS =
 DPCPP_EXE_NAME = nn
 DPCPP_SOURCES = nn.dp.cpp
 
-RUN_OPTS = filelist.txt -r 5 -lat 30 -lng 90
+RUN_OPTS = filelist.txt -r 5 -lat 30 -lng 90 -t
 
 all:
 	$(DPCPP_CXX) $(DPCPP_CXXFLAGS) $(DPCPP_EXE_NAME) $(DPCPP_SOURCES) $(DPCPP_LDFLAGS)

@@ -24,6 +24,10 @@ ifeq ($(dp),1)
 	NVCC_FLAGS += --gpu-name sm_13
 endif
 
+# make dp=1 compiles the CUDA kernels with double-precision support
+ifeq ($(dp),1)
+	NVCC_FLAGS += --gpu-name sm_13
+endif
 
 $(TARGET_G): streamcluster_cuda_cpu.cpp.dp.cpp streamcluster_cuda.dp.cpp streamcluster_header.dp.cpp
 	$(NVCC) $(NVCC_FLAGS) streamcluster_cuda_cpu.cpp.dp.cpp streamcluster_cuda.dp.cpp streamcluster_header.dp.cpp -o $(TARGET_G)

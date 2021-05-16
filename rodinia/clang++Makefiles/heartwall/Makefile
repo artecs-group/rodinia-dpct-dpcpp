@@ -6,6 +6,11 @@ endif
 
 DPCPP = $(SYCL_ROOT)/bin/clang++
 DPCPP_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+
+ifeq ($(time),1)
+	DPCPP_FLAGS += -DTIME_IT
+endif
+
 # link objects(binaries) together
 heartwall: main.dp.o ./AVI/avilib.o ./AVI/avimod.o 
 	$(DPCPP) main.dp.o ./AVI/avilib.o ./AVI/avimod.o -lm -o heartwall $(DPCPP_FLAGS)

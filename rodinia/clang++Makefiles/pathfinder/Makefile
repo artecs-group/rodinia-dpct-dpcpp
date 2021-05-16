@@ -10,6 +10,12 @@ SRC = pathfinder.dp.cpp
 
 EXE = pathfinder
 
+# 'make time=1' compiles for time measurement
+ifeq ($(time),1)
+	FLAGS = -DTIME_IT
+endif
+
+
 release:
 	$(CC) $(CC_FLAGS) $(SRC) -o $(EXE)
 
