@@ -24,7 +24,7 @@ CUFILES     := lud_kernel.dp.cpp
 OBJS = ../common/common.o lud.dp.o lud_kernel.dp.o
 
 ifeq ($(time),1)
-	FLAGS += -DTIME_IT
+	NVCCFLAGS += -DTIME_IT
 endif
 
 .PHONY: all clean 

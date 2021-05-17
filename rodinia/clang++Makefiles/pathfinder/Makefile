@@ -12,7 +12,7 @@ EXE = pathfinder
 
 # 'make time=1' compiles for time measurement
 ifeq ($(time),1)
-	FLAGS = -DTIME_IT
+	CC_FLAGS += -DTIME_IT
 endif
 
 
