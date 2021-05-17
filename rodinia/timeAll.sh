@@ -2,7 +2,7 @@
 
 numExecutions=3
 
-Replace the makefiles to compile for the ruyman docker
+#Replace the makefiles to compile for the ruyman docker
 read -p "Replace Makefiles? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
