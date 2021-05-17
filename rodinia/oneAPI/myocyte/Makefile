@@ -12,7 +12,7 @@ myocyte.out:		main.dp.o
 	dpcpp	main.dp.o \
 				-I/usr/local/cuda/include \
 				-L/usr/local/cuda/lib \
-				-lm -lcuda -lcudart \
+				-lm \
                                 -o myocyte.out
 
 # compile main function file into object (binary)
