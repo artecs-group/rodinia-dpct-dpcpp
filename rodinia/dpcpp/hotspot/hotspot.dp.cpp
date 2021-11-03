@@ -7,6 +7,7 @@
 #ifdef TIME_IT
 #include <sys/time.h>
 #endif
+#include "../common.hpp"
 
 #ifdef RD_WG_SIZE_0_0                                                            
         #define BLOCK_SIZE RD_WG_SIZE_0_0                                        
@@ -16,7 +17,26 @@
         #define BLOCK_SIZE RD_WG_SIZE                                            
 #else                                                                                    
         #define BLOCK_SIZE 16                                                            
-#endif                                                                                   
+#endif 
+
+#ifdef TIME_IT
+aux1Time = get_time();
+#endif
+
+#ifdef NVIDIA_GPU
+  NvidiaGpuSelector selector{};
+#elif INTEL_GPU
+  IntelGpuSelector selector{};
+#else
+  sycl::cpu_selector selector{};
+#endif
+
+  sycl::queue q_ct1{selector};
+
+#ifdef TIME_IT
+aux2Time = get_time();
+initTime = aux2Time-aux1Time;
+#endif
 
 #define STR_SIZE 256
 
@@ -265,7 +285,7 @@ int compute_tran_temp(float *MatrixPower,float *MatrixTemp[2], int col, int row,
              * info::device::max_work_group_size. Adjust the workgroup size if
              * needed.
             */
-            dpct::get_default_queue().submit([&](sycl::handler &cgh) {
+            q_ct1.submit([&](sycl::handler &cgh) {
                   sycl::range<2> temp_on_cuda_range_ct1(BLOCK_SIZE,
                                                         BLOCK_SIZE);
                   sycl::range<2> power_on_cuda_range_ct1(BLOCK_SIZE,
@@ -323,6 +343,7 @@ void usage(int argc, char **argv)
 
 int main(int argc, char** argv)
 {
+    std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
   printf("WG size of kernel = %d X %d\n", BLOCK_SIZE, BLOCK_SIZE);
 
     run(argc,argv);
@@ -342,16 +363,6 @@ void run(int argc, char** argv)
     long long freeTime = 0;
     long long aux1Time;
     long long aux2Time;
-    #endif
-
-    #ifdef TIME_IT
-    aux1Time = get_time();
-    #endif
- dpct::device_ext &dev_ct1 = dpct::get_current_device();
- sycl::queue &q_ct1 = dev_ct1.default_queue();
-    #ifdef TIME_IT
-    aux2Time = get_time();
-    initTime = aux2Time-aux1Time;
     #endif
 
     int size;

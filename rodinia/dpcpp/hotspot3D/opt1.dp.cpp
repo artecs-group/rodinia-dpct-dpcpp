@@ -1,5 +1,7 @@
 #include <CL/sycl.hpp>
 #include <dpct/dpct.hpp>
+#include "../common.hpp"
+
 long long get_time() {
         struct timeval tv;
 	gettimeofday(&tv, NULL);
@@ -78,12 +80,24 @@ void hotspot_opt1(float *p, float *tIn, float *tOut,
     #ifdef TIME_IT
     aux1Time = get_time();
     #endif
- dpct::device_ext &dev_ct1 = dpct::get_current_device();
- sycl::queue &q_ct1 = dev_ct1.default_queue();
+
+#ifdef NVIDIA_GPU
+  NvidiaGpuSelector selector{};
+#elif INTEL_GPU
+  IntelGpuSelector selector{};
+#else
+  sycl::cpu_selector selector{};
+#endif
+
+  sycl::queue q_ct1{selector};
+
     #ifdef TIME_IT
     aux2Time = get_time();
     initTime = aux2Time-aux1Time;
     #endif
+
+    std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
+
     float ce, cw, cn, cs, ct, cb, cc;
     float stepDivCap = dt / Cap;
     ce = cw =stepDivCap/ Rx;
@@ -140,7 +154,7 @@ void hotspot_opt1(float *p, float *tIn, float *tOut,
         tIn_d = tOut_d;
         tOut_d = t;
     }
-    dev_ct1.queues_wait_and_throw();
+    q_ct1.wait_and_throw();
     long long stop = get_time();
     #ifdef TIME_IT
     kernTime = stop-start;

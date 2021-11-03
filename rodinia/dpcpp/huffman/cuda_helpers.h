@@ -11,44 +11,34 @@ bool InitCUDA(void){return true;}
 
 #else
 bool InitCUDA(void) try {
-        int count = 0;
-	int i = 0;
+        dpct::device_info prop;
+        int dev = 0;
+        int n_dev = cl::sycl::device::get_devices(cl::sycl::info::device_type::all).size();
 
-        count = dpct::dev_mgr::instance().device_count();
-        if(count == 0) {
+        if(n_dev == 0) {
 		fprintf(stderr, "There is no device.\n");
 		return false;
 	}
 
-	for(i = 0; i < count; i++) {
-                dpct::device_info prop;
-                /*
-		DPCT1003:12: Migrated API does not return error
-                 * code. (*, 0) is inserted. You may need to rewrite this code.
-
-                 */
-                if ((dpct::dev_mgr::instance().get_device(i).get_device_info(
-                         prop),
-                     0) == 0) {
-                        /*
-			DPCT1005:13: The device version is
-                         * different. You need to rewrite this code.
-
-                         */
-                        //if (prop.get_major_version() >= 1) {
-                        if(dpct::get_current_device().is_gpu()){
-                                break;
-			}
-		}
-	}
-	if(i == count) {
-		fprintf(stdout, "There is no device supporting CUDA.\n Using first device.\n");
-		//return false;
-                i = 0;
-	}
-        dpct::dev_mgr::instance().select_device(i);
-
-        printf("SYCL initialized.\n");
+        for (int i = 0; i < n_dev; i++) {
+                dpct::dev_mgr::instance().get_device(i).get_device_info(prop);
+                std::string name = prop.get_name();
+                bool is_gpu = dpct::dev_mgr::instance().get_device(i).is_gpu();
+#ifdef NVIDIA_GPU
+                if(is_gpu && (name.find("NVIDIA") != std::string::npos)) {
+                dev = i;
+                break;
+                }
+#elif INTEL_GPU
+                if(is_gpu && (name.find("Intel(R)") != std::string::npos)) {
+                dev = i;
+                break;
+                }
+#endif
+    }
+        dpct::dev_mgr::instance().select_device(dev);
+        dpct::dev_mgr::instance().get_device(dev).get_device_info(prop);
+        std::cout << "Running on " << prop.get_name() << std::endl;
 	return true;
 }
 catch (sycl::exception const &exc) {
