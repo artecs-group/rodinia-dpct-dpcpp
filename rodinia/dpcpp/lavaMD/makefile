@@ -36,8 +36,8 @@ a.out:		main.o \
 			-o lavaMD
 
 # compile function files into objects (binaries)
-main.o:		main.h \
-			main.c \
+main.o:		main.hpp \
+			main.cpp \
 			./kernel/kernel_gpu_cuda_wrapper.h \
 			./kernel/kernel_gpu_cuda_wrapper.dp.cpp \
 			./util/num/num.h \
@@ -46,10 +46,10 @@ main.o:		main.h \
 			./util/timer/timer.c \
 			./util/device/device.h \
 			./util/device/device.dp.cpp
-	$(C_C)	$(KERNEL_DIM) $(OUTPUT) main.c \
+	$(CUD_C)	$(KERNEL_DIM) $(OUTPUT) main.cpp \
 			-c \
 			-o main.o \
-			-O3
+			-O3 $(CUDA_FLAG)
 
 ./kernel/kernel_gpu_cuda_wrapper.dp.o:	./kernel/kernel_gpu_cuda_wrapper.h \
 									./kernel/kernel_gpu_cuda_wrapper.dp.cpp

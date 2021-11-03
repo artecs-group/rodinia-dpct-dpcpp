@@ -20,33 +20,36 @@
 
 void setdevice(void){
 
-	// variables
-	int num_devices;
-	int device;
+    dpct::device_info prop;
+    int dev = 0;
+    int n_dev = dpct::dev_mgr::instance().device_count();
 
-	// work
-        num_devices = dpct::dev_mgr::instance().device_count();
-        if (num_devices > 1) {
-		
-		// variables
-		int max_multiprocessors; 
-		int max_device;
-                dpct::device_info properties;
-
-                // initialize variables
-		max_multiprocessors = 0;
-		max_device = 0;
-		
-		for (device = 0; device < num_devices; device++) {
-                        dpct::dev_mgr::instance().get_device(device).get_device_info(properties);
-                        if (max_multiprocessors < properties.get_max_compute_units()) {
-                                max_multiprocessors = properties.get_max_compute_units();
-                                max_device = device;
-			}
-		}
-                dpct::dev_mgr::instance().select_device(max_device);
-        }
-
+    for (int i = 0; i < n_dev; i++){ 
+	dpct::dev_mgr::instance().get_device(i).get_device_info(prop);
+        std::string name = prop.get_name();
+	bool is_gpu = dpct::dev_mgr::instance().get_device(i).is_gpu();
+	bool is_cpu = dpct::dev_mgr::instance().get_device(i).is_cpu();
+#ifdef NVIDIA_GPU
+    if(is_gpu && (name.find("NVIDIA") != std::string::npos)) {	
+	dev = i;
+	break;
+    }
+#elif INTEL_GPU
+    if(is_gpu && (name.find("Intel(R)") != std::string::npos)) {
+    	dev = i;
+	break;
+    }
+#else
+    if(is_cpu){
+    	dev = i;
+	break;
+    }
+#endif
+																    }
+    dpct::dev_mgr::instance().select_device(dev);
+    dpct::dev_mgr::instance().get_device(dev).get_device_info(prop);
+    std::cout << "Running on " << prop.get_name() << std::endl;
+    
 }
 
 //====================================================================================================100

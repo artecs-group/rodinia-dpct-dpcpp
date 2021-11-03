@@ -8,7 +8,7 @@
 
 #include <CL/sycl.hpp>
 #include <dpct/dpct.hpp>
-#include "./../main.h" // (in the main program folder)	needed to recognized input parameters
+#include "./../main.hpp" // (in the main program folder)	needed to recognized input parameters
 
 //======================================================================================================================================================150
 //	UTILITIES
