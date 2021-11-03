@@ -3,7 +3,7 @@
 #include "find_ellipse_kernel.h"
 // #include <cutil.h>
 #include <stdio.h>
-
+#include "../../common.hpp"
 
 // The number of sample points in each ellipse (stencil)
 #define NPOINTS 150
@@ -328,28 +328,7 @@ float *dilate_CUDA(int max_gicov_m, int max_gicov_n, int strel_m, int strel_n) {
 
 // Chooses the most appropriate GPU on which to execute
 void select_device() {
-	// Figure out how many devices exist
-	int num_devices, device;
-        num_devices = dpct::dev_mgr::instance().device_count();
-
-        // Choose the device with the largest number of multiprocessors
-	if (num_devices > 0) {
-		int max_multiprocessors = 0, max_device = -1;
-		for (device = 0; device < num_devices; device++) {
-                        dpct::device_info properties;
-                        dpct::dev_mgr::instance()
-                            .get_device(device)
-                            .get_device_info(properties);
-                        if (max_multiprocessors < properties.get_max_compute_units()) {
-                                max_multiprocessors = properties.get_max_compute_units();
-                                max_device = device;
-			}
-		}
-                dpct::dev_mgr::instance().select_device(max_device);
-        }
-	
-	// The following is to remove the API initialization overhead from the runtime measurements
-        sycl::free(0, dpct::get_default_queue());
+	select_custom_device();
 }
 
 

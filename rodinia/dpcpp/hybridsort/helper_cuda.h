@@ -837,71 +837,31 @@ inline int _ConvertSMVer2Cores(int major, int minor)
 // General GPU Device CUDA Initialization
 inline int gpuDeviceInit(int devID)
 {
-    int device_count;
-    /*
-    DPCT1003:2: Migrated API does not return error code. (*, 0) is inserted. You
-    may need to rewrite this code.
-    */
-    checkCudaErrors(
-        (device_count = dpct::dev_mgr::instance().device_count(), 0));
-
-    if (device_count == 0)
-    {
-        fprintf(stderr, "gpuDeviceInit() CUDA error: no devices supporting CUDA.\n");
-        exit(EXIT_FAILURE);
+    dpct::device_info prop;
+    int dev = 0;
+    int n_dev = cl::sycl::device::get_devices(cl::sycl::info::device_type::all).size();
+				        
+    for (int i = 0; i < n_dev; i++){ 
+	dpct::dev_mgr::instance().get_device(i).get_device_info(prop);
+        std::string name = prop.get_name();
+	bool is_gpu = dpct::dev_mgr::instance().get_device(i).is_gpu();
+#ifdef NVIDIA_GPU
+    if(is_gpu && (name.find("NVIDIA") != std::string::npos)) {
+	dev = i;
+	break;
     }
-
-    if (devID < 0)
-    {
-        devID = 0;
+#elif INTEL_GPU
+    if(is_gpu && (name.find("Intel(R)") != std::string::npos)) {
+	dev = i;
+	break;
     }
-
-    if (devID > device_count-1)
-    {
-        fprintf(stderr, "\n");
-        fprintf(stderr, ">> %d CUDA capable GPU device(s) detected. <<\n", device_count);
-        fprintf(stderr, ">> gpuDeviceInit (-device=%d) is not a valid GPU device. <<\n", devID);
-        fprintf(stderr, "\n");
-        return -devID;
-    }
-
-    dpct::device_info deviceProp;
-    /*
-    DPCT1003:3: Migrated API does not return error code. (*, 0) is inserted. You
-    may need to rewrite this code.
-    */
-    checkCudaErrors((
-        dpct::dev_mgr::instance().get_device(devID).get_device_info(deviceProp),
-        0));
-
-    /*
-    DPCT1035:4: All DPC++ devices can be used by host to submit tasks. You may
-    need to adjust this code.
-    */
-    if (false)
-    {
-        fprintf(stderr, "Error: device is running in <Compute Mode Prohibited>, no threads can use ::cudaSetDevice().\n");
-        return -1;
-    }
-
-    /*
-    DPCT1005:5: The device version is different. You need to rewrite this code.
-    */
-    if (deviceProp.get_major_version() < 1)
-    {
-        fprintf(stderr, "gpuDeviceInit(): GPU device does not support CUDA.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    /*
-    DPCT1003:6: Migrated API does not return error code. (*, 0) is inserted. You
-    may need to rewrite this code.
-    */
-    checkCudaErrors((dpct::dev_mgr::instance().select_device(devID), 0));
-    printf("gpuDeviceInit() CUDA Device [%d]: \"%s\n", devID,
-           deviceProp.get_name());
-
-    return devID;
+#endif
+																    }
+    dpct::dev_mgr::instance().select_device(dev);
+    dpct::dev_mgr::instance().get_device(dev).get_device_info(prop);
+    std::cout << "Running on " << prop.get_name() << std::endl;
+    
+    return dev;
 }
 
 // This function returns the best GPU (with maximum GFLOPS)

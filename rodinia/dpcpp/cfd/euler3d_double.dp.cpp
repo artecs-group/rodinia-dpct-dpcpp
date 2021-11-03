@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include "../common.hpp"
 
 #if CUDART_VERSION < 3000
 struct double3
@@ -748,28 +749,6 @@ int main(int argc, char** argv)
 	}
 	const char* data_file_name = argv[1];
 
-        dpct::device_info prop;
-        int dev;
-
-    // get number of devices
-    int n_dev = cl::sycl::device::get_devices(cl::sycl::info::device_type::all).size();
-
-    for (int i = 0; i < n_dev; i++) {
-        dpct::dev_mgr::instance().get_device(i).get_device_info(prop);
-        std::string name = prop.get_name();
-        bool is_gpu = dpct::dev_mgr::instance().get_device(i).is_gpu();
-#ifdef NVIDIA_GPU
-        if(is_gpu && (name.find("NVIDIA") != std::string::npos)) {
-            dev = i;
-            break;
-        }
-#elif INTEL_GPU
-        if(is_gpu && (name.find("Intel(R)") != std::string::npos)) {
-            dev = i;
-            break;
-        }
-#endif
-    }
 	
 	// CUDA_SAFE_CALL(cudaSetDevice(0));
 	// CUDA_SAFE_CALL(cudaGetDevice(&dev));
@@ -781,24 +760,17 @@ int main(int argc, char** argv)
         */
         #ifdef TIME_IT
         auxTime1 = get_time();
-        checkCudaErrors((dpct::dev_mgr::instance().select_device(dev), 0));
-        //checkCudaErrors(dev = dpct::dev_mgr::instance().current_device_id());
-        auxTime2 = get_time();
+        select_custom_device();
+	auxTime2 = get_time();
         initTime = auxTime2-auxTime1;
         #else
-        checkCudaErrors((dpct::dev_mgr::instance().select_device(dev), 0));
+        select_custom_device();
         //checkCudaErrors(dev = dpct::dev_mgr::instance().current_device_id());
         #endif
         /*
         DPCT1003:35: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
         */
-        checkCudaErrors(
-            (dpct::dev_mgr::instance().get_device(dev).get_device_info(prop),
-             0));
-
-        printf("Name:                     %s\n", prop.get_name());
-
         // set far field conditions and load them into constant memory on the gpu
 	{
 		double h_ff_variable[NVAR];

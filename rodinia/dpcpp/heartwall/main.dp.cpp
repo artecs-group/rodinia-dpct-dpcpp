@@ -142,31 +142,7 @@ int main(int argc, char *argv[]) {
 	#ifdef TIME_IT
     aux1T = get_time();
     #endif
-
-    dpct::device_info prop;
-    int dev = 0;
-
-    // get number of devices
-    int n_dev = cl::sycl::device::get_devices(cl::sycl::info::device_type::all).size();
-
-    for (int i = 0; i < n_dev; i++) {
-        dpct::dev_mgr::instance().get_device(i).get_device_info(prop);
-        std::string name = prop.get_name();
-        bool is_gpu = dpct::dev_mgr::instance().get_device(i).is_gpu();
-#ifdef NVIDIA_GPU
-        if(is_gpu && (name.find("NVIDIA") != std::string::npos)) {
-            dev = i;
-            break;
-        }
-#elif INTEL_GPU
-        if(is_gpu && (name.find("Intel(R)") != std::string::npos)) {
-            dev = i;
-            break;
-        }
-#endif
-    }
-
-	dpct::dev_mgr::instance().select_device(dev);
+    select_custom_device();
  	dpct::device_ext &dev_ct1 = dpct::get_current_device();
  	sycl::queue &q_ct1 = dev_ct1.default_queue();
 	#ifdef TIME_IT
@@ -174,7 +150,6 @@ int main(int argc, char *argv[]) {
 	initT = aux2T-aux1T;
     #endif
 
-	std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
   printf("WG size of kernel = %d \n", NUMBER_THREADS);
 	//======================================================================================================================================================
 	//	VARIABLES

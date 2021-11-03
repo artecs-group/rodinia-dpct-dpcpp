@@ -51,6 +51,8 @@ int
 main( int argc, char** argv)
 { 
 
+
+    gpuDeviceInit(0);
   // Create timers for each sort
     sdkCreateTimer(&uploadTimer);
     sdkCreateTimer(&downloadTimer);
