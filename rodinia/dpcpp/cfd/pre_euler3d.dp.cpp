@@ -673,12 +673,31 @@ int main(int argc, char** argv)
         dpct::device_info prop;
         int dev;
 
+    // get number of devices
+    int n_dev = cl::sycl::device::get_devices(cl::sycl::info::device_type::all).size();
+
+    for (int i = 0; i < n_dev; i++) {
+        dpct::dev_mgr::instance().get_device(i).get_device_info(prop);
+        std::string name = prop.get_name();
+        bool is_gpu = dpct::dev_mgr::instance().get_device(i).is_gpu();
+#ifdef NVIDIA_GPU
+        if(is_gpu && (name.find("NVIDIA") != std::string::npos)) {
+            dev = i;
+            break;
+        }
+#elif INTEL_GPU
+        if(is_gpu && (name.find("Intel(R)") != std::string::npos)) {
+            dev = i;
+            break;
+        }
+#endif
+    }
         /*
         DPCT1003:105: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.
         */
-        checkCudaErrors((dpct::dev_mgr::instance().select_device(0), 0));
-        checkCudaErrors(dev = dpct::dev_mgr::instance().current_device_id());
+        checkCudaErrors((dpct::dev_mgr::instance().select_device(dev), 0));
+        //checkCudaErrors(dev = dpct::dev_mgr::instance().current_device_id());
         /*
         DPCT1003:106: Migrated API does not return error code. (*, 0) is
         inserted. You may need to rewrite this code.

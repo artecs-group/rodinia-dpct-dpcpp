@@ -23,6 +23,7 @@
 #include <math.h>
 //#include <cuda.h>
 #include "bfs.hpp"
+#include "../common.hpp"
 
 #ifdef TIME_IT
 #include <sys/time.h>
@@ -177,13 +178,22 @@ void BFSGraph( int argc, char** argv)
   #ifdef TIME_IT
   time0 = get_time();
   #endif
-	// DEVICE / DRIVER INIT
-	dpct::device_ext &dev_ct1 = dpct::get_current_device();
- 	sycl::queue &q_ct1 = dev_ct1.default_queue();
+
+#ifdef NVIDIA_GPU
+  NvidiaGpuSelector selector{};
+#elif INTEL_GPU
+  IntelGpuSelector selector{};
+#else
+  sycl::cpu_selector selector{};
+#endif
+
+  sycl::queue q_ct1{selector};
 
   #ifdef TIME_IT
   time1 = get_time();
   #endif
+
+	std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
 
 	d_graph_nodes = sycl::malloc_device<Node>(no_of_nodes, q_ct1);
 	d_graph_edges = sycl::malloc_device<int>(edge_list_size, q_ct1);
