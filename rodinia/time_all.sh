@@ -23,7 +23,7 @@ then
     make all
     cu=1
 else
-    make oneAPI
+    make dpcpp
 fi
 
 
@@ -33,6 +33,6 @@ mkdir timing
 
 if [ $cu == 1 ]
 then
-    ./timeCUDA.sh
+    ./time_cuda.sh
 fi
-./timeOneAPI.sh
+./time_dpcpp.sh
