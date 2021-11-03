@@ -1844,7 +1844,7 @@ main(	int argc,
 		char** argv ) 
 {
 
-  printf("WG size of kernel 1 & 2  = %d \n", DEFAULT_ORDER);
+   printf("WG size of kernel 1 & 2  = %d \n", DEFAULT_ORDER);
 
 	// ------------------------------------------------------------60
 	// figure out and display whether 32-bit or 64-bit architecture
@@ -1865,7 +1865,7 @@ main(	int argc,
         //dpct::dev_mgr::instance().select_device(device);
         //printf("Selecting device %d\n", device);
 
-        std::cout << "Running on " << q.get_device().get_info<sycl::info::device::name>() << std::endl;
+    std::cout << "Running on " << q.get_device().get_info<sycl::info::device::name>() << std::endl;
 
 	// ------------------------------------------------------------60
 	// read inputs

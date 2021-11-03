@@ -13,6 +13,7 @@
 // includes, kernels
 #include "backprop_sycl_kernel.dp.cpp"
 #include "backprop.h"
+#include "../common.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -124,12 +125,21 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
   time0 = get_time();
   #endif
 
-  dpct::device_ext &dev_ct1 = dpct::get_current_device();
-  sycl::queue &q_ct1 = dev_ct1.default_queue();
+#ifdef NVIDIA_GPU
+  NvidiaGpuSelector selector{};
+#elif INTEL_GPU
+  IntelGpuSelector selector{};
+#else
+  sycl::cpu_selector selector{};
+#endif
+
+  sycl::queue q_ct1{selector};
 
   #ifdef TIME_IT
   time1 = get_time();
   #endif
+
+  std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
 
   input_cuda = sycl::malloc_device<float>((in + 1), q_ct1);
   output_hidden_cuda = sycl::malloc_device<float>((hid + 1), q_ct1);
@@ -191,7 +201,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
                      });
   });
 
-  dev_ct1.queues_wait_and_throw();
+  q_ct1.wait_and_throw();
   #ifdef TIME_IT
   time4 = get_time();
   #endif
