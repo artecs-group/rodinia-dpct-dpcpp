@@ -1,6 +1,4 @@
 #Configure
-#CUDA_INSTALL_PATH ?= /usr/local/cuda
-CUDA_INSTALL_PATH = $(CUDA_DIR)
 EXECUTABLE := dwt2d
 
 # Debug options
@@ -9,7 +7,7 @@ cudagdb=0 #compile for use with cuda-gdb, note that 'dbg' must be 1 as well
 performancetest=1
 
 # NVCC Options
-#NVCCFLAGS += -arch sm_20
+NVCCFLAGS += -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # Files
 CFILES := 
@@ -27,7 +25,7 @@ COMMONFLAGS += $(INCLUDES)
 NVCCFLAGS += $(COMMONFLAGS)
 CXXFLAGS += $(COMMONFLAGS)
 CFLAGS += $(COMMONFLAGS) -std=c99 
-#LDFLAGS += -L$(CUDA_INSTALL_PATH)/lib64 -lcudart
+LDFLAGS += -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # Warning flags (from cuda common.mk)
 CXXWARN_FLAGS := \
@@ -72,6 +70,10 @@ else
     CFLAGS      += -fno-strict-aliasing
 endif
 
+ifeq ($(time),1)
+	NVCCFLAGS += -DTIME_IT
+endif
+
 #ifeq ($(performancetest),1)
 #    COMMONFLAGS += -DGPU_DWT_TESTING
 #endif
@@ -80,19 +82,15 @@ endif
 #	override OUTPUT = -DOUTPUT
 #endif
 
-# 'make time=1' compiles for time measurement
-ifeq ($(time),1)
-	NVCCFLAGS += -DTIME_IT
-endif
-
 OUTPUT = -DOUTPUT
 
 # Compilers
 CXX := dpcpp
 CC := gcc
-LINK := dpcpp -fPIC
+#LINK := dpcpp -fPIC
+LINK := $(SYCL_ROOT)/bin/clang++
 #NVCC := $(CUDA_INSTALL_PATH)/bin/nvcc
-NVCC := dpcpp
+NVCC := $(SYCL_ROOT)/bin/clang++
 # Generate object files list
 COBJS=$(CFILES:.c=.c.o)
 CXXOBJS=$(CXXFILES:.cpp=.cpp.o)

@@ -1,7 +1,7 @@
 include ../../common/make.config
-CC := dpcpp
+CC := $(SYCL_ROOT)/bin/clang++
 
-#CC_FLAGS = -arch=sm_20
+CC_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 ifdef VERIFY
 override VERIFY = -DVERIFY

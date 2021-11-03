@@ -1,5 +1,7 @@
-DPCPP_CXX = dpcpp
-DPCPP_CXXFLAGS = -std=c++17 -g -o
+include ../../common/make.config
+
+DPCPP_CXX =  $(SYCL_ROOT)/bin/clang++
+DPCPP_CXXFLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS) -o
 DPCPP_LDFLAGS = 
 DPCPP_EXE_NAME = gaussianElimination
 DPCPP_SOURCES = gaussian.dp.cpp

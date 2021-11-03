@@ -1,6 +1,8 @@
 include ../../common/make.config
 
-CC := dpcpp
+CC := $(SYCL_ROOT)/bin/clang++
+
+CC_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 INCLUDE := 
 
@@ -10,20 +12,21 @@ EXE = pathfinder
 
 # 'make time=1' compiles for time measurement
 ifeq ($(time),1)
-	FLAGS = -DTIME_IT
+	CC_FLAGS += -DTIME_IT
 endif
 
+
 release:
-	$(CC) $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) $(CC_FLAGS) $(SRC) -o $(EXE)
 
 enum:
-	$(CC) -deviceemu $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) $(CC_FLAGS) -deviceemu $(SRC) -o $(EXE)
 
 debug:
-	$(CC) -g $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) -g $(CC_FLAGS) $(SRC) -o $(EXE)
 
 debugenum:
-	$(CC) -g -deviceemu $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) -g $(CC_FLAGS) -deviceemu $(SRC) -o $(EXE)
 
 clean:
 	rm -f pathfinder

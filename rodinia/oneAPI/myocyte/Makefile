@@ -1,3 +1,13 @@
+include ../../common/make.config
+
+DPCPP = $(SYCL_ROOT)/bin/clang++
+
+DPCPP_FLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+
+ifeq ($(time),1)
+	DPCPP_FLAGS += -DTIME_IT
+endif
+
 # Example
 # target: dependencies
 	# command 1
@@ -9,11 +19,11 @@
 
 # link objects(binaries) together
 myocyte.out:		main.dp.o
-	dpcpp	main.dp.o \
+	$(DPCPP)	main.dp.o \
 				-I/usr/local/cuda/include \
 				-L/usr/local/cuda/lib \
 				-lm \
-                                -o myocyte.out
+                -o myocyte.out $(DPCPP_FLAGS)
 
 # compile main function file into object (binary)
 main.dp.o:	define.c \
@@ -35,8 +45,8 @@ main.dp.o:	define.c \
 				kernel_fin_2.dp.cpp \
 				file.c \
 				timer.c
-	dpcpp	main.dp.cpp \
-				-c -O3 -g
+	$(DPCPP)	main.dp.cpp \
+				-c -O3 -g $(DPCPP_FLAGS)
 
 # delete all object files
 clean:

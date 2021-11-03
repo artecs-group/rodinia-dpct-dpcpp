@@ -1,9 +1,9 @@
 include ../../common/make.config
 
-SYCLCC=dpcpp
-CC =g++
+SYCLCC = $(SYCL_ROOT)/bin/clang++
+CC = g++
 
-SYCLCC_OPTS=-O3 -m64 -g 
+SYCLCC_OPTS=-O3 -m64 -g -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 GCC_OPTS=-O3 -Wall -Wextra -m64 -I $(SYCL_INC)
 

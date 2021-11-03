@@ -8,10 +8,10 @@ include ../experiments/test_rule.mk
 CUDA_INSTALL_PATH := $(CUDA_DIR)
 
 # Compilers
-NVCC       := dpcpp
-CXX        := dpcpp -fopenmp $(PROFILE)
-CC         := dpcpp 
-LINK       := dpcpp -fopenmp -m64 -fPIC $(PROFILE)
+NVCC       := $(SYCL_ROOT)/bin/clang++
+CXX        := $(SYCL_ROOT)/bin/clang++ -fopenmp $(PROFILE)
+CC         := $(SYCL_ROOT)/bin/clang++ 
+LINK       := $(SYCL_ROOT)/bin/clang++ -fopenmp -m64 -fPIC $(PROFILE)
 
 # Add source files here
 #STATIC_LIB := libmummergpu.a
@@ -64,9 +64,9 @@ CWARN_FLAGS := $(CXXWARN_FLAGS) \
 	-Wmain \
 
 # Compiler-specific flags
-NVCCFLAGS := -Xcompiler "-m64"
-CXXFLAGS  := -m64 $(CXXWARN_FLAGS)
-CFLAGS    := -m64 $(CWARN_FLAGS)
+NVCCFLAGS := -Xcompiler "-m64" -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+CXXFLAGS  := -m64 $(CXXWARN_FLAGS) -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+CFLAGS    := -m64 $(CWARN_FLAGS) -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # Common flags
 COMMONFLAGS ?= 

@@ -1,7 +1,8 @@
 include ../../../common/make.config
 
-CC := dpcpp
+CC := $(SYCL_ROOT)/bin/clang++
 
+CC_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # Example
 # target: dependencies
@@ -14,7 +15,7 @@ CC := dpcpp
 
 # link objects(binaries) together
 a.out:		main.dp.o
-	$(CC)	main.dp.o \
+	$(CC) $(CC_FLAGS)	main.dp.o \
 				-lm -o srad
 
 # compile main function file into object (binary)
@@ -27,7 +28,7 @@ main.dp.o: 	main.dp.cpp \
 				srad_kernel.dp.cpp \
 				srad2_kernel.dp.cpp \
 				compress_kernel.dp.cpp
-	$(CC)	main.dp.cpp \
+	$(CC) $(CC_FLAGS)	main.dp.cpp \
 				-c -O3
 
 # delete all object files

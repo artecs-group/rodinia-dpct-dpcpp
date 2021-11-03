@@ -1,17 +1,18 @@
+include ../../common/make.config
 
 # C compiler
 CC = gcc
 CC_FLAGS = -g  -O2
 
 # SYCL compiler
-DPCPP = dpcpp
-
+DPCPP = $(SYCL_ROOT)/bin/clang++
+DPCPP_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # 'make dbg=1' enables DPCPP debugging
 ifeq ($(dbg),1)
-	DPCPP_FLAGS = -g -O0
+	DPCPP_FLAGS += -g -O0
 else
-	DPCPP_FLAGS = -O2
+	DPCPP_FLAGS += -O2
 endif
 
 # 'make emu=1' compiles the CUDA kernels for emulation

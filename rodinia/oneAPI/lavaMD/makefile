@@ -16,9 +16,9 @@ C_C = gcc
 OMP_LIB = -lgomp
 OMP_FLAG = -fopenmp
 
-CUD_C = dpcpp
+CUD_C = $(SYCL_ROOT)/bin/clang++
 # OMP_FLAG = 	-Xcompiler paste_one_here
-#CUDA_FLAG = -arch sm_13
+CUDA_FLAG = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # link objects (binaries) together
 a.out:		main.o \
@@ -32,7 +32,7 @@ a.out:		main.o \
 			./util/timer/timer.o \
 			./util/device/device.dp.o \
 			-lm \
-			$(OMP_LIB) \
+			$(OMP_LIB) $(CUDA_FLAG) \
 			-o lavaMD
 
 # compile function files into objects (binaries)
@@ -78,7 +78,7 @@ main.o:		main.h \
 	$(CUD_C)			./util/device/device.dp.cpp \
 						-c \
 						-o ./util/device/device.dp.o \
-						-O3
+						-O3 $(CUDA_FLAG)
 
 # delete all object and executable files
 clean:

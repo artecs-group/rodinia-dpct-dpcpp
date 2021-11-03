@@ -1,6 +1,8 @@
 include ../../../common/make.config
 
-CC := dpcpp
+CC := $(SYCL_ROOT)/bin/clang++
+
+CC_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 SRC = srad.dp.cpp
 
@@ -8,20 +10,20 @@ EXE = srad
 
 # 'make time=1' compiles for time measurement
 ifeq ($(time),1)
-	FLAGS = -DTIME_IT
+	CC_FLAGS += -DTIME_IT
 endif
 
 release: $(SRC)
-	$(CC) $(KERNEL_DIM) $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) $(KERNEL_DIM) $(SRC) -o $(EXE) $(CC_FLAGS)
 
 enum: $(SRC)
-	$(CC) $(KERNEL_DIM) -deviceemu $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) $(KERNEL_DIM) -deviceemu $(SRC) -o $(EXE) $(CC_FLAGS)
 
 debug: $(SRC)
-	$(CC) $(KERNEL_DIM) -g $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) $(KERNEL_DIM) -g $(SRC) -o $(EXE) $(CC_FLAGS)
 
 debugenum: $(SRC)
-	$(CC) $(KERNEL_DIM) -g -deviceemu $(SRC) -o $(EXE) $(FLAGS)
+	$(CC) $(KERNEL_DIM) -g -deviceemu $(SRC) -o $(EXE) $(CC_FLAGS)
 
 clean: $(SRC)
 	rm -f $(EXE) $(EXE).linkinfo result.txt
