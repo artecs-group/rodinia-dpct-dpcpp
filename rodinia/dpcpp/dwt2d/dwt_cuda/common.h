@@ -40,6 +40,8 @@
 #include <vector>
 #include <chrono>
 
+extern sycl::queue q_ct1;
+
 // compile time minimum macro
 #define CTMIN(a,b) (((a) < (b)) ? (a) : (b))
 
@@ -272,7 +274,7 @@ namespace dwt_cuda {
     DPCT1003:11: Migrated API does not return error code. (*, 0) is inserted.
     You may need to rewrite this code.
     */
-    status = (dpct::get_default_queue()
+    status = (q_ct1
                   .memcpy(dest, src, sx * sy * sizeof(T))
                   .wait(),
               0);

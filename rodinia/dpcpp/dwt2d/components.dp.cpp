@@ -41,6 +41,8 @@
 
 #define THREADS 256
 
+extern sycl::queue q_ct1;
+
 /* Store 3 RGB float components */
 void storeComponents(float *d_r, float *d_g, float *d_b, float r, float g, float b, int pos)
 {
@@ -154,13 +156,13 @@ rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int heig
 
     /* Alloc d_src buffer */
     d_src = (unsigned char *)sycl::malloc_device(alignedSize,
-                                                 dpct::get_default_queue());
-    cudaCheckAsyncError("Cuda malloc") dpct::get_default_queue()
+                                                 q_ct1);
+    cudaCheckAsyncError("Cuda malloc") q_ct1
         .memset(d_src, 0, alignedSize)
         .wait();
 
     /* Copy data to device */
-    dpct::get_default_queue().memcpy(d_src, src, pixels * 3).wait();
+    q_ct1.memcpy(d_src, src, pixels * 3).wait();
     cudaCheckError("Copy data to device")
 
         /* Kernel */
@@ -177,7 +179,7 @@ rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int heig
   	long long time1;
 	long long time0 = get_time();
     #endif
-    dpct::get_default_queue().submit([&](sycl::handler &cgh) {
+    q_ct1.submit([&](sycl::handler &cgh) {
         sycl::accessor<unsigned char, 1, sycl::access::mode::read_write,
                        sycl::access::target::local>
             sData_acc_ct1(sycl::range<1>(768 /*THREADS*3*/), cgh);
@@ -190,13 +192,13 @@ rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int heig
                          });
     });
     #ifdef TIME_IT
-    dpct::get_current_device().queues_wait_and_throw();
+    q_ct1.wait_and_throw();
     time1 = get_time();
     #endif
     cudaCheckAsyncError("CopySrcToComponents kernel")
 
         /* Free Memory */
-        sycl::free(d_src, dpct::get_default_queue());
+        sycl::free(d_src, q_ct1);
     cudaCheckAsyncError("Free memory")
         
     #ifdef TIME_IT
@@ -227,13 +229,13 @@ bwToComponent(T *d_c, unsigned char * src, int width, int height){
 
     /* Alloc d_src buffer */
     d_src = (unsigned char *)sycl::malloc_device(alignedSize,
-                                                 dpct::get_default_queue());
-    cudaCheckAsyncError("Cuda malloc") dpct::get_default_queue()
+                                                 q_ct1);
+    cudaCheckAsyncError("Cuda malloc") q_ct1
         .memset(d_src, 0, alignedSize)
         .wait();
 
     /* Copy data to device */
-    dpct::get_default_queue().memcpy(d_src, src, pixels).wait();
+    q_ct1.memcpy(d_src, src, pixels).wait();
     cudaCheckError("Copy data to device")
 
         /* Kernel */
@@ -250,7 +252,7 @@ bwToComponent(T *d_c, unsigned char * src, int width, int height){
   	long long time1;
 	long long time0 = get_time();
     #endif
-    dpct::get_default_queue().submit([&](sycl::handler &cgh) {
+    q_ct1.submit([&](sycl::handler &cgh) {
         sycl::accessor<unsigned char, 1, sycl::access::mode::read_write,
                        sycl::access::target::local>
             sData_acc_ct1(sycl::range<1>(256 /*THREADS*/), cgh);
@@ -262,13 +264,13 @@ bwToComponent(T *d_c, unsigned char * src, int width, int height){
                          });
     });
     #ifdef TIME_IT
-    dpct::get_current_device().queues_wait_and_throw();
+    q_ct1.wait_and_throw();
     time1 = get_time();
     #endif
     cudaCheckAsyncError("CopySrcToComponent kernel")
 
         /* Free Memory */
-        sycl::free(d_src, dpct::get_default_queue());
+        sycl::free(d_src, q_ct1);
     cudaCheckAsyncError("Free memory")
 
     #ifdef TIME_IT

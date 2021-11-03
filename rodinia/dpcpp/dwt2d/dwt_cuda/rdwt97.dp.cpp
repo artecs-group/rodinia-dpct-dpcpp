@@ -36,6 +36,7 @@
 #include "transform_buffer.h"
 #include "io.h"
 
+extern sycl::queue q_ct1;
 
 namespace dwt_cuda {
 
@@ -340,7 +341,7 @@ namespace dwt_cuda {
     limit. To get the device limit, query info::device::max_work_group_size.
     Adjust the workgroup size if needed.
     */
-    dpct::get_default_queue().submit([&](sycl::handler &cgh) {
+    q_ct1.submit([&](sycl::handler &cgh) {
         sycl::accessor<RDWT97<WIN_SX, WIN_SY>, 0,
                        sycl::access::mode::read_write,
                        sycl::access::target::local>

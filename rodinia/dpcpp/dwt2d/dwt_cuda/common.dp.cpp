@@ -29,7 +29,18 @@
 ///
  
 #include "common.h"
+#include "../../common.hpp"
 
 namespace dwt_cuda {
   bool CudaDWTTester::testRunning = false;
 }
+
+#ifdef NVIDIA_GPU
+NvidiaGpuSelector selector{};
+#elif INTEL_GPU
+IntelGpuSelector selector{};
+#else
+sycl::cpu_selector selector{};
+#endif
+
+sycl::queue q_ct1{selector};

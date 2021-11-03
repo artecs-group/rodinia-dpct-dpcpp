@@ -41,6 +41,8 @@
 #include "components.h"
 #include "dwt.h"
 
+extern sycl::queue q_ct1;
+
 struct dwt {
     char * srcFilename;
     char * outFilename;
@@ -106,21 +108,20 @@ processDWT(struct dwt *d, int forward, int writeVisual)
     #ifdef TIME_IT
     long long kernTime = 0;
     #endif
-    dpct::device_ext &dev_ct1 = dpct::get_current_device();
-    sycl::queue &q_ct1 = dev_ct1.default_queue();
+
     int componentSize = d->pixWidth*d->pixHeight*sizeof(T);
     
     T *c_r_out, *backup ;
     c_r_out = (T *)sycl::malloc_device(
-        componentSize, dpct::get_default_queue()); //< aligned component size
+        componentSize, q_ct1); //< aligned component size
     cudaCheckError("Alloc device memory");
-    dpct::get_default_queue().memset(c_r_out, 0, componentSize).wait();
+    q_ct1.memset(c_r_out, 0, componentSize).wait();
     cudaCheckError("Memset device memory");
 
     backup = (T *)sycl::malloc_device(
-        componentSize, dpct::get_default_queue()); //< aligned component size
+        componentSize, q_ct1); //< aligned component size
     cudaCheckError("Alloc device memory");
-    dpct::get_default_queue().memset(backup, 0, componentSize).wait();
+    q_ct1.memset(backup, 0, componentSize).wait();
     cudaCheckError("Memset device memory");
 	
     if (d->components == 3) {
@@ -128,39 +129,39 @@ processDWT(struct dwt *d, int forward, int writeVisual)
         T *c_g_out, *c_b_out;
         c_g_out = (T *)sycl::malloc_device(
             componentSize,
-            dpct::get_default_queue()); //< aligned component size
+            q_ct1); //< aligned component size
         cudaCheckError("Alloc device memory");
-        dpct::get_default_queue().memset(c_g_out, 0, componentSize).wait();
+        q_ct1.memset(c_g_out, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
 
         c_b_out = (T *)sycl::malloc_device(
             componentSize,
-            dpct::get_default_queue()); //< aligned component size
+            q_ct1); //< aligned component size
         cudaCheckError("Alloc device memory");
-        dpct::get_default_queue().memset(c_b_out, 0, componentSize).wait();
+        q_ct1.memset(c_b_out, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
         
         /* Load components */
         T *c_r, *c_g, *c_b;
         c_r = (T *)sycl::malloc_device(
             componentSize,
-            dpct::get_default_queue()); //< R, aligned component size
+            q_ct1); //< R, aligned component size
         cudaCheckError("Alloc device memory");
-        dpct::get_default_queue().memset(c_r, 0, componentSize).wait();
+        q_ct1.memset(c_r, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
 
         c_g = (T *)sycl::malloc_device(
             componentSize,
-            dpct::get_default_queue()); //< G, aligned component size
+            q_ct1); //< G, aligned component size
         cudaCheckError("Alloc device memory");
-        dpct::get_default_queue().memset(c_g, 0, componentSize).wait();
+        q_ct1.memset(c_g, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
 
         c_b = (T *)sycl::malloc_device(
             componentSize,
-            dpct::get_default_queue()); //< B, aligned component size
+            q_ct1); //< B, aligned component size
         cudaCheckError("Alloc device memory");
-        dpct::get_default_queue().memset(c_b, 0, componentSize).wait();
+        q_ct1.memset(c_b, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
 
         #ifdef TIME_IT
@@ -207,15 +208,15 @@ processDWT(struct dwt *d, int forward, int writeVisual)
         }
 #endif
 
-        sycl::free(c_r, dpct::get_default_queue());
+        sycl::free(c_r, q_ct1);
         cudaCheckError("Cuda free");
-        sycl::free(c_g, dpct::get_default_queue());
+        sycl::free(c_g, q_ct1);
         cudaCheckError("Cuda free");
-        sycl::free(c_b, dpct::get_default_queue());
+        sycl::free(c_b, q_ct1);
         cudaCheckError("Cuda free");
-        sycl::free(c_g_out, dpct::get_default_queue());
+        sycl::free(c_g_out, q_ct1);
         cudaCheckError("Cuda free");
-        sycl::free(c_b_out, dpct::get_default_queue());
+        sycl::free(c_b_out, q_ct1);
         cudaCheckError("Cuda free");
 
     } 
@@ -224,9 +225,9 @@ processDWT(struct dwt *d, int forward, int writeVisual)
         T *c_r;
         (c_r) = (T *)sycl::malloc_device(
             componentSize,
-            dpct::get_default_queue()); //< R, aligned component size
+            q_ct1); //< R, aligned component size
         cudaCheckError("Alloc device memory");
-        dpct::get_default_queue().memset(c_r, 0, componentSize).wait();
+        q_ct1.memset(c_r, 0, componentSize).wait();
         cudaCheckError("Memset device memory");
         
         #ifdef TIME_IT
@@ -245,13 +246,13 @@ processDWT(struct dwt *d, int forward, int writeVisual)
             writeLinear(c_r_out, d->pixWidth, d->pixHeight, d->outFilename, ".lin.out");
         }
 // #endif
-        sycl::free(c_r, dpct::get_default_queue());
+        sycl::free(c_r, q_ct1);
         cudaCheckError("Cuda free");
     }
 
-    sycl::free(c_r_out, dpct::get_default_queue());
+    sycl::free(c_r_out, q_ct1);
     cudaCheckError("Cuda free device");
-    sycl::free(backup, dpct::get_default_queue());
+    sycl::free(backup, q_ct1);
     cudaCheckError("Cuda free device");
 
     #ifdef TIME_IT
@@ -356,32 +357,34 @@ int main(int argc, char **argv)
     }
 
     // device init
-    int devCount;
-    devCount = dpct::dev_mgr::instance().device_count();
-    cudaCheckError("Get device count");
-    if (devCount == 0) {
-        printf("No CUDA enabled device\n");
-        return -1;
-    } 
-    if (device < 0 || device > devCount -1) {
-        printf("Selected device %d is out of bound. Devices on your system are in range %d - %d\n", 
-               device, 0, devCount -1);
-        return -1;
-    }
-    dpct::device_info devProp;
-    dpct::dev_mgr::instance().get_device(device).get_device_info(devProp);
-    cudaCheckError("Get device properties");
-    /*
-    DPCT1005:2: The device version is different. You need to rewrite this code.
-    */
-    //if (devProp.get_major_version() < 1) {
-    if (!dpct::get_current_device().is_gpu()){
-        printf("Device %d does not support CUDA\n", device);
-        //return -1;
-    }
-    printf("Using device %d: %s\n", device, devProp.get_name());
-    dpct::dev_mgr::instance().select_device(device);
-    cudaCheckError("Set selected device");
+    // int devCount;
+    // devCount = dpct::dev_mgr::instance().device_count();
+    // cudaCheckError("Get device count");
+    // if (devCount == 0) {
+    //     printf("No CUDA enabled device\n");
+    //     return -1;
+    // } 
+    // if (device < 0 || device > devCount -1) {
+    //     printf("Selected device %d is out of bound. Devices on your system are in range %d - %d\n", 
+    //            device, 0, devCount -1);
+    //     return -1;
+    // }
+    // dpct::device_info devProp;
+    // dpct::dev_mgr::instance().get_device(device).get_device_info(devProp);
+    // cudaCheckError("Get device properties");
+    // /*
+    // DPCT1005:2: The device version is different. You need to rewrite this code.
+    // */
+    // //if (devProp.get_major_version() < 1) {
+    // if (!dpct::get_current_device().is_gpu()){
+    //     printf("Device %d does not support CUDA\n", device);
+    //     //return -1;
+    // }
+    // printf("Using device %d: %s\n", device, devProp.get_name());
+    // dpct::dev_mgr::instance().select_device(device);
+    // cudaCheckError("Set selected device");
+
+    std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
 
     struct dwt *d;
     d = (struct dwt *)malloc(sizeof(struct dwt));
@@ -416,7 +419,7 @@ int main(int argc, char **argv)
 
     //load img source image
     d->srcImg = (unsigned char *)sycl::malloc_host(inputSize,
-                                                   dpct::get_default_queue());
+                                                   q_ct1);
     cudaCheckError("Alloc host memory");
     if (getImg(d->srcFilename, d->srcImg, inputSize) == -1) 
         return -1;
@@ -456,7 +459,7 @@ int main(int argc, char **argv)
     //writeComponent(g_wave_cuda, 512000, ".g");
     //writeComponent(g_cuda, componentSize, ".g");
     //writeComponent(b_wave_cuda, componentSize, ".b");
-    sycl::free(d->srcImg, dpct::get_default_queue());
+    sycl::free(d->srcImg, q_ct1);
     cudaCheckError("Cuda free host");
 
     return 0;

@@ -38,6 +38,8 @@
 #include "dwt.h"
 #include "common.h"
 
+extern sycl::queue q_ct1;
+
 inline void fdwt(float *in, float *out, int width, int height, int levels)
 {
         dwt_cuda::fdwt97(in, out, width, height, levels);
@@ -94,7 +96,7 @@ nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int stages
     
     /* create backup of input, because each test iteration overwrites it */
     const int size = pixHeight * pixWidth * sizeof(T);
-    dpct::get_default_queue().memcpy(backup, in, size).wait();
+    q_ct1.memcpy(backup, in, size).wait();
     cudaCheckError("Memcopy device to device");
     
     /* Measure time of individual levels. */
@@ -128,7 +130,7 @@ nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int stages
     cudaCheckAsyncError("DWT Kernel calls");
 */
 #ifdef TIME_IT
-dpct::get_current_device().queues_wait_and_throw();
+q_ct1.wait_and_throw();
 time1=get_time1();
 return time1-time0;
 #else
@@ -225,11 +227,11 @@ int writeLinear(T *component_cuda, int pixWidth, int pixHeight,
     int samplesNum = pixWidth*pixHeight;
 
     size = samplesNum*sizeof(T);
-    gpu_output = (T *)sycl::malloc_host(size, dpct::get_default_queue());
+    gpu_output = (T *)sycl::malloc_host(size, q_ct1);
     cudaCheckError("Malloc host");
     memset(gpu_output, 0, size);
     result = (unsigned char *)malloc(samplesNum);
-    dpct::get_default_queue().memcpy(gpu_output, component_cuda, size).wait();
+    q_ct1.memcpy(gpu_output, component_cuda, size).wait();
     cudaCheckError("Memcopy device to host");
 
     /* T to char */
@@ -250,7 +252,7 @@ int writeLinear(T *component_cuda, int pixWidth, int pixHeight,
     close(i);
 
     /* Clean up */
-    sycl::free(gpu_output, dpct::get_default_queue());
+    sycl::free(gpu_output, q_ct1);
     cudaCheckError("Cuda free host memory");
     free(result);
     if(x == 0) return 1;
@@ -317,13 +319,13 @@ int writeNStage2DDWT(T *component_cuda, int pixWidth, int pixHeight,
 #endif
     
     size = samplesNum*sizeof(T);
-    src = (T *)sycl::malloc_host(size, dpct::get_default_queue());
+    src = (T *)sycl::malloc_host(size, q_ct1);
     cudaCheckError("Malloc host");
     dst = (T*)malloc(size);
     memset(src, 0, size);
     memset(dst, 0, size);
     result = (unsigned char *)malloc(samplesNum);
-    dpct::get_default_queue().memcpy(src, component_cuda, size).wait();
+    q_ct1.memcpy(src, component_cuda, size).wait();
     cudaCheckError("Memcopy device to host");
 
     // LL Band
@@ -379,7 +381,7 @@ int writeNStage2DDWT(T *component_cuda, int pixWidth, int pixHeight,
     x = write(i, result, samplesNum);
     close(i);
 
-    sycl::free(src, dpct::get_default_queue());
+    sycl::free(src, q_ct1);
     cudaCheckError("Cuda free host memory");
     free(dst);
     free(result);

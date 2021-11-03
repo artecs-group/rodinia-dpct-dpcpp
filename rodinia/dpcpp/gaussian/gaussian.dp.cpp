@@ -19,6 +19,7 @@
 #include <sys/time.h>
 #include <string.h>
 #include <math.h>
+#include "../common.hpp"
 
 #ifdef RD_WG_SIZE_0_0
         #define MAXBLOCKSIZE RD_WG_SIZE_0_0
@@ -125,7 +126,7 @@ int main(int argc, char *argv[])
         exit(0);
     }
     
-    PrintDeviceProperties();
+    //PrintDeviceProperties();
     //char filename[100];
     //sprintf(filename,"matrices/matrix%d.txt",size);
 
@@ -419,12 +420,22 @@ void ForwardSub(){
                 #ifdef TIME_IT
                 time0 = get_time();
                 #endif
-                dpct::device_ext &dev_ct1 = dpct::get_current_device();
-                sycl::queue &q_ct1 = dev_ct1.default_queue();
+
+#ifdef NVIDIA_GPU
+                NvidiaGpuSelector selector{};
+#elif INTEL_GPU
+                IntelGpuSelector selector{};
+#else
+                sycl::cpu_selector selector{};
+#endif
+
+                sycl::queue q_ct1{selector};
                 
                 #ifdef TIME_IT
                 time1 = get_time();
                 #endif
+                std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
+
                 // allocate memory on GPU
                 m_cuda = sycl::malloc_device<float>(Size * Size, q_ct1);
 
@@ -481,7 +492,7 @@ void ForwardSub(){
                                         Fan1(m_cuda, a_cuda, Size_ct2, t, item_ct1);
                                 });
                         });
-                        dev_ct1.queues_wait_and_throw();
+                        q_ct1.wait_and_throw();
                         /*
                         DPCT1049:8: The workgroup size passed to the SYCL kernel may
                         exceed the limit. To get the device limit, query
@@ -500,7 +511,7 @@ void ForwardSub(){
                                                 Size_t_ct4, t, item_ct1);
                                 });
                         });
-                        dev_ct1.queues_wait_and_throw();
+                        q_ct1.wait_and_throw();
                         //checkCUDAError("Fan2");
                 }
                 // end timing kernels
