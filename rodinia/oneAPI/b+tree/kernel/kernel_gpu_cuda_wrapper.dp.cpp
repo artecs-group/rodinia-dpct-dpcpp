@@ -74,12 +74,11 @@ kernel_gpu_cuda_wrapper(record *records,
 	//======================================================================================================================================================150
 	//	GPU SETUP
 	//======================================================================================================================================================150
-
 	//====================================================================================================100
 	//	INITIAL DRIVER OVERHEAD
 	//====================================================================================================100
 
-        dpct::get_current_device().queues_wait_and_throw();
+        //dpct::get_current_device().queues_wait_and_throw();
 
         //====================================================================================================100
 	//	EXECUTION PARAMETERS
@@ -108,7 +107,7 @@ kernel_gpu_cuda_wrapper(record *records,
 
 	record *recordsD;
         recordsD = (record *)sycl::malloc_device(records_mem,
-                                                 dpct::get_default_queue());
+                                                 q);
         //checkCUDAError("cudaMalloc  recordsD");
 
 	//==================================================50
@@ -116,7 +115,7 @@ kernel_gpu_cuda_wrapper(record *records,
 	//==================================================50
 
 	knode *knodesD;
-        knodesD = (knode *)sycl::malloc_device(knodes_mem, dpct::get_default_queue());
+        knodesD = (knode *)sycl::malloc_device(knodes_mem, q);
         //checkCUDAError("cudaMalloc  recordsD");
 
 	//==================================================50
@@ -124,7 +123,7 @@ kernel_gpu_cuda_wrapper(record *records,
 	//==================================================50
 
 	long *currKnodeD;
-        currKnodeD = sycl::malloc_device<long>(count, dpct::get_default_queue());
+        currKnodeD = sycl::malloc_device<long>(count, q);
         //checkCUDAError("cudaMalloc  currKnodeD");
 
 	//==================================================50
@@ -132,7 +131,7 @@ kernel_gpu_cuda_wrapper(record *records,
 	//==================================================50
 
 	long *offsetD;
-        offsetD = sycl::malloc_device<long>(count, dpct::get_default_queue());
+        offsetD = sycl::malloc_device<long>(count, q);
         //checkCUDAError("cudaMalloc  offsetD");
 
 	//==================================================50
@@ -140,7 +139,7 @@ kernel_gpu_cuda_wrapper(record *records,
 	//==================================================50
 
 	int *keysD;
-        keysD = sycl::malloc_device<int>(count, dpct::get_default_queue());
+        keysD = sycl::malloc_device<int>(count, q);
         //checkCUDAError("cudaMalloc  keysD");
 
 	//====================================================================================================100
@@ -152,7 +151,7 @@ kernel_gpu_cuda_wrapper(record *records,
 	//==================================================50
 
 	record *ansD;
-        ansD = sycl::malloc_device<record>(count, dpct::get_default_queue());
+        ansD = sycl::malloc_device<record>(count, q);
         //checkCUDAError("cudaMalloc ansD");
 
 	time2 = get_time();
@@ -169,21 +168,21 @@ kernel_gpu_cuda_wrapper(record *records,
 	//	recordsD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(recordsD, records, records_mem).wait();
+        q.memcpy(recordsD, records, records_mem).wait();
         //checkCUDAError("cudaMalloc cudaMemcpy memD");
 
 	//==================================================50
 	//	knodesD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(knodesD, knodes, knodes_mem).wait();
+        q.memcpy(knodesD, knodes, knodes_mem).wait();
         //checkCUDAError("cudaMalloc cudaMemcpy memD");
 
 	//==================================================50
 	//	currKnodeD
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(currKnodeD, currKnode, count * sizeof(long))
             .wait();
         //checkCUDAError("cudaMalloc cudaMemcpy currKnodeD");
@@ -192,14 +191,14 @@ kernel_gpu_cuda_wrapper(record *records,
 	//	offsetD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(offsetD, offset, count * sizeof(long)).wait();
+        q.memcpy(offsetD, offset, count * sizeof(long)).wait();
         //checkCUDAError("cudaMalloc cudaMemcpy offsetD");
 
 	//==================================================50
 	//	keysD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(keysD, keys, count * sizeof(int)).wait();
+        q.memcpy(keysD, keys, count * sizeof(int)).wait();
         //checkCUDAError("cudaMalloc cudaMemcpy keysD");
 
 	//====================================================================================================100
@@ -210,7 +209,7 @@ kernel_gpu_cuda_wrapper(record *records,
 	//	ansD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(ansD, ans, count * sizeof(record)).wait();
+        q.memcpy(ansD, ans, count * sizeof(record)).wait();
         //checkCUDAError("cudaMalloc cudaMemcpy ansD");
 
 	time3 = get_time();
@@ -224,7 +223,7 @@ kernel_gpu_cuda_wrapper(record *records,
         limit. To get the device limit, query info::device::max_work_group_size.
         Adjust the workgroup size if needed.
         */
-        dpct::get_default_queue().submit([&](sycl::handler &cgh) {
+        q.submit([&](sycl::handler &cgh) {
                 cgh.parallel_for(
                     sycl::nd_range<3>(sycl::range<3>(1, 1, numBlocks) *
                                           sycl::range<3>(1, 1, threadsPerBlock),
@@ -251,7 +250,7 @@ kernel_gpu_cuda_wrapper(record *records,
 	//	ansD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(ans, ansD, count * sizeof(record)).wait();
+        q.memcpy(ans, ansD, count * sizeof(record)).wait();
         //checkCUDAError("cudaMemcpy ansD");
 
 	time5 = get_time();
@@ -260,13 +259,13 @@ kernel_gpu_cuda_wrapper(record *records,
 	//	GPU MEMORY DEALLOCATION
 	//======================================================================================================================================================150
 
-        sycl::free(recordsD, dpct::get_default_queue());
-        sycl::free(knodesD, dpct::get_default_queue());
+        sycl::free(recordsD, q);
+        sycl::free(knodesD, q);
 
-        sycl::free(currKnodeD, dpct::get_default_queue());
-        sycl::free(offsetD, dpct::get_default_queue());
-        sycl::free(keysD, dpct::get_default_queue());
-        sycl::free(ansD, dpct::get_default_queue());
+        sycl::free(currKnodeD, q);
+        sycl::free(offsetD, q);
+        sycl::free(keysD, q);
+        sycl::free(ansD, q);
 
         time6 = get_time();
 

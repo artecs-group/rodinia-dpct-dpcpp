@@ -80,7 +80,7 @@ try{
 	//	INITIAL DRIVER OVERHEAD
 	//====================================================================================================100
 
-        dpct::get_current_device().queues_wait_and_throw();
+        //dpct::get_current_device().queues_wait_and_throw();
 
         //====================================================================================================100
 	//	EXECUTION PARAMETERS
@@ -108,7 +108,7 @@ try{
 	//==================================================50
 
 	knode *knodesD;
-        knodesD = (knode *)sycl::malloc_device(knodes_mem, dpct::get_default_queue());
+        knodesD = (knode *)sycl::malloc_device(knodes_mem, q);
         //checkCUDAError("cudaMalloc  recordsD");
 
 	//==================================================50
@@ -116,7 +116,7 @@ try{
 	//==================================================50
 
 	long *currKnodeD;
-        currKnodeD = sycl::malloc_device<long>(count, dpct::get_default_queue());
+        currKnodeD = sycl::malloc_device<long>(count, q);
         //checkCUDAError("cudaMalloc  currKnodeD");
 
 	//==================================================50
@@ -124,7 +124,7 @@ try{
 	//==================================================50
 
 	long *offsetD;
-        offsetD = sycl::malloc_device<long>(count, dpct::get_default_queue());
+        offsetD = sycl::malloc_device<long>(count, q);
         //checkCUDAError("cudaMalloc  offsetD");
 
 	//==================================================50
@@ -132,7 +132,7 @@ try{
 	//==================================================50
 
 	long *lastKnodeD;
-        lastKnodeD = sycl::malloc_device<long>(count, dpct::get_default_queue());
+        lastKnodeD = sycl::malloc_device<long>(count, q);
         //checkCUDAError("cudaMalloc  lastKnodeD");
 
 	//==================================================50
@@ -140,7 +140,7 @@ try{
 	//==================================================50
 
 	long *offset_2D;
-        offset_2D = sycl::malloc_device<long>(count, dpct::get_default_queue());
+        offset_2D = sycl::malloc_device<long>(count, q);
         //checkCUDAError("cudaMalloc  offset_2D");
 
 	//==================================================50
@@ -148,7 +148,7 @@ try{
 	//==================================================50
 
 	int *startD;
-        startD = sycl::malloc_device<int>(count, dpct::get_default_queue());
+        startD = sycl::malloc_device<int>(count, q);
         //checkCUDAError("cudaMalloc startD");
 
 	//==================================================50
@@ -156,7 +156,7 @@ try{
 	//==================================================50
 
 	int *endD;
-        endD = sycl::malloc_device<int>(count, dpct::get_default_queue());
+        endD = sycl::malloc_device<int>(count, q);
         //checkCUDAError("cudaMalloc endD");
 
 	//====================================================================================================100
@@ -168,7 +168,7 @@ try{
 	//==================================================50
 
 	int *ansDStart;
-        ansDStart = sycl::malloc_device<int>(count, dpct::get_default_queue());
+        ansDStart = sycl::malloc_device<int>(count, q);
         //checkCUDAError("cudaMalloc ansDStart");
 
 	//==================================================50
@@ -176,7 +176,7 @@ try{
 	//==================================================50
 
 	int *ansDLength;
-        ansDLength = sycl::malloc_device<int>(count, dpct::get_default_queue());
+        ansDLength = sycl::malloc_device<int>(count, q);
         //checkCUDAError("cudaMalloc ansDLength");
 
 	time2 = get_time();
@@ -193,14 +193,14 @@ try{
 	//	knodesD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(knodesD, knodes, knodes_mem).wait();
+        q.memcpy(knodesD, knodes, knodes_mem).wait();
         //checkCUDAError("cudaMalloc cudaMemcpy memD");
 
 	//==================================================50
 	//	currKnodeD
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(currKnodeD, currKnode, count * sizeof(long))
             .wait();
         //checkCUDAError("cudaMalloc cudaMemcpy currKnodeD");
@@ -209,14 +209,14 @@ try{
 	//	offsetD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(offsetD, offset, count * sizeof(long)).wait();
+        q.memcpy(offsetD, offset, count * sizeof(long)).wait();
         //checkCUDAError("cudaMalloc cudaMemcpy offsetD");
 
 	//==================================================50
 	//	lastKnodeD
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(lastKnodeD, lastKnode, count * sizeof(long))
             .wait();
         //checkCUDAError("cudaMalloc cudaMemcpy lastKnodeD");
@@ -225,7 +225,7 @@ try{
 	//	offset_2D
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(offset_2D, offset_2, count * sizeof(long))
             .wait();
         //checkCUDAError("cudaMalloc cudaMemcpy offset_2D");
@@ -234,14 +234,14 @@ try{
 	//	startD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(startD, start, count * sizeof(int)).wait();
+        q.memcpy(startD, start, count * sizeof(int)).wait();
         //checkCUDAError("cudaMemcpy startD");
 
 	//==================================================50
 	//	endD
 	//==================================================50
 
-        dpct::get_default_queue().memcpy(endD, end, count * sizeof(int)).wait();
+        q.memcpy(endD, end, count * sizeof(int)).wait();
         //checkCUDAError("cudaMemcpy endD");
 
 	//====================================================================================================100
@@ -252,7 +252,7 @@ try{
 	//	ansDStart
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(ansDStart, recstart, count * sizeof(int))
             .wait();
         //checkCUDAError("cudaMemcpy ansDStart");
@@ -261,7 +261,7 @@ try{
 	//	ansDLength
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(ansDLength, reclength, count * sizeof(int))
             .wait();
         //checkCUDAError("cudaMemcpy ansDLength");
@@ -278,7 +278,7 @@ try{
         limit. To get the device limit, query info::device::max_work_group_size.
         Adjust the workgroup size if needed.
         */
-        dpct::get_default_queue().submit([&](sycl::handler &cgh) {
+        q.submit([&](sycl::handler &cgh) {
                 cgh.parallel_for(
                     sycl::nd_range<3>(sycl::range<3>(1, 1, numBlocks) *
                                           sycl::range<3>(1, 1, threadsPerBlock),
@@ -307,7 +307,7 @@ try{
 	//	ansDStart
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(recstart, ansDStart, count * sizeof(int))
             .wait();
         //checkCUDAError("cudaMemcpy ansDStart");
@@ -316,7 +316,7 @@ try{
 	//	ansDLength
 	//==================================================50
 
-        dpct::get_default_queue()
+        q
             .memcpy(reclength, ansDLength, count * sizeof(int))
             .wait();
         //checkCUDAError("cudaMemcpy ansDLength");
@@ -327,16 +327,16 @@ try{
 	//	GPU MEMORY DEALLOCATION
 	//======================================================================================================================================================150
 
-        sycl::free(knodesD, dpct::get_default_queue());
+        sycl::free(knodesD, q);
 
-        sycl::free(currKnodeD, dpct::get_default_queue());
-        sycl::free(offsetD, dpct::get_default_queue());
-        sycl::free(lastKnodeD, dpct::get_default_queue());
-        sycl::free(offset_2D, dpct::get_default_queue());
-        sycl::free(startD, dpct::get_default_queue());
-        sycl::free(endD, dpct::get_default_queue());
-        sycl::free(ansDStart, dpct::get_default_queue());
-        sycl::free(ansDLength, dpct::get_default_queue());
+        sycl::free(currKnodeD, q);
+        sycl::free(offsetD, q);
+        sycl::free(lastKnodeD, q);
+        sycl::free(offset_2D, q);
+        sycl::free(startD, q);
+        sycl::free(endD, q);
+        sycl::free(ansDStart, q);
+        sycl::free(ansDLength, q);
 
         time6 = get_time();
 

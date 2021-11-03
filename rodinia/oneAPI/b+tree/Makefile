@@ -60,7 +60,9 @@ C_C = gcc
 #	DPCPP
 # ====================================================================================================100
 
-SYCL_C = dpcpp
+SYCL_C = $(SYCL_ROOT)/bin/clang++
+
+DPCPP_FLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 # OMP_FLAG = 	-Xcompiler paste_one_here
 
 # ====================================================================================================100
@@ -98,7 +100,7 @@ b+tree.out:	./main.o \
 			./util/num/num.o \
 			./util/cuda/cuda.o \
 			-lm \
-            -o b+tree.out -I $(SYCL_INC) -lsycl
+            -o b+tree.out $(DPCPP_FLAGS)
 
 
 # ========================================================================================================================================================================================================200
@@ -115,7 +117,7 @@ main.o:	./common.h \
 	$(SYCL_C)	$(KERNEL_DIM) ./main.c.dp.cpp \
 			-c \
 			-o ./main.o \
-			-O3 -I $(SYCL_INC) -lsycl
+			-O3 $(DPCPP_FLAGS)
 
 # ======================================================================================================================================================150
 #	KERNELS
@@ -127,7 +129,7 @@ main.o:	./common.h \
 	$(SYCL_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper.dp.cpp \
 				-c \
 				-o ./kernel/kernel_gpu_cuda_wrapper.o \
-				-O3 \
+				-O3 $(DPCPP_FLAGS)
 
 ./kernel/kernel_gpu_cuda_wrapper_2.o:	./common.h \
 										./kernel/kernel_gpu_cuda_wrapper_2.h \
@@ -135,7 +137,7 @@ main.o:	./common.h \
 	$(SYCL_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper_2.dp.cpp \
 				-c \
 				-o ./kernel/kernel_gpu_cuda_wrapper_2.o \
-				-O3 \
+				-O3 $(DPCPP_FLAGS)
 
 # ======================================================================================================================================================150
 #	UTILITIES
@@ -163,7 +165,7 @@ main.o:	./common.h \
 	$(SYCL_C)	./util/cuda/cuda.dp.cpp \
 				-c \
 				-o ./util/cuda/cuda.o \
-				-O3 \
+				-O3 $(DPCPP_FLAGS)
 
 # ======================================================================================================================================================150
 #	END
