@@ -99,12 +99,33 @@ void BFSGraph( int argc, char** argv)
 		return;
 	}
 
+  #ifdef TIME_IT
+  time0 = get_time();
+  #endif
+
+#ifdef NVIDIA_GPU
+  NvidiaGpuSelector selector{};
+#elif INTEL_GPU
+  IntelGpuSelector selector{};
+#else
+  sycl::cpu_selector selector{};
+#endif
+
+  sycl::queue q_ct1{selector};
+
+  #ifdef TIME_IT
+  time1 = get_time();
+  #endif
+
+	std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
+
 	int source = 0;
 
 	fscanf(fp,"%d",&no_of_nodes);
 
 	int num_of_blocks = 1;
 	int num_of_threads_per_block = no_of_nodes;
+	int MAX_THREADS_PER_BLOCK = q_ct1.get_device().get_info<cl::sycl::info::device::max_work_group_size>();
 
 	//Make execution Parameters according to the number of nodes
 	//Distribute threads across multiple Blocks if necessary
@@ -175,26 +196,6 @@ void BFSGraph( int argc, char** argv)
     sycl::range<3> threads(1, 1, num_of_threads_per_block);
 	int k=0;
 
-  #ifdef TIME_IT
-  time0 = get_time();
-  #endif
-
-#ifdef NVIDIA_GPU
-  NvidiaGpuSelector selector{};
-#elif INTEL_GPU
-  IntelGpuSelector selector{};
-#else
-  sycl::cpu_selector selector{};
-#endif
-
-  sycl::queue q_ct1{selector};
-
-  #ifdef TIME_IT
-  time1 = get_time();
-  #endif
-
-	std::cout << "Running on " << q_ct1.get_device().get_info<sycl::info::device::name>() << std::endl;
-
 	d_graph_nodes = sycl::malloc_device<Node>(no_of_nodes, q_ct1);
 	d_graph_edges = sycl::malloc_device<int>(edge_list_size, q_ct1);
 	d_graph_mask = sycl::malloc_device<bool>(no_of_nodes, q_ct1);
@@ -261,7 +262,7 @@ void BFSGraph( int argc, char** argv)
                                     Kernel(d_graph_nodes, d_graph_edges,
                                            d_graph_mask, d_updating_graph_mask,
                                            d_graph_visited, d_cost,
-                                           no_of_nodes_ct6, item_ct1);
+                                           no_of_nodes_ct6, item_ct1, MAX_THREADS_PER_BLOCK);
                             });
                 });
                 // check if kernel execution generated and error
@@ -280,7 +281,7 @@ void BFSGraph( int argc, char** argv)
                             [=](sycl::nd_item<3> item_ct1) {
                                     Kernel2(d_graph_mask, d_updating_graph_mask,
                                             d_graph_visited, d_over,
-                                            no_of_nodes_ct4, item_ct1);
+                                            no_of_nodes_ct4, item_ct1, MAX_THREADS_PER_BLOCK);
                             });
                 });
                 // check if kernel execution generated and error
