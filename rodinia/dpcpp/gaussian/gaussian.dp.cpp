@@ -21,16 +21,6 @@
 #include <math.h>
 #include "../common.hpp"
 
-#ifdef RD_WG_SIZE_0_0
-        #define MAXBLOCKSIZE RD_WG_SIZE_0_0
-#elif defined(RD_WG_SIZE_0)
-        #define MAXBLOCKSIZE RD_WG_SIZE_0
-#elif defined(RD_WG_SIZE)
-        #define MAXBLOCKSIZE RD_WG_SIZE
-#else
-        #define MAXBLOCKSIZE 512
-#endif
-
 //2D defines. Go from specific to general                                                
 #ifdef RD_WG_SIZE_1_0
         #define BLOCK_SIZE_XY RD_WG_SIZE_1_0
@@ -94,7 +84,7 @@ create_matrix(float *m, int size){
 
 int main(int argc, char *argv[])
 {
-  printf("WG size of kernel 1 = %d, WG size of kernel 2= %d X %d\n", MAXBLOCKSIZE, BLOCK_SIZE_XY, BLOCK_SIZE_XY);
+  printf("WG size of kernel 1 = WG size of kernel 2= %d X %d\n", BLOCK_SIZE_XY, BLOCK_SIZE_XY);
     int verbose = 1;
     int pRes = 0;
     int i, j;
@@ -458,7 +448,7 @@ void ForwardSub(){
 
                 int block_size,grid_size;
 
-                block_size = MAXBLOCKSIZE;
+                block_size = q_ct1.get_device().get_info<cl::sycl::info::device::max_work_group_size>();
                 grid_size = (Size/block_size) + (!(Size%block_size)? 0:1);
                 //printf("1d grid size: %d\n",grid_size);
 

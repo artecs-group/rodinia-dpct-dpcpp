@@ -15,6 +15,7 @@
 #include <iostream>
 #include "bucketsort.dp.hpp"
 #include "mergesort.dp.hpp"
+#include "../common.hpp"
 using namespace std; 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +53,7 @@ main( int argc, char** argv)
 { 
 
 
-    gpuDeviceInit(0);
+    select_custom_device();
   // Create timers for each sort
     sdkCreateTimer(&uploadTimer);
     sdkCreateTimer(&downloadTimer);

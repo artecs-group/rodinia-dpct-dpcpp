@@ -837,31 +837,7 @@ inline int _ConvertSMVer2Cores(int major, int minor)
 // General GPU Device CUDA Initialization
 inline int gpuDeviceInit(int devID)
 {
-    dpct::device_info prop;
-    int dev = 0;
-    int n_dev = cl::sycl::device::get_devices(cl::sycl::info::device_type::all).size();
-				        
-    for (int i = 0; i < n_dev; i++){ 
-	dpct::dev_mgr::instance().get_device(i).get_device_info(prop);
-        std::string name = prop.get_name();
-	bool is_gpu = dpct::dev_mgr::instance().get_device(i).is_gpu();
-#ifdef NVIDIA_GPU
-    if(is_gpu && (name.find("NVIDIA") != std::string::npos)) {
-	dev = i;
-	break;
-    }
-#elif INTEL_GPU
-    if(is_gpu && (name.find("Intel(R)") != std::string::npos)) {
-	dev = i;
-	break;
-    }
-#endif
-																    }
-    dpct::dev_mgr::instance().select_device(dev);
-    dpct::dev_mgr::instance().get_device(dev).get_device_info(prop);
-    std::cout << "Running on " << prop.get_name() << std::endl;
-    
-    return dev;
+    return devID;
 }
 
 // This function returns the best GPU (with maximum GFLOPS)

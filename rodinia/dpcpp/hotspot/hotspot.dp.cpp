@@ -20,7 +20,21 @@
 #endif 
 
 #ifdef TIME_IT
-aux1Time = get_time();
+long long get_time() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+
+long long alocTime = 0;
+long long cpinTime = 0;
+long long kernTime = 0;
+long long cpouTime = 0;
+long long freeTime = 0;
+#endif
+
+#ifdef TIME_IT
+long long aux1Time = get_time();
 #endif
 
 #ifdef NVIDIA_GPU
@@ -34,8 +48,8 @@ aux1Time = get_time();
   sycl::queue q_ct1{selector};
 
 #ifdef TIME_IT
-aux2Time = get_time();
-initTime = aux2Time-aux1Time;
+long long aux2Time = get_time();
+long long initTime = aux2Time-aux1Time;
 #endif
 
 #define STR_SIZE 256
@@ -245,14 +259,6 @@ void calculate_temp(int iteration,  //number of iteration
    compute N time steps
 */
 
-#ifdef TIME_IT
-long long get_time() {
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000) + tv.tv_usec;
-}
-#endif
-
 int compute_tran_temp(float *MatrixPower,float *MatrixTemp[2], int col, int row, \
 		int total_iterations, int num_iterations, int blockCols, int blockRows, int borderCols, int borderRows) 
 {
@@ -353,18 +359,6 @@ int main(int argc, char** argv)
 
 void run(int argc, char** argv)
 {
-
-    #ifdef TIME_IT
-    long long initTime;
-    long long alocTime = 0;
-    long long cpinTime = 0;
-    long long kernTime = 0;
-    long long cpouTime = 0;
-    long long freeTime = 0;
-    long long aux1Time;
-    long long aux2Time;
-    #endif
-
     int size;
     int grid_rows,grid_cols;
     float *FilesavingTemp,*FilesavingPower,*MatrixOut; 
