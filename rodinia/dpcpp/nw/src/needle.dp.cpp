@@ -6,6 +6,7 @@
 #include <string.h>
 #include <math.h>
 #include "needle.h"
+#include "../../common.hpp"
 #ifdef TIME_IT
 #include <sys/time.h>
 #endif
@@ -55,22 +56,17 @@ long long get_time() {
 ////////////////////////////////////////////////////////////////////////////////
 // Program main
 ////////////////////////////////////////////////////////////////////////////////
-int main(int argc, char **argv) try {
+int main(int argc, char **argv) {
     std::string version;
 
-    version = dpct::get_current_device().get_info<sycl::info::device::version>();
+    select_custom_device();
+    //version = dpct::get_current_device().get_info<sycl::info::device::version>();
     
-    std::cout << "oneAPI version: " << version << std::endl;
+    //std::cout << "oneAPI version: " << version << std::endl;
 
     printf("WG size of kernel = %d \n", BLOCK_SIZE);
     runTest( argc, argv);
     return EXIT_SUCCESS;
-}
-catch (sycl::exception const &exc) {
-    printf("Error checking driver version.\n");
-    std::cerr << exc.what() << "Exception caught at file:" << __FILE__
-            << ", line:" << __LINE__ << std::endl;
-    std::exit(1);
 }
 
 void usage(int argc, char **argv)
@@ -83,7 +79,7 @@ void usage(int argc, char **argv)
 
 void runTest(int argc, char** argv)
 {
-    #ifdef TIME_IT
+    #ifdef TIME_T
     long long initTime;
     long long alocTime = 0;
     long long cpinTime = 0;
@@ -180,7 +176,6 @@ void runTest(int argc, char** argv)
     alocTime += aux2Time-aux1Time;
     aux1Time = get_time();
     #endif
-
     q_ct1.memcpy(referrence_cuda, referrence, sizeof(int) * size).wait();
     q_ct1.memcpy(matrix_cuda, input_itemsets, sizeof(int) * size).wait();
     #ifdef TIME_IT

@@ -25,7 +25,7 @@
 #include <assert.h>
 
 #include "common.h"
-
+#include "../../common.hpp"
 #ifdef TIME_IT
 #include <sys/time.h>
 #endif
@@ -82,6 +82,7 @@ main ( int argc, char *argv[] )
     #ifdef TIME_IT
     aux1Time = get_time();
     #endif
+    select_custom_device();
     dpct::device_ext &dev_ct1 = dpct::get_current_device();
     sycl::queue &q_ct1 = dev_ct1.default_queue();
     #ifdef TIME_IT

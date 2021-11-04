@@ -10,6 +10,7 @@
 #include <sys/time.h>
 #include <float.h>
 #include <vector>
+#include "../common.hpp"
 
 #define min( a, b )			a > b ? b : a
 #define ceilDiv( a, b )		( a + b - 1 ) / b
@@ -87,6 +88,7 @@ int main(int argc, char* argv[])
   long long aux2Time;
 
   aux1Time = get_time();
+  select_custom_device();
   dpct::device_ext &dev_ct1 = dpct::get_current_device();
   sycl::queue &q_ct1 = dev_ct1.default_queue();
   aux2Time = get_time();
