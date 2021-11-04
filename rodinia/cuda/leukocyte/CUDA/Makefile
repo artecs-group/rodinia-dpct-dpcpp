@@ -44,8 +44,16 @@ track_ellipse_kernel.o: track_ellipse_kernel.cu track_ellipse_kernel.h
 	$(NVCC) $(NVCC_FLAGS) -I$(MATRIX_DIR) -c track_ellipse_kernel.cu
 
 find_ellipse.o: avilib.h
+	$(CC) $(CC_FLAGS) -I$(MATRIX_DIR) find_ellipse.c -c
 
 track_ellipse.o: find_ellipse.h avilib.h
+	$(CC) $(CC_FLAGS) -I$(MATRIX_DIR) track_ellipse.c -c
+
+avilib.o: avilib.h
+	$(CC) $(CC_FLAGS) avilib.c -c
+
+misc_math.o: misc_math.h
+	$(CC) $(CC_FLAGS) misc_math.c -c
 
 $(MATRIX_DIR)/meschach.a:
 	cd $(MATRIX_DIR); ./configure --with-all; make all; make clean

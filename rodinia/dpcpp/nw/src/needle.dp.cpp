@@ -79,7 +79,7 @@ void usage(int argc, char **argv)
 
 void runTest(int argc, char** argv)
 {
-    #ifdef TIME_T
+    #ifdef TIME_IT
     long long initTime;
     long long alocTime = 0;
     long long cpinTime = 0;

@@ -1,15 +1,13 @@
 #include <CL/sycl.hpp>
 #include <dpct/dpct.hpp>
 #include <cmath>
-#include "../common.hpp"
 //=====================================================================
 //	MAIN FUNCTION
 //=====================================================================
 
 void master(fp timeinst, fp *initvalu, fp *parameter, fp *finavalu, fp *com,
 			fp *d_initvalu, fp *d_finavalu, fp *d_params, fp *d_com) {
- 
-	select_custom_device();
+
 	dpct::device_ext &dev_ct1 = dpct::get_current_device();
 	sycl::queue &q_ct1 = dev_ct1.default_queue();
 

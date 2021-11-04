@@ -28,14 +28,14 @@ ifeq ($(emu),1)
 endif
 
 
-leukocyte: detect_main.c.dp.o avilib.o find_ellipse.c.dp.o find_ellipse_kernel.dp.o track_ellipse.c.dp.o track_ellipse_kernel.dp.o misc_math.o $(MATRIX_DIR)/meschach.a
-	$(NVCC) $(NVCC_FLAGS) -lm -lsycl avilib.o find_ellipse.c.dp.o find_ellipse_kernel.dp.o track_ellipse.c.dp.o track_ellipse_kernel.dp.o misc_math.o detect_main.c.dp.o -o leukocyte $(MATRIX_DIR)/meschach.a -lm
+leukocyte: detect_main.o avilib.o find_ellipse.o find_ellipse_kernel.dp.o track_ellipse.o track_ellipse_kernel.dp.o misc_math.o $(MATRIX_DIR)/meschach.a
+	$(NVCC) $(NVCC_FLAGS) -lm -lsycl avilib.o find_ellipse.o find_ellipse_kernel.dp.o track_ellipse.o track_ellipse_kernel.dp.o misc_math.o detect_main.o -o leukocyte $(MATRIX_DIR)/meschach.a -lm
 
 %.o: %.[ch]
 	$(CC)  $(OUTPUT) $(CC_FLAGS) $< -c
 
-detect_main.c.dp.o: detect_main.c.dp.cpp find_ellipse.h track_ellipse.h avilib.h 
-	$(NVCC) $(NVCC_FLAGS) -I $(MATRIX_DIR) detect_main.c.dp.cpp -c
+detect_main.o: detect_main.c find_ellipse.h track_ellipse.h avilib.h 
+	$(CC) $(CC_FLAGS) -I $(MATRIX_DIR) detect_main.c -c
 
 find_ellipse_kernel.dp.o: find_ellipse_kernel.dp.cpp find_ellipse_kernel.h
 	$(NVCC) $(NVCC_FLAGS) -c find_ellipse_kernel.dp.cpp
@@ -43,11 +43,11 @@ find_ellipse_kernel.dp.o: find_ellipse_kernel.dp.cpp find_ellipse_kernel.h
 track_ellipse_kernel.dp.o: track_ellipse_kernel.dp.cpp track_ellipse_kernel.h
 	$(NVCC) $(NVCC_FLAGS) -I$(MATRIX_DIR) -c track_ellipse_kernel.dp.cpp
 
-find_ellipse.c.dp.o: avilib.h
-	$(NVCC) $(NVCC_FLAGS) -I$(MATRIX_DIR) find_ellipse.c.dp.cpp -c
+find_ellipse.o: avilib.h
+	$(CC) $(CC_FLAGS) -I$(MATRIX_DIR) find_ellipse.c -c
 
-track_ellipse.c.dp.o: find_ellipse.h avilib.h
-	$(NVCC) $(NVCC_FLAGS) -I$(MATRIX_DIR) track_ellipse.c.dp.cpp -c
+track_ellipse.o: find_ellipse.h avilib.h
+	$(CC) $(CC_FLAGS) -I$(MATRIX_DIR) track_ellipse.c -c
 
 avilib.o: avilib.h
 	$(CC) $(CC_FLAGS) avilib.c -c

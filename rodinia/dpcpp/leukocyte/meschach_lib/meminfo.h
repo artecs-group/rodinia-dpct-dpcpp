@@ -69,7 +69,7 @@
 #endif
 
 /* structure for memory information */
-typedef struct dpct_type_91c7b2 {
+typedef struct {
    long bytes;       /* # of allocated bytes for each type (summary) */
    int  numvar;      /* # of allocated variables for each type */
 } MEM_ARRAY;
@@ -150,7 +150,7 @@ int mem_stat_reg_vars();
 
 /* internal type */
 
-typedef struct dpct_type_5f3b1a {
+typedef struct {
    char **type_names;        /* array of names of types (strings) */
    int  (**free_funcs)();    /* array of functions for releasing types */
    unsigned ntypes;          /* max number of types */

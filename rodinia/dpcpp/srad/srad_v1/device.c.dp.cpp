@@ -1,5 +1,6 @@
 #include <CL/sycl.hpp>
 #include <dpct/dpct.hpp>
+#include "../../common.hpp"
 //======================================================================================================================================================150
 //	FUNCTIONS
 //======================================================================================================================================================150
@@ -9,34 +10,7 @@
 //====================================================================================================100
 
 void setdevice(void){
-
-	// variables
-	int num_devices;
-	int device;
-
-	// work
-        num_devices = dpct::dev_mgr::instance().device_count();
-        if (num_devices > 1) {
-		
-		// variables
-		int max_multiprocessors; 
-		int max_device;
-                dpct::device_info properties;
-
-                // initialize variables
-		max_multiprocessors = 0;
-		max_device = 0;
-		
-		for (device = 0; device < num_devices; device++) {
-                        dpct::dev_mgr::instance().get_device(device).get_device_info(properties);
-                        if (max_multiprocessors < properties.get_max_compute_units()) {
-                                max_multiprocessors = properties.get_max_compute_units();
-                                max_device = device;
-			}
-		}
-                dpct::dev_mgr::instance().select_device(max_device);
-        }
-
+        select_custom_device();
 }
 
 //====================================================================================================100

@@ -36,6 +36,7 @@
 #include <math.h>
 #include <sys/resource.h>
 #include <limits.h>
+#include "../common.hpp"
 
 #ifdef ENABLE_PARSEC_HOOKS
 #include <hooks.h>
@@ -1243,6 +1244,8 @@ int main(int argc, char **argv)
   strcpy(infilename, argv[7]);
   strcpy(outfilename, argv[8]);
   nproc = atoi(argv[9]);
+
+  select_custom_device();
 
   srand48(SEED);
   PStream* stream;

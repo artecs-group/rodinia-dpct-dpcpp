@@ -29,7 +29,6 @@ DPCT1009:1: SYCL uses exceptions to report errors and does not use the error
    int err = call;                                                            \
     } while (0)
 
-#define THREADS_PER_BLOCK 512
 #define MAXBLOCKS 65536
 #define CUDATIME
 
@@ -189,6 +188,7 @@ float pgain(long x, Points *points, float z, long int *numcenters, int kmax,
             double *free_t) try {
   dpct::device_ext &dev_ct1 = dpct::get_current_device();
   sycl::queue &q_ct1 = dev_ct1.default_queue();
+  int THREADS_PER_BLOCK = q_ct1.get_device().get_info<cl::sycl::info::device::max_work_group_size>();
 #ifdef CUDATIME
 	float tmp_t;
         sycl::event start, stop;

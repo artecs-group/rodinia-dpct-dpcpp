@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <float.h>
 #include <sys/time.h>
+#include "../common.hpp"
 //#include <time.h>
 #define PI 3.1415926535897932
 #define BLOCK_X 16
@@ -725,6 +726,7 @@ int main(int argc, char * argv[]){
 		printf("Number of particles must be > 0\n");
 		return 0;
 	}
+	select_custom_device();
 	//establish seed
 	int * seed = (int *)malloc(sizeof(int)*Nparticles);
 	int i;

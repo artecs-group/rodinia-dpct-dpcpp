@@ -17,6 +17,7 @@
 #include <dpct/dpct.hpp>
 #include "streamcluster_header.dp.cpp"
 #include <cmath>
+#include "../common.hpp"
 
 using namespace std;
 
@@ -896,6 +897,8 @@ int main(int argc, char **argv)
   strcpy(infilename, argv[7]);
   strcpy(outfilename, argv[8]);
   nproc = atoi(argv[9]);
+
+  select_custom_device();
 
   srand48(SEED);
   PStream* stream;

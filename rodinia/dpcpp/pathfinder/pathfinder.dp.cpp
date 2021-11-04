@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
+#include "../common.hpp"
 #ifdef TIME_IT
 #include <sys/time.h>
 #endif
@@ -238,9 +239,7 @@ int calc_path(int *gpuWall, int *gpuResult[2], int rows, int cols, \
 
 int main(int argc, char** argv)
 {
-    int num_devices;
-    num_devices = dpct::dev_mgr::instance().device_count();
-    if (num_devices > 1) dpct::dev_mgr::instance().select_device(DEVICE);
+    select_custom_device();
 
     run(argc,argv);
 

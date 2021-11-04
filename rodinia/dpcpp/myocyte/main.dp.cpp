@@ -11,7 +11,7 @@
 // Myocyte application models cardiac myocyte (heart muscle cell) and simulates its behavior according to the work by Saucerman and Bers [8]. The model integrates 
 // cardiac myocyte electrical activity with the calcineurin pathway, which is a key aspect of the development of heart failure. The model spans large number of temporal 
 // scales to reflect how changes in heart rate as observed during exercise or stress contribute to calcineurin pathway activation, which ultimately leads to the expression 
-// of numerous genes that remodel the heart’s structure. It can be used to identify potential therapeutic targets that may be useful for the treatment of heart failure. 
+// of numerous genes that remodel the heartï¿½s structure. It can be used to identify potential therapeutic targets that may be useful for the treatment of heart failure. 
 // Biochemical reactions, ion transport and electrical activity in the cell are modeled with 91 ordinary differential equations (ODEs) that are determined by more than 200 
 // experimentally validated parameters. The model is simulated by solving this group of ODEs for a specified time interval. The process of ODE solving is based on the 
 // causal relationship between values of ODEs at different time steps, thus it is mostly sequential. At every dynamically determined time step, the solver evaluates the 
@@ -93,6 +93,7 @@
 
 #include "work.dp.cpp"
 #include "work_2.dp.cpp"
+#include "../common.hpp"
 
 //====================================================================================================100
 //		MAIN FUNCTION
@@ -164,6 +165,7 @@ int main(int argc, char *argv []){
 
 	}
 
+	select_custom_device();
 	//================================================================================80
 	//		EXECUTION IF THERE IS 1 WORKLOAD, PARALLELIZE INSIDE 1 WORKLOAD
 	//================================================================================80

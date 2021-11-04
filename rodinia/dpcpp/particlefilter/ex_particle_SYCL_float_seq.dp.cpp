@@ -11,6 +11,7 @@
 #include <float.h>
 #include <sys/time.h>
 #include <time.h>
+#include "../common.hpp"
 
 #define BLOCK_X 16
 #define BLOCK_Y 16
@@ -1083,6 +1084,7 @@ int main(int argc, char * argv[]) {
         return 0;
     }
     //establish seed
+    select_custom_device();
     int * seed = (int *) malloc(sizeof (int) *Nparticles);
     int i;
     for (i = 0; i < Nparticles; i++)

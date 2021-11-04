@@ -47,33 +47,33 @@ typedef	unsigned int	u_int;
 ************************************************************/
 
 /* vector definition */
-typedef struct dpct_type_c61d8d {
-                unsigned int	dim, max_dim;
+typedef	struct	{
+		unsigned int	dim, max_dim;
 		Real	*ve;
 		} VEC;
 
 /* matrix definition */
-typedef struct dpct_type_e7dae4 {
-                unsigned int	m, n;
+typedef	struct	{
+		unsigned int	m, n;
 		unsigned int	max_m, max_n, max_size;
 		Real	**me,*base;	/* base is base of alloc'd mem */
 		} MAT;
 
 /* band matrix definition */
-typedef struct dpct_type_4f1866 {
+typedef struct {
                MAT   *mat;       /* matrix */
                int   lb,ub;    /* lower and upper bandwidth */
                } BAND;
 
 
 /* permutation definition */
-typedef struct dpct_type_da915d {
-                unsigned int	size, max_size, *pe;
+typedef	struct	{
+		unsigned int	size, max_size, *pe;
 		} PERM;
 
 /* integer vector definition */
-typedef struct dpct_type_38bc42 {
-                unsigned int	dim, max_dim;
+typedef struct	{
+		unsigned int	dim, max_dim;
 		int	*ive;
 	        } IVEC;
 
