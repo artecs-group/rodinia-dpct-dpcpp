@@ -16,9 +16,9 @@ C_C = gcc
 OMP_LIB = -lgomp
 OMP_FLAG = -fopenmp
 
-CUD_C = $(SYCL_ROOT)/bin/clang++
+# SYCL_C = $(SYCL_ROOT)/bin/clang++
 # OMP_FLAG = 	-Xcompiler paste_one_here
-CUDA_FLAG = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+# DPCPP_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # link objects (binaries) together
 a.out:		main.o \
@@ -26,13 +26,13 @@ a.out:		main.o \
 			./util/num/num.o \
 			./util/timer/timer.o \
 			./util/device/device.dp.o
-	$(CUD_C)	$(KERNEL_DIM) main.o \
+	$(SYCL_C)	$(KERNEL_DIM) main.o \
 			./kernel/kernel_gpu_cuda_wrapper.dp.o \
 			./util/num/num.o \
 			./util/timer/timer.o \
 			./util/device/device.dp.o \
 			-lm \
-			$(OMP_LIB) $(CUDA_FLAG) \
+			$(OMP_LIB) $(DPCPP_FLAGS) \
 			-o lavaMD
 
 # compile function files into objects (binaries)
@@ -46,18 +46,18 @@ main.o:		main.hpp \
 			./util/timer/timer.c \
 			./util/device/device.h \
 			./util/device/device.dp.cpp
-	$(CUD_C)	$(KERNEL_DIM) $(OUTPUT) main.cpp \
+	$(SYCL_C)	$(KERNEL_DIM) $(OUTPUT) main.cpp \
 			-c \
 			-o main.o \
-			-O3 $(CUDA_FLAG)
+			-O3 $(DPCPP_FLAGS)
 
 ./kernel/kernel_gpu_cuda_wrapper.dp.o:	./kernel/kernel_gpu_cuda_wrapper.h \
 									./kernel/kernel_gpu_cuda_wrapper.dp.cpp
-	$(CUD_C) $(KERNEL_DIM)						./kernel/kernel_gpu_cuda_wrapper.dp.cpp \
+	$(SYCL_C) $(KERNEL_DIM)						./kernel/kernel_gpu_cuda_wrapper.dp.cpp \
 									-c \
 									-o ./kernel/kernel_gpu_cuda_wrapper.dp.o \
 									-O3 \
-									$(CUDA_FLAG)
+									$(DPCPP_FLAGS)
 
 ./util/num/num.o:	./util/num/num.h \
 					./util/num/num.c
@@ -75,10 +75,10 @@ main.o:		main.hpp \
 
 ./util/device/device.dp.o:	./util/device/device.h \
 						./util/device/device.dp.cpp
-	$(CUD_C)			./util/device/device.dp.cpp \
+	$(SYCL_C)			./util/device/device.dp.cpp \
 						-c \
 						-o ./util/device/device.dp.o \
-						-O3 $(CUDA_FLAG)
+						-O3 $(DPCPP_FLAGS)
 
 # delete all object and executable files
 clean:

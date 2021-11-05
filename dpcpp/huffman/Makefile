@@ -1,9 +1,9 @@
 include ../../common/make.config
 
-SYCLCC = $(SYCL_ROOT)/bin/clang++
+# SYCL_C = $(SYCL_ROOT)/bin/clang++
 CC = g++
 
-SYCLCC_OPTS=-O3 -m64 -g -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+DPCPP_FLAGS = -O3 -m64 $(DPCPP_FLAGS)
 
 GCC_OPTS=-O3 -Wall -Wextra -m64 -I $(SYCL_INC)
 
@@ -20,22 +20,22 @@ override TESTING = -DCACHECWLUT
 endif
 
 pavle: $(OBJ) 
-	$(SYCLCC) $(TESTING) $(CACHECWLUT) $(SYCLCC_OPTS) $(OBJ) -o $(EXE) 
+	$(SYCL_C) $(TESTING) $(CACHECWLUT) $(DPCPP_FLAGS) $(OBJ) -o $(EXE) 
 
 vlc_kernel_sm64huff.dp.o: vlc_kernel_sm64huff.dp.cpp 
-	$(SYCLCC) $(TESTING) -c vlc_kernel_sm64huff.dp.cpp $(SYCLCC_OPTS)
+	$(SYCL_C) $(TESTING) -c vlc_kernel_sm64huff.dp.cpp $(DPCPP_FLAGS)
 
 scan.dp.o: scan.dp.cpp 
-	$(SYCLCC) -c scan.dp.cpp $(SYCLCC_OPTS)
+	$(SYCL_C) -c scan.dp.cpp $(DPCPP_FLAGS)
 
 cpuencode.dp.o: cpuencode.dp.cpp
-	$(SYCLCC) -c cpuencode.dp.cpp $(SYCLCC_OPTS)
+	$(SYCL_C) -c cpuencode.dp.cpp $(DPCPP_FLAGS)
 
 pack_kernels.dp.o: pack_kernels.dp.cpp 
-	$(SYCLCC) -c pack_kernels.dp.cpp $(SYCLCC_OPTS)
+	$(SYCL_C) -c pack_kernels.dp.cpp $(DPCPP_FLAGS)
 
 main_test_cu.dp.o: main_test_cu.dp.cpp cutil.h
-	$(SYCLCC) $(TESTING) -c main_test_cu.dp.cpp $(SYCLCC_OPTS)
+	$(SYCL_C) $(TESTING) -c main_test_cu.dp.cpp $(DPCPP_FLAGS)
 
 .o:.cpp
 	$(CC) ++ $(GCC_OPTS) -c $@ -o $<
