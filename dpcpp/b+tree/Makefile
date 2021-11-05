@@ -60,9 +60,10 @@ C_C = gcc
 #	DPCPP
 # ====================================================================================================100
 
-SYCL_C = $(SYCL_ROOT)/bin/clang++
+# SYCL_C = $(SYCL_ROOT)/bin/clang++
 
-DPCPP_FLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+# DPCPP_FLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+DPCPP_FLAGS = -O3 $(DPCPP_FLAGS)
 # OMP_FLAG = 	-Xcompiler paste_one_here
 
 # ====================================================================================================100
@@ -117,7 +118,7 @@ main.o:	./common.h \
 	$(SYCL_C)	$(KERNEL_DIM) ./main.c.dp.cpp \
 			-c \
 			-o ./main.o \
-			-O3 $(DPCPP_FLAGS)
+			 $(DPCPP_FLAGS)
 
 # ======================================================================================================================================================150
 #	KERNELS
@@ -129,7 +130,7 @@ main.o:	./common.h \
 	$(SYCL_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper.dp.cpp \
 				-c \
 				-o ./kernel/kernel_gpu_cuda_wrapper.o \
-				-O3 $(DPCPP_FLAGS)
+				 $(DPCPP_FLAGS)
 
 ./kernel/kernel_gpu_cuda_wrapper_2.o:	./common.h \
 										./kernel/kernel_gpu_cuda_wrapper_2.h \
@@ -137,7 +138,7 @@ main.o:	./common.h \
 	$(SYCL_C) $(KERNEL_DIM) ./kernel/kernel_gpu_cuda_wrapper_2.dp.cpp \
 				-c \
 				-o ./kernel/kernel_gpu_cuda_wrapper_2.o \
-				-O3 $(DPCPP_FLAGS)
+				 $(DPCPP_FLAGS)
 
 # ======================================================================================================================================================150
 #	UTILITIES
@@ -149,7 +150,7 @@ main.o:	./common.h \
 	$(C_C)	./util/timer/timer.c \
 			-c \
 			-o ./util/timer/timer.o \
-			-O3
+			
 
 ./util/num/num.o:	./common.h \
 					./util/num/num.h \
@@ -157,7 +158,7 @@ main.o:	./common.h \
 	$(C_C)	./util/num/num.c \
 			-c \
 			-o ./util/num/num.o \
-			-O3
+			
 
 ./util/cuda/cuda.o:	./common.h \
 					./util/cuda/cuda.h \
@@ -165,7 +166,7 @@ main.o:	./common.h \
 	$(SYCL_C)	./util/cuda/cuda.dp.cpp \
 				-c \
 				-o ./util/cuda/cuda.o \
-				-O3 $(DPCPP_FLAGS)
+				 $(DPCPP_FLAGS)
 
 # ======================================================================================================================================================150
 #	END

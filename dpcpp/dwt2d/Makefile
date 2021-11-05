@@ -7,7 +7,7 @@ cudagdb=0 #compile for use with cuda-gdb, note that 'dbg' must be 1 as well
 performancetest=1
 
 # NVCC Options
-NVCCFLAGS += -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+# DPCPP_FLAGS += -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # Files
 CFILES := 
@@ -22,10 +22,10 @@ include ../../common/make.config
 
 # Common flags
 COMMONFLAGS += $(INCLUDES) 
-NVCCFLAGS += $(COMMONFLAGS)
+DPCPP_FLAGS += $(COMMONFLAGS)
 CXXFLAGS += $(COMMONFLAGS)
 CFLAGS += $(COMMONFLAGS) -std=c99 
-LDFLAGS += -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+# DPCPP_FLAGS += -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # Warning flags (from cuda common.mk)
 CXXWARN_FLAGS := \
@@ -56,22 +56,22 @@ CXXFLAGS += $(CXXWARN_FLAGS)
 # Debug/release flags
 ifeq ($(dbg),1)
     COMMONFLAGS += -g 
-    NVCCFLAGS   += -D_DEBUG
+    DPCPP_FLAGS   += -D_DEBUG
     CXXFLAGS    += -D_DEBUG
     CFLAGS      += -D_DEBUG
 
     ifeq ($(cudagdb),1)
-        NVCCFLAGS += -G
+        DPCPP_FLAGS += -G
     endif
 else 
-    COMMONFLAGS += -O2 
-    #NVCCFLAGS   += --compiler-options -fno-strict-aliasing
+    DPCPP_FLAGS += -O2 
+    #DPCPP_FLAGS   += --compiler-options -fno-strict-aliasing
     CXXFLAGS    += -fno-strict-aliasing
     CFLAGS      += -fno-strict-aliasing
 endif
 
 ifeq ($(time),1)
-	NVCCFLAGS += -DTIME_IT
+	DPCPP_FLAGS += -DTIME_IT
 endif
 
 #ifeq ($(performancetest),1)
@@ -85,12 +85,12 @@ endif
 OUTPUT = -DOUTPUT
 
 # Compilers
-CXX := dpcpp
+# SYCL_C := dpcpp
 CC := gcc
-#LINK := dpcpp -fPIC
-LINK := $(SYCL_ROOT)/bin/clang++
-#NVCC := $(CUDA_INSTALL_PATH)/bin/nvcc
-NVCC := $(SYCL_ROOT)/bin/clang++
+#SYCL_C := dpcpp -fPIC
+# SYCL_C := $(SYCL_ROOT)/bin/clang++
+# #NVCC := $(CUDA_INSTALL_PATH)/bin/nvcc
+# SYCL_C := $(SYCL_ROOT)/bin/clang++
 # Generate object files list
 COBJS=$(CFILES:.c=.c.o)
 CXXOBJS=$(CXXFILES:.cpp=.cpp.o)
@@ -102,13 +102,13 @@ CUOBJS=$(CUFILES:.dp.cpp=.dp.cpp.o)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.dp.cpp.o: %.dp.cpp
-	$(NVCC) $(OUTPUT) $(NVCCFLAGS) -c $< -o $@
+	$(SYCL_C) $(OUTPUT) $(DPCPP_FLAGS) -c $< -o $@
 
 %.cpp.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(SYCL_C) $(CXXFLAGS) -c $< -o $@
 
 $(EXECUTABLE): $(COBJS) $(CXXOBJS) $(CUOBJS) 
-	$(LINK) -o $(EXECUTABLE) $(COBJS) $(CXXOBJS) $(CUOBJS) $(LDFLAGS)
+	$(SYCL_C) -o $(EXECUTABLE) $(COBJS) $(CXXOBJS) $(CUOBJS) $(DPCPP_FLAGS)
 
 clean:
 	rm -f $(COBJS) $(CXXOBJS) $(CUOBJS) $(EXECUTABLE)

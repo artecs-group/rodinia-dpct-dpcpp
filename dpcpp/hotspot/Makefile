@@ -1,8 +1,8 @@
 include ../../common/make.config
 
-CC := $(SYCL_ROOT)/bin/clang++
+# CC := $(SYCL_ROOT)/bin/clang++
 
-DPCPP_CXXFLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+# DPCPP_CXXFLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 SRC = hotspot.dp.cpp
 
@@ -13,15 +13,15 @@ ifeq ($(time),1)
 endif
 
 release: $(SRC)
-	$(CC) $(KERNEL_DIM) $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
+	$(SYCL_C) $(KERNEL_DIM) $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
 
 enum: $(SRC)
-	$(CC) $(KERNEL_DIM) -deviceemu $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
+	$(SYCL_C) $(KERNEL_DIM) -deviceemu $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
 
 debug: $(SRC)
-	$(CC) $(KERNEL_DIM) -g $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
+	$(SYCL_C) $(KERNEL_DIM) -g $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
 
 debugenum: $(SRC)
-	$(CC) $(KERNEL_DIM) -g -deviceemu $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
+	$(SYCL_C) $(KERNEL_DIM) -g -deviceemu $(SRC) -o $(EXE) $(DPCPP_CXXFLAGS)
 clean: $(SRC)
 	rm -f $(EXE) $(EXE).linkinfo result.txt

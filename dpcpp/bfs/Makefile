@@ -1,8 +1,8 @@
 include ../../common/make.config
 
-CC := $(SYCL_ROOT)/bin/clang++
+# SYCL_C := $(SYCL_ROOT)/bin/clang++
 
-DPCPP_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+# DPCPP_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 # 'make time=1' compiles for time measurement
 ifeq ($(time),1)
@@ -14,15 +14,15 @@ SRC = bfs.dp.cpp
 EXE = bfs
 
 release: $(SRC)
-	$(CC) $(SRC) $(DPCPP_FLAGS) -o $(EXE) 
+	$(SYCL_C) $(SRC) $(DPCPP_FLAGS) -o $(EXE) 
 
 enum: $(SRC)
-	$(CC) $(DPCPP_FLAGS) -deviceemu $(SRC) -o $(EXE) 
+	$(SYCL_C) $(DPCPP_FLAGS) -deviceemu $(SRC) -o $(EXE) 
 
 debug: $(SRC)
-	$(CC) -g $(DPCPP_FLAGS) $(SRC) -o $(EXE) 
+	$(SYCL_C) $(DPCPP_FLAGS) $(SRC) -o $(EXE) 
 debugenum: $(SRC)
-	$(CC) -g -deviceemu $(DPCPP_FLAGS) $(SRC) 
+	$(SYCL_C) -deviceemu $(DPCPP_FLAGS) $(SRC) 
 
 clean: $(SRC)
 	rm -f $(EXE) $(EXE).linkinfo result.txt
