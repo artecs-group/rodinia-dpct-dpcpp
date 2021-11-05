@@ -173,7 +173,7 @@ cd dpcpp/nw
 pwd
 for (( i=0; i<$numExecutions; i++ ))
 do
-    ./needleman_wunsch 16000 10 | grep "GPU: KERNEL" >> ../../timing/nw/dpcpp.txt
+#    ./needleman_wunsch 16000 10 | grep "GPU: KERNEL" >> ../../timing/nw/dpcpp.txt
 done
 
 cd ../..
@@ -217,14 +217,14 @@ cd dpcpp/srad/srad_v1
 pwd
 for (( i=0; i<$numExecutions; i++ ))
 do
-    ./srad 100 0.5 502 458 | grep "Total time:" >> ../../timing/srad/srad_v1/dpcpp.txt
+    ./srad 100 0.5 502 458 | grep "Total time:" >> ../../../timing/srad/srad_v1/dpcpp.txt
 done
 
 cd ../srad_v2
 pwd
 for (( i=0; i<$numExecutions; i++ ))
 do
-    ./srad 128 128 0 31 0 31 0.5 2 | grep "Total time:" >> ../../timing/srad/srad_v2/dpcpp.txt
+    ./srad 128 128 0 31 0 31 0.5 2 | grep "Total time:" >> ../../../timing/srad/srad_v2/dpcpp.txt
 done
 
 cd ../../..

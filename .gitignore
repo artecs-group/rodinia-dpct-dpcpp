@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
-
+timing/
+*.txt
 # Compiled Object files
 *.slo
 *.lo
@@ -45,3 +46,4 @@ done.txt
 TODO.txt
 rodinia/dpct1059.cpp
 dpct_notes.txt
+rodinia/.gitignore

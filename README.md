@@ -1,6 +1,6 @@
 ## Issues
 ### DPCT compatibility issue 
-vector_class does not found: you should add it's definition (e.g. oneAPI) and add it in "sycl_workspace/llvm/sycl/include/CL/sycl/stl.hpp"
+vector_class does not found: you should add it's definition (e.g. oneAPI). Add it in "sycl_workspace/llvm/sycl/include/CL/sycl/stl.hpp"
 
 ### OpenGL dependency
 You have to install OpenGL to run some tests:

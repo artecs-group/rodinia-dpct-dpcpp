@@ -332,7 +332,7 @@ runTest( int argc, char** argv)
 	printf("%15.12f s, %15.12f % : GPU MEM: COPY OUT\n",				(float) cpouTime / 1000000, (float) cpouTime / (float) totalTime * 100);
 	printf("%15.12f s, %15.12f % : GPU MEM: FRE\n", 					(float) freeTime / 1000000, (float) freeTime / (float) totalTime * 100);
 
-	printf("Total time:\n");
+	printf("Total time: ");
 	printf("%.12f s\n", 												(float) totalTime / 1000000);
 	#endif
 }
