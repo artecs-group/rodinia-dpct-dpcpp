@@ -2,64 +2,63 @@ all: dpcpp
 
 dpcpp: B+TREE BACKPROP BFS CFD DWT2D GAUSSIAN HEARTWALL HOTSPOT HOTSPOT3D HUFFMAN LAVAMD LUD MYOCYTE NN NW PARTICLEFILTER PATHFINDER SRAD STREAMCLUSTER
 
-DEVICE = NVIDIA_GPU # Available: NVIDIA_GPU, INTEL_GPU
 
 B+TREE:
-	cd b+tree; make time=1 DEVICE=$(GPU)
+	cd b+tree; make time=1
 
 BACKPROP:
-	cd backprop; make time=1 DEVICE=$(GPU)
+	cd backprop; make time=1
 
 BFS:
-	cd bfs; make time=1 DEVICE=$(GPU)
+	cd bfs; make time=1
 
 CFD:
-	cd cfd; make time=1 DEVICE=$(GPU)
+	cd cfd; make time=1
 
 DWT2D:
-	cd dwt2d; make time=1 DEVICE=$(GPU)
+	cd dwt2d; make time=1
 
 GAUSSIAN:
-	cd gaussian; make time=1 DEVICE=$(GPU)
+	cd gaussian; make time=1
 
 HEARTWALL:
-	cd heartwall; make time=1 DEVICE=$(GPU)
+	cd heartwall; make time=1
 
 HOTSPOT:
-	cd hotspot; make time=1 DEVICE=$(GPU)
+	cd hotspot; make time=1
 
 HOTSPOT3D:
-	cd hotspot3D; make time=1 DEVICE=$(GPU)
+	cd hotspot3D; make time=1
 
 HUFFMAN:
-	cd huffman; make time=1 DEVICE=$(GPU)
+	cd huffman; make time=1
 
 LAVAMD:
-	cd lavaMD; make time=1 DEVICE=$(GPU)
+	cd lavaMD; make time=1
 
 LUD:
-	cd lud; make time=1 DEVICE=$(GPU)
+	cd lud; make time=1
 
 MYOCYTE:
-	cd myocyte; make time=1 DEVICE=$(GPU)
+	cd myocyte; make time=1
 
 NN:
-	cd nn; make time=1 DEVICE=$(GPU)
+	cd nn; make time=1
 
 NW:
-	cd nw; make time=1 DEVICE=$(GPU)
+	cd nw; make time=1
 
 PARTICLEFILTER:
-	cd particlefilter; make time=1 DEVICE=$(GPU)
+	cd particlefilter; make time=1
 
 PATHFINDER:
-	cd pathfinder; make time=1 DEVICE=$(GPU)
+	cd pathfinder; make time=1
 
 SRAD:
-	cd srad; make time=1 DEVICE=$(GPU)
+	cd srad; make time=1
 
 STREAMCLUSTER:
-	cd streamcluster; make time=1 DEVICE=$(GPU)
+	cd streamcluster; make time=1
 
 
 
