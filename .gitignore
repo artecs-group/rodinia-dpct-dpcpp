@@ -1,7 +1,6 @@
 # Prerequisites
 *.d
 timing/
-*.txt
 # Compiled Object files
 *.slo
 *.lo
