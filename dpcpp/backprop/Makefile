@@ -12,7 +12,7 @@ CC_FLAGS = -g  -O2
 ifeq ($(dbg),1)
 	DPCPP_FLAGS += -g -O0
 else
-	DPCPP_FLAGS = -O2 $(DPCPP_FLAGS)
+	DPCPP_FLAGS += -O2
 endif
 
 # 'make emu=1' compiles the CUDA kernels for emulation

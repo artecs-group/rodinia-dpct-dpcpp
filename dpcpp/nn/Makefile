@@ -1,7 +1,7 @@
 include ../../common/make.config
 
 # SYCL_C = $(SYCL_ROOT)/bin/clang++
-DPCPP_FLAGS = -g-o $(DPCPP_FLAGS)
+DPCPP_FLAGS += -g -o
 DPCPP_LDFLAGS = 
 DPCPP_EXE_NAME = nn
 DPCPP_SOURCES = nn.dp.cpp

@@ -63,7 +63,7 @@ C_C = gcc
 # SYCL_C = $(SYCL_ROOT)/bin/clang++
 
 # DPCPP_FLAGS = -std=c++17 -g -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
-DPCPP_FLAGS = -O3 $(DPCPP_FLAGS)
+DPCPP_FLAGS += -O3
 # OMP_FLAG = 	-Xcompiler paste_one_here
 
 # ====================================================================================================100

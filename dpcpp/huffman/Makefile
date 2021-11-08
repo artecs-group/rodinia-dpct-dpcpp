@@ -3,7 +3,7 @@ include ../../common/make.config
 # SYCL_C = $(SYCL_ROOT)/bin/clang++
 CC = g++
 
-DPCPP_FLAGS = -O3 -m64 $(DPCPP_FLAGS)
+DPCPP_FLAGS += -O3 -m64
 
 GCC_OPTS=-O3 -Wall -Wextra -m64 -I $(SYCL_INC)
 

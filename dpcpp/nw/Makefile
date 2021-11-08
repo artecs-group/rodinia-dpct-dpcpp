@@ -4,7 +4,7 @@ include ../../common/make.config
 TARGET = needleman_wunsch
 SRCS = src/needle.dp.cpp
 DEPS = src/needle_kernel.dp.cpp src/needle.h
-DPCPP_FLAGS = -g $(DPCPP_FLAGS)
+DPCPP_FLAGS += -g
 
 ifeq ($(time),1)
 	DPCPP_FLAGS += -DTIME_IT

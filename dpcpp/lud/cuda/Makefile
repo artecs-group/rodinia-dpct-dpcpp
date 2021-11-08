@@ -7,11 +7,11 @@ DEFS += \
 		-DGPU_TIMER \
 		$(SPACE)
 
-DPCPP_FLAGS = -I../common \
+DPCPP_FLAGS += -I../common \
 			 -O3 \
 			 -use_fast_math \
 			 -lm \
-			 $(DPCPP_FLAGS) $(SPACE)
+			 $(SPACE)
 
 # Add source files here
 EXECUTABLE  := lud_cuda

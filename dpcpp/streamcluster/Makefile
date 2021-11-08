@@ -1,8 +1,8 @@
 include ../../common/make.config
 
-SYCL_C = $(SYCL_ROOT)/bin/clang++
+# SYCL_C = $(SYCL_ROOT)/bin/clang++
 
-DPCPP_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
+# DPCPP_FLAGS = -std=c++17 -I $(SYCL_INCLUDE_DIR) -I $(DPCT_INCLUDE_DIR) -L $(SYCL_LIB) $(SYCL_FLAGS)
 
 TARGET_G = sc_gpu
 
