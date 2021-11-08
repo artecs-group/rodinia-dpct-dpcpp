@@ -173,7 +173,7 @@ cd dpcpp/nw
 pwd
 for (( i=0; i<$numExecutions; i++ ))
 do
-#    ./needleman_wunsch 16000 10 | grep "GPU: KERNEL" >> ../../timing/nw/dpcpp.txt
+    ./needleman_wunsch 12000 10 | grep "GPU: KERNEL" >> ../../timing/nw/dpcpp.txt
 done
 
 cd ../..

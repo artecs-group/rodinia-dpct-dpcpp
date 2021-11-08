@@ -173,7 +173,7 @@ cd cuda/nw
 pwd
 for (( i=0; i<$numExecutions; i++ ))
 do
-    ./needle 16000 10 | grep "GPU: KERNEL" >> ../../timing/nw/cuda.txt
+    ./needle 12000 10 | grep "GPU: KERNEL" >> ../../timing/nw/cuda.txt
 done
 
 cd ../..
