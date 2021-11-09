@@ -1,11 +1,10 @@
 #include <CL/sycl.hpp>
 #include <dpct/dpct.hpp>
 // statistical kernel
-void prepare(	long d_Ne,
-											fp *d_I,										// pointer to output image (DEVICE GLOBAL MEMORY)
+void prepare(long d_Ne, fp *d_I,										// pointer to output image (DEVICE GLOBAL MEMORY)
 											fp *d_sums,									// pointer to input image (DEVICE GLOBAL MEMORY)
 											fp *d_sums2,
-											sycl::nd_item<3> item_ct1){
+											sycl::nd_item<3> item_ct1, int NUMBER_THREADS){
 
 	// indexes
         int bx = item_ct1.get_group(2);    // get current horizontal block index

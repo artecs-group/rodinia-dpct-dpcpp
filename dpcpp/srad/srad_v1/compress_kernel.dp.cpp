@@ -1,9 +1,7 @@
 #include <CL/sycl.hpp>
 #include <dpct/dpct.hpp>
 // statistical kernel
-void compress(	long d_Ne,
-											fp *d_I,
-											sycl::nd_item<3> item_ct1){									// pointer to output image (DEVICE GLOBAL MEMORY)
+void compress(long d_Ne, fp *d_I, sycl::nd_item<3> item_ct1, int NUMBER_THREADS){									// pointer to output image (DEVICE GLOBAL MEMORY)
 
 	// indexes
         int bx = item_ct1.get_group(2);    // get current horizontal block index

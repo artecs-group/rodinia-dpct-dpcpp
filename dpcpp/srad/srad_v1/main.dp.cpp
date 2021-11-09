@@ -103,11 +103,11 @@ int main(int argc, char *argv []){
 	//================================================================================80
 
 	// CUDA kernel execution parameters
-        sycl::range<3> threads(1, 1, 1);
-        int blocks_x;
-        sycl::range<3> blocks(1, 1, 1);
-        sycl::range<3> blocks2(1, 1, 1);
-        sycl::range<3> blocks3(1, 1, 1);
+	sycl::range<3> threads(1, 1, 1);
+	int blocks_x;
+	sycl::range<3> blocks(1, 1, 1);
+	sycl::range<3> blocks2(1, 1, 1);
+	sycl::range<3> blocks3(1, 1, 1);
 
         // memory sizes
 	int mem_size;															// matrix memory size
@@ -156,6 +156,7 @@ int main(int argc, char *argv []){
 	time2 = get_time();
 
 	setdevice();
+	int NUMBER_THREADS = dpct::get_default_queue().get_device().get_info<cl::sycl::info::device::max_work_group_size>();
 
 	//================================================================================80
 	// 	READ IMAGE (SIZE OF IMAGE HAS TO BE KNOWN)
@@ -300,7 +301,7 @@ int main(int argc, char *argv []){
         dpct::get_default_queue().submit([&](sycl::handler &cgh) {
                 cgh.parallel_for(sycl::nd_range<3>(blocks * threads, threads),
                                  [=](sycl::nd_item<3> item_ct1) {
-                                         extract(Ne, d_I, item_ct1);
+                                         extract(Ne, d_I, item_ct1, NUMBER_THREADS);
                                  });
         });
 
@@ -331,7 +332,7 @@ int main(int argc, char *argv []){
                         cgh.parallel_for(
                             sycl::nd_range<3>(blocks * threads, threads),
                             [=](sycl::nd_item<3> item_ct1) {
-                                    prepare(Ne, d_I, d_sums, d_sums2, item_ct1);
+                                    prepare(Ne, d_I, d_sums, d_sums2, item_ct1, NUMBER_THREADS);
                             });
                 });
 
@@ -360,13 +361,13 @@ int main(int argc, char *argv []){
                                                sycl::access::mode::read_write,
                                                sycl::access::target::local>
                                     d_psum_acc_ct1(
-                                        sycl::range<1>(512 /*NUMBER_THREADS*/),
+                                        sycl::range<1>(NUMBER_THREADS),
                                         cgh);
                                 sycl::accessor<fp, 1,
                                                sycl::access::mode::read_write,
                                                sycl::access::target::local>
                                     d_psum2_acc_ct1(
-                                        sycl::range<1>(512 /*NUMBER_THREADS*/),
+                                        sycl::range<1>(NUMBER_THREADS),
                                         cgh);
 
                                 cgh.parallel_for(
@@ -377,7 +378,7 @@ int main(int argc, char *argv []){
                                                 Ne, no, mul, d_sums, d_sums2,
                                                 item_ct1,
                                                 d_psum_acc_ct1.get_pointer(),
-                                                d_psum2_acc_ct1.get_pointer());
+                                                d_psum2_acc_ct1.get_pointer(), NUMBER_THREADS);
                                     });
                         });
 
@@ -432,7 +433,7 @@ int main(int argc, char *argv []){
                             [=](sycl::nd_item<3> item_ct1) {
                                     srad(lambda, Nr, Nc, Ne, d_iN, d_iS, d_jE,
                                          d_jW, d_dN, d_dS, d_dW, d_dE, q0sqr,
-                                         d_c, d_I, item_ct1);
+                                         d_c, d_I, item_ct1, NUMBER_THREADS);
                             });
                 }); // output image
 
@@ -451,7 +452,7 @@ int main(int argc, char *argv []){
                             [=](sycl::nd_item<3> item_ct1) {
                                     srad2(lambda, Nr, Nc, Ne, d_iN, d_iS, d_jE,
                                           d_jW, d_dN, d_dS, d_dW, d_dE, d_c,
-                                          d_I, item_ct1);
+                                          d_I, item_ct1, NUMBER_THREADS);
                             });
                 }); // output image
 
@@ -475,7 +476,7 @@ int main(int argc, char *argv []){
         dpct::get_default_queue().submit([&](sycl::handler &cgh) {
                 cgh.parallel_for(sycl::nd_range<3>(blocks * threads, threads),
                                  [=](sycl::nd_item<3> item_ct1) {
-                                         compress(Ne, d_I, item_ct1);
+                                         compress(Ne, d_I, item_ct1, NUMBER_THREADS);
                                  });
         });
 

@@ -18,7 +18,7 @@ void srad2(	fp d_lambda,
 										fp *d_dW, 
 										fp *d_c, 
 										fp *d_I,
-										sycl::nd_item<3> item_ct1){
+										sycl::nd_item<3> item_ct1, int NUMBER_THREADS){
 
 	// indexes
     int bx = item_ct1.get_group(2);    // get current horizontal block index

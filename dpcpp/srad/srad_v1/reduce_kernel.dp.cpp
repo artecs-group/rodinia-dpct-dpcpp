@@ -8,7 +8,7 @@ void reduce(	long d_Ne,											// number of elements in array
 										fp *d_sums2,
 										sycl::nd_item<3> item_ct1,
 										fp *d_psum,
-										fp *d_psum2){
+										fp *d_psum2, int NUMBER_THREADS){
 
 	// indexes
     int bx = item_ct1.get_group(2);    // get current horizontal block index
