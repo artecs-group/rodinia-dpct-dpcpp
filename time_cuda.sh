@@ -217,14 +217,14 @@ cd cuda/srad/srad_v1
 pwd
 for (( i=0; i<$numExecutions; i++ ))
 do
-    ./srad 100 0.5 502 458 | grep "Total time:" >> ../../../timing/srad/srad_v1/cuda.txt
+    ./srad 100 0.5 512 512 | grep "Total time:" >> ../../../timing/srad/srad_v1/cuda.txt
 done
 
 cd ../srad_v2
 pwd
 for (( i=0; i<$numExecutions; i++ ))
 do
-    ./srad 502 458 0 31 0 31 0.5 2 | grep "Total time:" >> ../../../timing/srad/srad_v2/cuda.txt
+    ./srad 512 512 0 31 0 31 0.5 2 | grep "Total time:" >> ../../../timing/srad/srad_v2/cuda.txt
 done
 
 cd ../../..
