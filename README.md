@@ -24,44 +24,42 @@ Once you installed all the requirements, you have to edit the file "common/make.
 * ONEAPI_DIR &#8594; set the location where you have installed the oneAPI Base Toolkit (e.g. /opt/intel/oneapi)
 
 ## Compilation
-At this point, there are two Makefiles to build the tests, one of them for CUDA tests and another for DPC++ tests.
+At this point, there are two Makefiles to build the benchmarks, one of them for CUDA benchmarks and another for DPC++ benchmarks.
 
-### CUDA Tests Compilation
+### CUDA Benchmark Compilation
 Move to cuda folder and invoke the make command with the following arguments:
 
 * time=<0,1> &#8594; Prints the time consumption of the device.
 
 Example:
-    
-    ```
-    cd cuda
-    make time=1
-    ```
+```
+cd cuda
+make time=1
+```
 
-### DPC++ Tests Compilation
+### DPC++ Benchmark Compilation
 Move to dpcpp folder and invoke the make command with the following arguments:
 
 * time=<0,1> &#8594; Prints the time consumption of the device.
 * DPCPP_ENV=<clang,oneapi> &#8594; The "clang" option uses the LLVM compiler, while the "oneapi" uses the oneAPI compiler.
 * DEVICE=<CPU,INTEL_GPU,NVIDIA_GPU> &#8594; Selects the device where the code runs. The "NVIDIA_GPU" option just works selecting the variable "DPCPP_ENV=clang".
 
-The following example compiles the tests using the LLVM compiler, selects the NVIDIA GPU, and choose to show the GPU time consumption:
-    
-    ```
-    cd dpcpp
-    make DPCPP_ENV=clang DEVICE=NVIDIA_GPU time=1
-    ```
+The following example compiles the benchmarks using the LLVM compiler, selects the NVIDIA GPU, and choose to show the GPU time consumption:
+```
+cd dpcpp
+make DPCPP_ENV=clang DEVICE=NVIDIA_GPU time=1
+```
 
 ## How to run it?
 You can run them one by one, or use the scripts we provide ("time_cuda.sh", "time_dpcpp.sh"), which save the kernel time in a "timing" folder. For that, you had to compile them with the "time=1" argument.
 
 ## Known Issues
 ### DPCT Dependencies not Found
-If compiling tests with LLVM, errors pop up (e.g. "vector_class not found") then probably the LLVM dependencies do not fit with all the DPCT library.
+If compiling benchmarks with LLVM, errors pop up (e.g. "vector_class not found") then probably the LLVM dependencies do not fit with all the DPCT library.
 To fix it you have to copy the content of the file "path/to/oneapi/compiler/latest/linux/include/sycl/CL/sycl/stl.hpp" from oneAPI compiler to the the file "path/to/llvm/sycl/include/CL/sycl/stl.hpp" to the LLVM compiler. Now you have to [rebuild the LLVM compiler](https://github.com/intel/llvm/blob/sycl/sycl/doc/GetStartedGuide.md#build-dpc-toolchain). 
 
-### Tests not working in DPC++
-The following tests does not work in DPC++:
+### Benchmarks not working in DPC++
+The following benchmarks does not work in DPC++:
 
 * Hybridsort
 * Kmeans
