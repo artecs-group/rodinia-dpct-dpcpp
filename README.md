@@ -20,7 +20,7 @@ Some additional configuration would be requiered (see Section [Known Issues](#kn
 Once you installed all the requirements, you have to edit the file "common/make.config", changing the value of the following variables:
 
 * CUDA_DIR &#8594; set the path where you have installed the CUDA Toolkit (e.g. /usr/local/cuda)
-* LLVM_DIR &#8594; set the location where you have installed the LLVM compiler "bin/build" folder (e.g. ~/sycl_workspace/llvm/build)
+* LLVM_DIR &#8594; set the location where you have installed the LLVM compiler (e.g. ~/sycl_workspace/llvm/build)
 * ONEAPI_DIR &#8594; set the location where you have installed the oneAPI Base Toolkit (e.g. /opt/intel/oneapi)
 
 ## Compilation
