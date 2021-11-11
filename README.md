@@ -14,7 +14,7 @@ Before to run the benchmarks you have to install some dependencies.
     sudo apt-get install libglew1.5
     ```
 
-Some additional configuration would be requiered (see Section [Known Issues](#known-issues)). 
+**NOTE**: Some additional configuration would be requiered (see Section [Known Issues](#known-issues)). 
 
 ## Project Configuration
 Once you installed all the requirements, you have to edit the file "common/make.config", changing the value of the following variables:
