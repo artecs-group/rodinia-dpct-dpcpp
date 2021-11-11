@@ -32,6 +32,7 @@ Move to cuda folder and invoke the make command with the following arguments:
 * time=<0,1> &#8594; Prints the time consumption of the device.
 
 Example:
+    
     ```
     cd cuda
     make time=1
@@ -45,6 +46,7 @@ Move to dpcpp folder and invoke the make command with the following arguments:
 * DEVICE=<CPU,INTEL_GPU,NVIDIA_GPU> &#8594; Selects the device where the code runs. The "NVIDIA_GPU" option just works selecting the variable "DPCPP_ENV=clang".
 
 The following example compiles the tests using the LLVM compiler, selects the NVIDIA GPU, and choose to show the GPU time consumption:
+    
     ```
     cd dpcpp
     make DPCPP_ENV=clang DEVICE=NVIDIA_GPU time=1
