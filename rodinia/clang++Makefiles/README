@@ -1,1 +1,0 @@
-Compile the tests in rodinia/oneAPI with these makefiles in order to execute them using the CUDA backend in the ruyman/dpcpp_cuda_examples docker.
