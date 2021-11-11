@@ -4,61 +4,61 @@ dpcpp: B+TREE BACKPROP BFS CFD DWT2D GAUSSIAN HEARTWALL HOTSPOT HOTSPOT3D HUFFMA
 
 
 B+TREE:
-	cd b+tree; make time=1
+	cd b+tree; make
 
 BACKPROP:
-	cd backprop; make time=1
+	cd backprop; make
 
 BFS:
-	cd bfs; make time=1
+	cd bfs; make
 
 CFD:
-	cd cfd; make time=1
+	cd cfd; make
 
 DWT2D:
-	cd dwt2d; make time=1
+	cd dwt2d; make
 
 GAUSSIAN:
-	cd gaussian; make time=1
+	cd gaussian; make
 
 HEARTWALL:
-	cd heartwall; make time=1
+	cd heartwall; make
 
 HOTSPOT:
-	cd hotspot; make time=1
+	cd hotspot; make
 
 HOTSPOT3D:
-	cd hotspot3D; make time=1
+	cd hotspot3D; make
 
 HUFFMAN:
-	cd huffman; make time=1
+	cd huffman; make
 
 LAVAMD:
-	cd lavaMD; make time=1
+	cd lavaMD; make
 
 LUD:
-	cd lud; make time=1
+	cd lud; make
 
 MYOCYTE:
-	cd myocyte; make time=1
+	cd myocyte; make
 
 NN:
-	cd nn; make time=1
+	cd nn; make
 
 NW:
-	cd nw; make time=1
+	cd nw; make
 
 PARTICLEFILTER:
-	cd particlefilter; make time=1
+	cd particlefilter; make
 
 PATHFINDER:
-	cd pathfinder; make time=1
+	cd pathfinder; make
 
 SRAD:
-	cd srad; make time=1
+	cd srad; make
 
 STREAMCLUSTER:
-	cd streamcluster; make time=1
+	cd streamcluster; make
 
 
 
