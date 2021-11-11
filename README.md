@@ -4,8 +4,8 @@ Rodinia benchmarks for CUDA translated to DPC++ using the [Intel DPC++ Compatibi
 ## Requirements
 Before to run the benchmarks you have to install some dependencies.
 
-* [CUDA Toolkit 11.4](https://developer.nvidia.com/cuda-11-4-0-download-archive) -> Mandatory to run in NVIDIA GPUs.
-* [Intel LLVM open source compiler](https://github.com/intel/llvm/blob/sycl/sycl/doc/GetStartedGuide.md) -> It will run the code on all the devices.
+* [CUDA Toolkit 11.4](https://developer.nvidia.com/cuda-11-4-0-download-archive) &#8594; Mandatory to run in NVIDIA GPUs.
+* [Intel LLVM open source compiler](https://github.com/intel/llvm/blob/sycl/sycl/doc/GetStartedGuide.md) &#8594; It will run the code on all the devices.
 * [Intel oneAPI Base Toolkit](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html). The commercial "dpcpp" compiler cohabits with the previous compiler. However, it does not support NVIDIA GPUs.
 * In order to run the "Hybridsort" test, you have to install some OpenGL libraries:
     ```
@@ -19,9 +19,9 @@ Some additional configuration would be requiered (see Section [Known Issues](#kn
 ## Project Configuration
 Once you installed all the requirements, you have to edit the file "common/make.config", changing the value of the following variables:
 
-* CUDA_DIR -> set the path where you have installed the CUDA Toolkit (e.g. /usr/local/cuda)
-* LLVM_DIR -> set the location where you have installed the LLVM compiler "bin/build" folder (e.g. ~/sycl_workspace/llvm/build)
-* ONEAPI_DIR -> set the location where you have installed the oneAPI Base Toolkit (e.g. /opt/intel/oneapi)
+* CUDA_DIR &#8594; set the path where you have installed the CUDA Toolkit (e.g. /usr/local/cuda)
+* LLVM_DIR &#8594; set the location where you have installed the LLVM compiler "bin/build" folder (e.g. ~/sycl_workspace/llvm/build)
+* ONEAPI_DIR &#8594; set the location where you have installed the oneAPI Base Toolkit (e.g. /opt/intel/oneapi)
 
 ## Compilation
 At this point, there are two Makefiles to build the tests, one of them for CUDA tests and another for DPC++ tests.
@@ -29,7 +29,7 @@ At this point, there are two Makefiles to build the tests, one of them for CUDA 
 ### CUDA Tests Compilation
 Move to cuda folder and invoke the make command with the following arguments:
 
-* time=<0,1> -> Prints the time consumption of the device.
+* time=<0,1> &#8594; Prints the time consumption of the device.
 
 Example:
     ```
@@ -40,9 +40,9 @@ Example:
 ### DPC++ Tests Compilation
 Move to dpcpp folder and invoke the make command with the following arguments:
 
-* time=<0,1> -> Prints the time consumption of the device.
-* DPCPP_ENV=<clang,oneapi> -> The "clang" option uses the LLVM compiler, while the "oneapi" uses the oneAPI compiler.
-* DEVICE=<CPU,INTEL_GPU,NVIDIA_GPU> -> Selects the device where the code runs. The "NVIDIA_GPU" option just works selecting the variable "DPCPP_ENV=clang".
+* time=<0,1> &#8594; Prints the time consumption of the device.
+* DPCPP_ENV=<clang,oneapi> &#8594; The "clang" option uses the LLVM compiler, while the "oneapi" uses the oneAPI compiler.
+* DEVICE=<CPU,INTEL_GPU,NVIDIA_GPU> &#8594; Selects the device where the code runs. The "NVIDIA_GPU" option just works selecting the variable "DPCPP_ENV=clang".
 
 The following example compiles the tests using the LLVM compiler, selects the NVIDIA GPU, and choose to show the GPU time consumption:
     ```
