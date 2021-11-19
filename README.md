@@ -14,8 +14,6 @@ Before to run the benchmarks you have to install some dependencies.
     sudo apt-get install libglew1.5
     ```
 
-**NOTE**: Some additional configuration would be requiered (see Section [Known Issues](#known-issues)). 
-
 ## Project Configuration
 Once you installed all the requirements, you have to edit the file "common/make.config", changing the value of the following variables:
 
@@ -54,10 +52,6 @@ make DPCPP_ENV=clang DEVICE=NVIDIA_GPU time=1
 You can run them one by one, or use the scripts we provide ("time_cuda.sh", "time_dpcpp.sh"), which save the kernel time in a "timing" folder. For that, you had to compile them with the "time=1" argument.
 
 ## Known Issues
-### DPCT Dependencies not Found
-If compiling benchmarks with LLVM, errors pop up (e.g. "vector_class not found") then probably the LLVM dependencies do not fit with all the DPCT library.
-To fix it you have to copy the content of the file "path/to/oneapi/compiler/latest/linux/include/sycl/CL/sycl/stl.hpp" from oneAPI compiler to the the file "path/to/llvm/sycl/include/CL/sycl/stl.hpp" to the LLVM compiler. Now you have to [rebuild the LLVM compiler](https://github.com/intel/llvm/blob/sycl/sycl/doc/GetStartedGuide.md#build-dpc-toolchain). 
-
 ### Benchmarks not working in DPC++
 The following benchmarks does not work in DPC++:
 
