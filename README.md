@@ -61,8 +61,8 @@ The following benchmarks does not work in DPC++:
 * Mummergpu
 
 ## Publications
-* Germán Castaño, Youssef Faqir-Rhazoui, Carlos García and Manuel Prieto-Matías (2022). "Evaluation of Intel’s DPC++ Compatibility Tool in Heterogeneous Computing." Journal of Parallel and Distributed Computing (accepted).
-    * [Track link here](https://authors.elsevier.com/tracking/article/details.do?aid=4540&jid=YJPDC&surname=Garcia).
+* Germán Castaño, Youssef Faqir-Rhazoui, Carlos García and Manuel Prieto-Matías (2022). "Evaluation of Intel’s DPC++ Compatibility Tool in Heterogeneous Computing." Journal of Parallel and Distributed Computing, volume 165, pages 120-129.
+    * [Free available here](https://doi.org/10.1016/j.jpdc.2022.03.017).
 
 ## Acknowledgements
 This work has been supported by the EU (FEDER) and the Spanish MINECO and CM under grants S2018/TCS-4423 and RTI2018-093684-B-I00.
